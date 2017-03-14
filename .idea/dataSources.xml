@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="918451862">
+    <data-source source="LOCAL" name="Rails sportaide: development" uuid="6ffb040a-edf9-434c-8b49-12ad6a5ecafe">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:sport_aid_dev</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails sportaide: test" uuid="9d04446b-a548-48ec-b2b0-cbdd8de4d919">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:sport_aid_test</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails sportaide: production" uuid="826af53f-8ce4-4670-a632-ee23d5875c98">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://aaqpt9s75zh12z.cqop2fodb2mj.ap-southeast-2.rds.amazonaws.com:&lt;%= ENV['RDS_PORT'] %&gt;/sport_aid_prod</jdbc-url>
+      <user-name>sportaid</user-name>
+      <user-password>dfd9dfdadfc5dfd8dfdedfcbdfc3dfce</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
