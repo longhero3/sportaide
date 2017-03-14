@@ -16,7 +16,7 @@
     <data-source source="LOCAL" name="Rails sportaide: production" uuid="826af53f-8ce4-4670-a632-ee23d5875c98">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://aaqpt9s75zh12z.cqop2fodb2mj.ap-southeast-2.rds.amazonaws.com:&lt;%= ENV['RDS_PORT'] %&gt;/sport_aid_prod</jdbc-url>
+      <jdbc-url>jdbc:postgresql://aaqpt9s75zh12z.cqop2fodb2mj.ap-southeast-2.rds.amazonaws.com:5432/ebdb</jdbc-url>
       <user-name>sportaid</user-name>
       <user-password>dfd9dfdadfc5dfd8dfdedfcbdfc3dfce</user-password>
       <libraries />
