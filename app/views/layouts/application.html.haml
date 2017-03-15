@@ -1,0 +1,31 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Sportaide
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body.new-sprortaide
+    .wrapper.wrapper-inner-pages.small-padding
+      %header.header
+        .header-top
+          .shell
+            .header-inner
+              %a.logo{ href: '/' }
+                =image_tag 'main_logo'
+              %p.help Play safe. Play smart.
+              %button.btn-nav
+                %span.bar
+                %span.bar
+                %span.bar
+              %nav.nav-utilities
+                -#%ul
+                -#  %li.has-subnav
+                -#    .nav-dropdown.nav-dropdown-lang
+                -#      %ul
+                -#        %li
+                -#          %a{ href: '/' } English
+                -#        %li.change-language
+                -#          %a{ href: '/' } Chinese
+      = yield

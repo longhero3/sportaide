@@ -7,6 +7,7 @@ gem 'rails', '~> 5.0.0'
 # gem 'sqlite3'
 gem 'pg'
 gem 'aws-healthcheck'
+gem "haml-rails"
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -20,6 +21,7 @@ gem 'coffee-rails', '~> 4.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'semantic-ui-sass'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
