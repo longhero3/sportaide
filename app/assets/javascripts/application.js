@@ -15,3 +15,4 @@
 //= require turbolinks
 //= require semantic-ui
 //= require home
+//= require_tree ./react-components

@@ -7,4 +7,7 @@ Rails.application.routes.draw do
       get :search_sports
     end
   end
+
+  get 'dashboard' => 'dashboard#index'
+  get 'dashboard/*path' => 'dashboard#index'
 end

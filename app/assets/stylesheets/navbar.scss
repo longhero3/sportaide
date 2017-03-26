@@ -1,0 +1,125 @@
+.c-menu {
+  position: fixed;
+  z-index: 200;
+  background-color: #67b5d1;
+  transition: transform 0.3s;
+}
+
+.c-menu__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+body.has-active-menu {
+  overflow: hidden;
+}
+
+.c-menu--slide-left {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 50;
+  overflow: auto;
+  transform: translateX(-100%);
+  padding-bottom: 50px;
+  background: #0b161d;
+  z-index: 101;
+
+  .nav-content {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-top: 5rem;
+
+    .close-section {
+      padding-left: 2rem;
+      margin-bottom: 2rem;
+      button {
+        background-color: #142B3A;
+        color: white;
+      }
+    }
+
+    .menu-header {
+      color: white;
+      font-size: 1.5rem;
+      line-height: 1.4;
+      margin-bottom: 0.2rem;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .c-menu__items {
+    display: block;
+    border-top: 1px solid #152B39;
+
+    .c-menu__item {
+      padding-left: 2rem;
+      display: block;
+      color: white;
+      font-size: 16px;
+      line-height: 2.5rem;
+      height: 2.5rem;
+
+      &.active {
+        background-color: #142B3A;
+        color: white;
+      }
+
+      &:hover {
+        background-color: #142B3A;
+        color: white;
+      }
+
+      .c-menu__link {
+        text-decoration: none;
+        display: block;
+        color:white;
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+@media all and (min-width: 320px) {
+  .c-menu--slide-left {
+    width: 300px;
+  }
+}
+
+.c-mask{
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  background-color: #000;
+  opacity: 0;
+  transition: opacity 0.3s, width 0s 0.3s, height 0s 0.3s;
+
+  &.is-active {
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+}
+
+@media all and (min-width: 320px) {
+  .c-menu--slide-left {
+    transform: translateX(-300px);
+  }
+}
+
+#c-menu--slide-left.is-active {
+  transform: translateX(0);
+}

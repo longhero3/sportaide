@@ -1,0 +1,27 @@
+{
+  "name": "brunch-app",
+  "description": "Brunch.io application",
+  "private": true,
+  "author": "Brunch",
+  "version": "0.0.1",
+  "repository": "",
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
+  },
+  "dependencies": {
+    "auto-reload-brunch": ">= 1.0 < 1.9",
+    "babel-brunch": "6.0.0",
+    "babel-preset-react": "^6.3.13",
+    "clean-css-brunch": ">= 1.0 < 1.9",
+    "css-brunch": ">= 1.0 < 1.9",
+    "javascript-brunch": ">= 1.0 < 1.9",
+    "react": "0.14.0",
+    "react-datepicker": "0.17.0",
+    "react-dom": "0.14.0",
+    "react-inline-edit": "1.2.0",
+    "react-redux": "5.0.3",
+    "redux": "3.6.0",
+    "uglify-js-brunch": ">= 1.0 < 1.9"
+  }
+}

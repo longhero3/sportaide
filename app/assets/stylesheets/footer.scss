@@ -1,0 +1,30 @@
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid rgba(0,0,0,0.5);
+  z-index: 102;
+  box-sizing: border-box;
+  height: 50px;
+  background-color: #152B39;
+  color: #fff;
+
+  .menu-section a {
+    color: white;
+    border-color: white;
+    background-color: transparent;
+    line-height: 26px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 0;
+    border: none;
+
+    &:hover {
+      background-color: #0b161d;
+      color: white;
+    }
+  }
+
+
+}
