@@ -43,7 +43,13 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
       return React.createElement(
         'div',
         null,
-        'This is lessons view'
+        React.createElement(NavBar, null),
+        React.createElement(
+          'h1',
+          null,
+          ' This is the Lesson View'
+        ),
+        React.createElement(Footer, null)
       );
     }
   }]);
@@ -51,7 +57,7 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
   return LessonsView;
 }(React.Component);
 
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -80,12 +86,23 @@ var NewsfeedsView = exports.NewsfeedsView = function (_React$Component) {
   }
 
   _createClass(NewsfeedsView, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return React.createElement(
-        'div',
+        "div",
         null,
-        'This is newsfeed view'
+        React.createElement(NavBar, null),
+        React.createElement(
+          "div",
+          { className: "ui container" },
+          React.createElement("div", { className: "ui grid" })
+        ),
+        React.createElement(
+          "h1",
+          null,
+          " This is the Newsfeed View"
+        ),
+        React.createElement(Footer, null)
       );
     }
   }]);
@@ -200,6 +217,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -286,6 +305,17 @@ var NavBar = exports.NavBar = function (_React$Component) {
                 _react2.default.createElement(
                   'a',
                   { href: '#', className: 'c-menu__link' },
+                  'Dashboard'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                { className: 'c-menu__item' },
+                _react2.default.createElement(
+                  _reactRouter.Link,
+                  { to: '/dashboard/newsfeeds', className: 'c-menu__link', onClick: function onClick() {
+                      return _this2.props.dispatch(ToggleMenu());
+                    } },
                   'Newsfeed'
                 )
               ),
@@ -293,18 +323,11 @@ var NavBar = exports.NavBar = function (_React$Component) {
                 'li',
                 { className: 'c-menu__item' },
                 _react2.default.createElement(
-                  'a',
-                  { href: '#', className: 'c-menu__link' },
+                  _reactRouter.Link,
+                  { to: '/dashboard/lessons', className: 'c-menu__link', onClick: function onClick() {
+                      return _this2.props.dispatch(ToggleMenu());
+                    } },
                   'Lessons'
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                { className: 'c-menu__item' },
-                _react2.default.createElement(
-                  'a',
-                  { href: '#', className: 'c-menu__link' },
-                  'Quizzes'
                 )
               )
             )
@@ -485,6 +508,8 @@ var _reactRedux = require('react-redux');
 
 var _reactRouter = require('react-router');
 
+var _reactRouterRedux = require('react-router-redux');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Root = function Root(_ref) {
@@ -529,6 +554,54 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var store = (0, _redux.createStore)(TodoApp);
 
 (0, _reactDom.render)(_react2.default.createElement(Root, { store: store }), document.getElementById('dashboard'));
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+
+var NewsfeedNave = exports.NewsfeedNave = function (_React$Component) {
+  _inherits(NewsfeedNave, _React$Component);
+
+  function NewsfeedNave(props) {
+    _classCallCheck(this, NewsfeedNave);
+
+    var _this = _possibleConstructorReturn(this, (NewsfeedNave.__proto__ || Object.getPrototypeOf(NewsfeedNave)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(NewsfeedNave, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(NavBar, null),
+        React.createElement(
+          'h1',
+          null,
+          ' This is the Newsfeed View'
+        ),
+        React.createElement(Footer, null)
+      );
+    }
+  }]);
+
+  return NewsfeedNave;
+}(React.Component);
 
 /* jshint ignore:start */
 (function() {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router';
 
 export class NavBar extends React.Component{
 //  <p>
@@ -46,9 +47,9 @@ export class NavBar extends React.Component{
           </div>
           <div className="menu-header">Sportaide Menu</div>
           <ul className="c-menu__items">
-            <li className="c-menu__item"><a href="#" className="c-menu__link">Newsfeed</a></li>
-            <li className="c-menu__item"><a href="#" className="c-menu__link">Lessons</a></li>
-            <li className="c-menu__item"><a href="#" className="c-menu__link">Quizzes</a></li>
+            <li className="c-menu__item"><a href="#" className="c-menu__link">Dashboard</a></li>
+            <li className="c-menu__item"><Link to="/dashboard/newsfeeds" className="c-menu__link" onClick={ () => this.props.dispatch(ToggleMenu())}>Newsfeed</Link></li>
+            <li className="c-menu__item"><Link to="/dashboard/lessons" className="c-menu__link" onClick={ () => this.props.dispatch(ToggleMenu())}>Lessons</Link></li>
           </ul>
         </div>
       </nav>

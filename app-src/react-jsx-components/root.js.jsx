@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory,IndexRoute } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 const Root = ({ store }) => (
   <Provider store={store}>

@@ -10,7 +10,9 @@ export class LessonsView extends React.Component{
   render(){
     return(
       <div>
-        This is lessons view
+        <NavBar />
+        <h1> This is the Lesson View</h1>
+        <Footer/>
       </div>
       );
   }
