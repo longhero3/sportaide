@@ -10,7 +10,7 @@
   background-color: #152B39;
   color: #fff;
 
-  .menu-section a {
+  .menu-section button {
     color: white;
     border-color: white;
     background-color: transparent;
@@ -20,7 +20,7 @@
     border-radius: 0;
     border: none;
 
-    &:hover {
+    &:hover, &:focus {
       background-color: #0b161d;
       color: white;
     }

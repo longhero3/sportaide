@@ -1,14 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const Footer = () => (
+let Footer = ({dispatch}) => (
   <nav className='footer'>
     <div className='menu-section'>
-      <a className="ui button" href='#'>
+      <button className="ui button" href='' onClick={() => dispatch(ToggleMenu())}>
         <i className="icon align justify"></i>
         Menu
-      </a>
+      </button>
     </div>
   </nav>
   );
+
+Footer = connect()(Footer)
 
 export default Footer
