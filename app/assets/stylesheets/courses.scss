@@ -31,3 +31,70 @@
     }
   }
 }
+
+.course-block {
+  background-color: #fff;
+  border: 1px solid #dcdcdc;
+  margin-bottom: 10px;
+  min-height: 120px;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    background-color: #f7f7f7;
+  }
+
+  .offering-content {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: box;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -o-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+    .offering-info {
+      margin: 0 30px 0 30px;
+      -webkit-box-flex: 1;
+      -moz-box-flex: 1;
+      -o-box-flex: 1;
+      box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+
+      .course-offering-name {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: box;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -moz-box-orient: horizontal;
+        -o-box-orient: horizontal;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+
+        h2 {
+          font-size: 20px;
+          line-height: 24px;
+          margin: 12px 0 8px 0;
+        }
+      }
+
+      .course-offering-author {
+        color: #b3b3b3;
+        font-size: 1rem;
+      }
+    }
+  }
+}

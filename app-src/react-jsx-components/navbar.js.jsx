@@ -29,7 +29,6 @@ export class NavBar extends React.Component{
   componentDidMount(){
     store.subscribe( function(){
       var newState = store.getState()
-      console.log(newState)
       this.setState({className: newState.NavReducer.className})
       }.bind(this)
     )

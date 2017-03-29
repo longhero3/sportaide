@@ -62,7 +62,7 @@ function loadCoursesSuccess(courses) {
 
 function loadCourses() {
   return function (dispatch) {
-    return courseApi.getAllCourses().then(function (courses) {
+    return CourseApi.getAllCourses().then(function (courses) {
       dispatch(loadCoursesSuccess(courses));
     }).catch(function (error) {
       throw error;
@@ -75,11 +75,13 @@ function loadCourses() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LessonsView = undefined;
+exports.CourseBlock = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _reactRedux = require('react-redux');
+
+var _reactRouter = require('react-router');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -89,80 +91,159 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = require('react');
 
-var LessonsView = exports.LessonsView = function (_React$Component) {
-  _inherits(LessonsView, _React$Component);
+var CourseBlock = exports.CourseBlock = function (_React$Component) {
+  _inherits(CourseBlock, _React$Component);
 
-  function LessonsView(props) {
-    _classCallCheck(this, LessonsView);
+  function CourseBlock(props) {
+    _classCallCheck(this, CourseBlock);
 
-    var _this = _possibleConstructorReturn(this, (LessonsView.__proto__ || Object.getPrototypeOf(LessonsView)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CourseBlock.__proto__ || Object.getPrototypeOf(CourseBlock)).call(this, props));
 
     _this.state = {
-      courses: []
+      course: props.course
     };
     return _this;
   }
 
-  _createClass(LessonsView, [{
-    key: 'componentsDidMount',
-    value: function componentsDidMount() {
-      store.dispatch(loadCourses());
-      var newCourses = store.getState().CoursesReducer.courses;
-      this.setState({ courses: newCourses });
+  _createClass(CourseBlock, [{
+    key: 'goToCoursePage',
+    value: function goToCoursePage() {
+      _reactRouter.browserHistory.push('/dashboard/lessons/' + course.id);
     }
   }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
-        null,
-        React.createElement(NavBar, null),
+        { className: 'course-block', onclick: this.goToCoursePage.bind(this) },
         React.createElement(
           'div',
-          { className: 'ui container courses-container' },
+          { className: 'offering-content' },
           React.createElement(
             'div',
-            { className: 'ui two column stackable grid' },
+            null,
+            React.createElement('img', { src: this.state.course.thumbnail, className: 'offering-image', width: '100', height: '100' })
+          ),
+          React.createElement(
+            'div',
+            { className: 'offering-info' },
             React.createElement(
               'div',
-              { className: 'four wide column' },
+              { className: 'course-offering-name' },
               React.createElement(
+                'h2',
+                null,
+                this.state.course.name
+              )
+            ),
+            React.createElement(
+              'div',
+              { className: 'course-offering-author' },
+              React.createElement(
+                'span',
+                null,
+                this.state.course.author
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return CourseBlock;
+}(React.Component);
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LessonsView = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LessonsView = exports.LessonsView = function (_React$Component) {
+  _inherits(LessonsView, _React$Component);
+
+  function LessonsView() {
+    _classCallCheck(this, LessonsView);
+
+    return _possibleConstructorReturn(this, (LessonsView.__proto__ || Object.getPrototypeOf(LessonsView)).apply(this, arguments));
+  }
+
+  _createClass(LessonsView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      store.dispatch(loadCourses());
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(NavBar, null),
+        _react2.default.createElement(
+          'div',
+          { className: 'ui container courses-container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ui two column stackable grid' },
+            _react2.default.createElement(
+              'div',
+              { className: 'four wide column' },
+              _react2.default.createElement(
                 'div',
                 { className: 'course-navigation' },
-                React.createElement(
+                _react2.default.createElement(
                   'ul',
                   null,
-                  React.createElement(
+                  _react2.default.createElement(
                     'li',
                     null,
-                    React.createElement(
+                    _react2.default.createElement(
                       'a',
                       { href: '/dashboard/lessons/recommended_courses' },
                       'Current Course'
                     )
                   ),
-                  React.createElement(
+                  _react2.default.createElement(
                     'li',
                     null,
-                    React.createElement(
+                    _react2.default.createElement(
                       'a',
                       { href: '/dashboard/lessons/recommended_courses' },
                       'Recommended for you'
                     )
                   ),
-                  React.createElement(
+                  _react2.default.createElement(
                     'li',
                     null,
-                    React.createElement(
+                    _react2.default.createElement(
                       'a',
                       { href: '/dashboard/lessons/recommended_courses' },
                       'Recents'
                     )
                   ),
-                  React.createElement(
+                  _react2.default.createElement(
                     'li',
                     null,
-                    React.createElement(
+                    _react2.default.createElement(
                       'a',
                       { href: '/dashboard/lessons/recommended_courses' },
                       'Search'
@@ -171,22 +252,59 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
                 )
               )
             ),
-            React.createElement(
+            _react2.default.createElement(
               'div',
               { className: 'twelve wide column' },
-              React.createElement('div', { className: 'course-list' })
+              _react2.default.createElement(
+                'div',
+                { className: 'ui one course-list' },
+                this.props.courses.map(function (course) {
+                  return _react2.default.createElement(CourseBlock, {
+                    key: course.id,
+                    course: course
+                  });
+                })
+              )
             )
           )
         ),
-        React.createElement(Footer, null)
+        _react2.default.createElement(Footer, null)
       );
     }
   }]);
 
   return LessonsView;
-}(React.Component);
+}(_react2.default.Component);
 
-exports.LessonsView = LessonsView = (0, _reactRedux.connect)()(LessonsView);
+LessonsView.propTypes = {
+  courses: _react.PropTypes.array.isRequired,
+  dispatch: _react.PropTypes.func.isRequired
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    courses: state.CoursesReducer
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onLoad: function onLoad() {
+      dispatch(loadCourses());
+    }
+  };
+};
+
+var VisibleLessonsView = (0, _reactRedux.connect)(mapStateToProps)(LessonsView);
+exports.default = VisibleLessonsView;
 
 "use strict";
 
@@ -412,7 +530,6 @@ var NavBar = exports.NavBar = function (_React$Component) {
     value: function componentDidMount() {
       store.subscribe(function () {
         var newState = store.getState();
-        console.log(newState);
         this.setState({ className: newState.NavReducer.className });
       }.bind(this));
     }
@@ -675,7 +792,7 @@ var Root = function Root(_ref) {
         { path: '/dashboard', component: MainApp },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: LessonsView })
+        _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView })
       )
     )
   );

@@ -10,7 +10,9 @@ exports.config =
           '../app-src/react-jsx-components/actions/nav_actions.js.jsx',
           '../app-src/react-jsx-components/actions/course_actions.js.jsx',
 
+          '../app-src/react-jsx-components/lessons/course_block.js.jsx',
           '../app-src/react-jsx-components/lessons/lessons_view.js.jsx',
+          '../app-src/react-jsx-components/lessons/visible_lessons_view.js.jsx',
           '../app-src/react-jsx-components/newsfeed/newsfeeds_view.js.jsx',
 
           '../app-src/react-jsx-components/reducers/todos.js.jsx',

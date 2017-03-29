@@ -9,7 +9,7 @@ const Root = ({ store }) => (
       <Route path="/dashboard" component={MainApp}>
         <IndexRoute component={MainView}/>
         <Route path="newsfeeds" component={NewsfeedsView}></Route>
-        <Route path="lessons" component={LessonsView}></Route>
+        <Route path="lessons" component={VisibleLessonsView}></Route>
       </Route>
     </Router>
   </Provider>

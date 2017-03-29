@@ -1,18 +1,10 @@
-var React = require('react');
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 export class LessonsView extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      courses: []
-    }
-  }
 
-  componentsDidMount(){
+  componentDidMount(){
     store.dispatch(loadCourses());
-    var newCourses = store.getState().CoursesReducer.courses
-    this.setState({courses: newCourses})
   }
 
   render(){
@@ -32,8 +24,14 @@ export class LessonsView extends React.Component{
               </div>
             </div>
             <div className="twelve wide column">
-              <div className="course-list"></div>
-              {}
+              <div className="ui one course-list">
+              {this.props.courses.map(course =>
+                <CourseBlock
+                key={course.id}
+                course={course}
+                />
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -44,4 +42,7 @@ export class LessonsView extends React.Component{
 
 }
 
-LessonsView = connect()(LessonsView)
+LessonsView.propTypes = {
+  courses: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired
+}

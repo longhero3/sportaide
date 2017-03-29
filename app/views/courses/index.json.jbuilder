@@ -1,4 +1,5 @@
-json.array!(@courses) do |cost_type|
-  json.extract! cost_type, :name, :overview, :release_date, :duration, :view
-  json.url cost_type_url(cost_type, format: :json)
+json.array!(@courses) do |course|
+  json.extract! course, :id, :name, :overview, :release_date, :duration, :view
+  json.author course.author.try(:fullname)
+  json.thumbnail course.course_img.url(:thumb)
 end
