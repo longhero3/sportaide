@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 const TodoApp = combineReducers({
-  NavReducer
+  NavReducer, CoursesReducer
 })
 
 export default TodoApp

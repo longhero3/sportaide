@@ -5,13 +5,17 @@ exports.config =
       joinTo: 'compiled_components.js'
       order:
         before: [
+          '../app-src/react-jsx-components/api/course_api.js.jsx',
+
           '../app-src/react-jsx-components/actions/nav_actions.js.jsx',
+          '../app-src/react-jsx-components/actions/course_actions.js.jsx',
 
           '../app-src/react-jsx-components/lessons/lessons_view.js.jsx',
           '../app-src/react-jsx-components/newsfeed/newsfeeds_view.js.jsx',
 
           '../app-src/react-jsx-components/reducers/todos.js.jsx',
           '../app-src/react-jsx-components/reducers/nav_reducer.js.jsx',
+          '../app-src/react-jsx-components/reducers/courses_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/todo_app.js.jsx',
 
           '../app-src/react-jsx-components/navbar.js.jsx',

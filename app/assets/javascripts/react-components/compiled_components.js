@@ -3,6 +3,37 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var CourseApi = function () {
+  function CourseApi() {
+    _classCallCheck(this, CourseApi);
+  }
+
+  _createClass(CourseApi, null, [{
+    key: 'getAllCourses',
+    value: function getAllCourses() {
+      return fetch('/courses.json').then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
+  }]);
+
+  return CourseApi;
+}();
+
+exports.default = CourseApi;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var ToggleMenu = exports.ToggleMenu = function ToggleMenu() {
   return {
     type: 'TOGGLE_MENU'
@@ -14,8 +45,41 @@ var ToggleMenu = exports.ToggleMenu = function ToggleMenu() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.loadCoursesSuccess = loadCoursesSuccess;
+exports.loadCourses = loadCourses;
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOAD_COURSES_SUCCESS = 'LOAD_COURSES_SUCCESS';
+
+function loadCoursesSuccess(courses) {
+  return { type: LOAD_COURSES_SUCCESS, courses: courses };
+}
+
+function loadCourses() {
+  return function (dispatch) {
+    return courseApi.getAllCourses().then(function (courses) {
+      dispatch(loadCoursesSuccess(courses));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+;'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LessonsView = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactRedux = require('react-redux');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -33,11 +97,20 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (LessonsView.__proto__ || Object.getPrototypeOf(LessonsView)).call(this, props));
 
-    _this.state = {};
+    _this.state = {
+      courses: []
+    };
     return _this;
   }
 
   _createClass(LessonsView, [{
+    key: 'componentsDidMount',
+    value: function componentsDidMount() {
+      store.dispatch(loadCourses());
+      var newCourses = store.getState().CoursesReducer.courses;
+      this.setState({ courses: newCourses });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
@@ -45,9 +118,65 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
         null,
         React.createElement(NavBar, null),
         React.createElement(
-          'h1',
-          null,
-          ' This is the Lesson View'
+          'div',
+          { className: 'ui container courses-container' },
+          React.createElement(
+            'div',
+            { className: 'ui two column stackable grid' },
+            React.createElement(
+              'div',
+              { className: 'four wide column' },
+              React.createElement(
+                'div',
+                { className: 'course-navigation' },
+                React.createElement(
+                  'ul',
+                  null,
+                  React.createElement(
+                    'li',
+                    null,
+                    React.createElement(
+                      'a',
+                      { href: '/dashboard/lessons/recommended_courses' },
+                      'Current Course'
+                    )
+                  ),
+                  React.createElement(
+                    'li',
+                    null,
+                    React.createElement(
+                      'a',
+                      { href: '/dashboard/lessons/recommended_courses' },
+                      'Recommended for you'
+                    )
+                  ),
+                  React.createElement(
+                    'li',
+                    null,
+                    React.createElement(
+                      'a',
+                      { href: '/dashboard/lessons/recommended_courses' },
+                      'Recents'
+                    )
+                  ),
+                  React.createElement(
+                    'li',
+                    null,
+                    React.createElement(
+                      'a',
+                      { href: '/dashboard/lessons/recommended_courses' },
+                      'Search'
+                    )
+                  )
+                )
+              )
+            ),
+            React.createElement(
+              'div',
+              { className: 'twelve wide column' },
+              React.createElement('div', { className: 'course-list' })
+            )
+          )
         ),
         React.createElement(Footer, null)
       );
@@ -56,6 +185,8 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
 
   return LessonsView;
 }(React.Component);
+
+exports.LessonsView = LessonsView = (0, _reactRedux.connect)()(LessonsView);
 
 "use strict";
 
@@ -188,6 +319,25 @@ var NavReducer = function NavReducer() {
 
 exports.default = NavReducer;
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var CoursesReducer = function CoursesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  switch (action.type) {
+    case LOAD_COURSES_SUCCESS:
+      return action.courses;
+    default:
+      return state;
+  }
+};
+
+exports.default = CoursesReducer;
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -197,7 +347,7 @@ Object.defineProperty(exports, "__esModule", {
 var _redux = require('redux');
 
 var TodoApp = (0, _redux.combineReducers)({
-  NavReducer: NavReducer
+  NavReducer: NavReducer, CoursesReducer: CoursesReducer
 });
 
 exports.default = TodoApp;
@@ -549,9 +699,13 @@ var _reactRedux = require('react-redux');
 
 var _redux = require('redux');
 
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(TodoApp);
+var store = (0, _redux.createStore)(TodoApp, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 (0, _reactDom.render)(_react2.default.createElement(Root, { store: store }), document.getElementById('dashboard'));
 

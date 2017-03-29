@@ -1,0 +1,33 @@
+.courses-container {
+  margin-top: 1rem!important;
+
+  .course-navigation {
+    background-color: white;
+    box-sizing: border-box;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      li {
+        background-color: #f7f7f7;
+        border: 1px solid #dcdcdc;
+
+        a {
+          line-height: 1.5rem;
+          color: rgba(0,0,0,0.55);
+          padding: 16px 20px;
+          font-size: 14px;
+          line-height: 21px;
+          display: block;
+        }
+
+        &:hover {
+          background-color: white;
+        }
+      }
+    }
+  }
+}

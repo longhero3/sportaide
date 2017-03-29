@@ -11,6 +11,7 @@ body {
   -webkit-text-size-adjust: none;
   -ms-text-size-adjust: none;
   text-size-adjust: none;
+  background-color: #ebebeb;
 
   .wrapper {
     min-height: 100%;
@@ -26,6 +27,9 @@ body {
       top: 0;
       z-index: 99;
       display:block;
+      box-shadow: 0 0 5px rgba(0,0,0,.5);
+      background-color: white;
+      min-height: 54px;
 
       .header-top {
         .header-inner {

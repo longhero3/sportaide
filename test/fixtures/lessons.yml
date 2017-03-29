@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  vod: 
+  transcript: MyText
+  chapter: one
+
+two:
+  title: MyString
+  vod: 
+  transcript: MyText
+  chapter: two
