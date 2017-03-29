@@ -15,6 +15,11 @@ exports.config =
           '../app-src/react-jsx-components/lessons/visible_lessons_view.js.jsx',
           '../app-src/react-jsx-components/newsfeed/newsfeeds_view.js.jsx',
 
+          '../app-src/react-jsx-components/course/course_nav.js.jsx',
+          '../app-src/react-jsx-components/course/course_tabs.js.jsx',
+          '../app-src/react-jsx-components/course/course_view.js.jsx',
+
+
           '../app-src/react-jsx-components/reducers/todos.js.jsx',
           '../app-src/react-jsx-components/reducers/nav_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/courses_reducer.js.jsx',

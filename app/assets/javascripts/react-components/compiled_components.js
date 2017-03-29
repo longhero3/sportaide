@@ -108,14 +108,15 @@ var CourseBlock = exports.CourseBlock = function (_React$Component) {
   _createClass(CourseBlock, [{
     key: 'goToCoursePage',
     value: function goToCoursePage() {
-      _reactRouter.browserHistory.push('/dashboard/lessons/' + course.id);
+      console.log('go here');
+      _reactRouter.browserHistory.push('/dashboard/lessons/' + this.state.course.id);
     }
   }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
-        { className: 'course-block', onclick: this.goToCoursePage.bind(this) },
+        { className: 'course-block', onClick: this.goToCoursePage.bind(this) },
         React.createElement(
           'div',
           { className: 'offering-content' },
@@ -359,7 +360,388 @@ var NewsfeedsView = exports.NewsfeedsView = function (_React$Component) {
   return NewsfeedsView;
 }(React.Component);
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CourseNav = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CourseNav = exports.CourseNav = function (_React$Component) {
+  _inherits(CourseNav, _React$Component);
+
+  function CourseNav() {
+    _classCallCheck(this, CourseNav);
+
+    return _possibleConstructorReturn(this, (CourseNav.__proto__ || Object.getPrototypeOf(CourseNav)).apply(this, arguments));
+  }
+
+  _createClass(CourseNav, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "chapter-navigation" },
+        _react2.default.createElement("div", { className: "search-navigation" }),
+        _react2.default.createElement(
+          "div",
+          { className: "chapter-wrapper" },
+          _react2.default.createElement(
+            "div",
+            { className: "chapter-content" },
+            _react2.default.createElement(
+              "div",
+              { className: "ui styled accordion" },
+              _react2.default.createElement(
+                "div",
+                { className: "title active" },
+                _react2.default.createElement("i", { className: "dropdown icon" }),
+                "Level 1"
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "content active" },
+                _react2.default.createElement(
+                  "div",
+                  { className: "accordion transition visible", style: { display: "block !important" } },
+                  _react2.default.createElement(
+                    "div",
+                    { className: "title" },
+                    "Level 1A"
+                  ),
+                  _react2.default.createElement(
+                    "div",
+                    { className: "title" },
+                    "Level 1B"
+                  ),
+                  _react2.default.createElement(
+                    "div",
+                    { className: "title" },
+                    "Level 1C"
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "title" },
+                _react2.default.createElement("i", { className: "dropdown icon" }),
+                "Level 2"
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "content" },
+                _react2.default.createElement(
+                  "p",
+                  null,
+                  "Welcome to level 2"
+                ),
+                _react2.default.createElement(
+                  "div",
+                  { className: "accordion" },
+                  _react2.default.createElement(
+                    "div",
+                    { className: "active title" },
+                    "Level 2A"
+                  ),
+                  _react2.default.createElement(
+                    "div",
+                    { className: "title" },
+                    "Level 2B"
+                  ),
+                  _react2.default.createElement(
+                    "div",
+                    { className: "title" },
+                    "Level 2C"
+                  )
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return CourseNav;
+}(_react2.default.Component);
+
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CourseTabs = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CourseTabs = exports.CourseTabs = function (_React$Component) {
+  _inherits(CourseTabs, _React$Component);
+
+  function CourseTabs() {
+    _classCallCheck(this, CourseTabs);
+
+    return _possibleConstructorReturn(this, (CourseTabs.__proto__ || Object.getPrototypeOf(CourseTabs)).apply(this, arguments));
+  }
+
+  _createClass(CourseTabs, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      $('.tab-menu .item').tab();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'ui segment' },
+        _react2.default.createElement(
+          'div',
+          { className: 'ui pointing secondary menu tab-menu' },
+          _react2.default.createElement(
+            'a',
+            { className: 'item active', 'data-tab': 'first' },
+            'Overview'
+          ),
+          _react2.default.createElement(
+            'a',
+            { className: 'item', 'data-tab': 'second' },
+            'Video'
+          ),
+          _react2.default.createElement(
+            'a',
+            { className: 'item', 'data-tab': 'third' },
+            'Transcript'
+          )
+        ),
+        _react2.default.createElement('div', { className: 'ui tab active', 'data-tab': 'first' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'ui tab segment', 'data-tab': 'second' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ui top attached tabular menu' },
+            _react2.default.createElement(
+              'a',
+              { className: 'item active', 'data-tab': 'second/a' },
+              '2A'
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'item', 'data-tab': 'second/b' },
+              '2B'
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'item', 'data-tab': 'second/c' },
+              '2C'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui bottom attached tab segment active', 'data-tab': 'second/a' },
+            '2A'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui bottom attached tab segment', 'data-tab': 'second/b' },
+            '2B'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui bottom attached tab segment', 'data-tab': 'second/c' },
+            '2C'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'ui tab segment', 'data-tab': 'third' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ui top attached tabular menu' },
+            _react2.default.createElement(
+              'a',
+              { className: 'item active', 'data-tab': 'third/a' },
+              '3A'
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'item', 'data-tab': 'third/b' },
+              '3B'
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'item', 'data-tab': 'third/c' },
+              '3C'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui bottom attached tab segment active', 'data-tab': 'third/a' },
+            '3A'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui bottom attached tab segment', 'data-tab': 'third/b' },
+            '3B'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui bottom attached tab segment', 'data-tab': 'third/c' },
+            '3C'
+          )
+        )
+      );
+    }
+  }]);
+
+  return CourseTabs;
+}(_react2.default.Component);
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CourseView = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CourseView = exports.CourseView = function (_React$Component) {
+  _inherits(CourseView, _React$Component);
+
+  function CourseView() {
+    _classCallCheck(this, CourseView);
+
+    return _possibleConstructorReturn(this, (CourseView.__proto__ || Object.getPrototypeOf(CourseView)).apply(this, arguments));
+  }
+
+  _createClass(CourseView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      $('.accordion').accordion();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(NavBar, null),
+        _react2.default.createElement(
+          'div',
+          { className: 'course-title-banner' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ui container' },
+            _react2.default.createElement(
+              'div',
+              { className: 'ui two column stackable grid' },
+              _react2.default.createElement(
+                'div',
+                { className: 'ten wide column' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'ui breadcrumb' },
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/dashboard/newsfeeds', className: 'section' },
+                    'Home'
+                  ),
+                  _react2.default.createElement('i', { className: 'right angle icon divider' }),
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/dashboard/lessons', className: 'section' },
+                    'Lessons'
+                  ),
+                  _react2.default.createElement('i', { className: 'right angle icon divider' }),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'active section' },
+                    "Course 101"
+                  )
+                ),
+                _react2.default.createElement(
+                  'h1',
+                  { className: 'default-title' },
+                  ' Introduction to footy 101'
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'ui container courses-container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ui two column stackable grid' },
+            _react2.default.createElement(
+              'div',
+              { className: 'five wide column' },
+              _react2.default.createElement(CourseNav, null)
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'eleven wide column' },
+              _react2.default.createElement(CourseTabs, null)
+            )
+          )
+        ),
+        _react2.default.createElement(Footer, null)
+      );
+    }
+  }]);
+
+  return CourseView;
+}(_react2.default.Component);
+
+//CourseView.propTypes = {
+//  courses: PropTypes.array.isRequired
+//}
+
+;'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -792,7 +1174,8 @@ var Root = function Root(_ref) {
         { path: '/dashboard', component: MainApp },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView })
+        _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: CourseView })
       )
     )
   );

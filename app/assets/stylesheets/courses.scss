@@ -98,3 +98,29 @@
     }
   }
 }
+
+.course-title-banner {
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,.1);
+  padding: 10px 0;
+
+  .breadcrumb {
+    * {
+      color: white!important;
+      font-size: 12px;
+    }
+    
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  h1.default-title {
+    margin: 0;
+    font-size: 23px;
+  }
+}

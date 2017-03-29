@@ -11,12 +11,13 @@ export class CourseBlock extends React.Component{
   }
 
   goToCoursePage() {
-    browserHistory.push('/dashboard/lessons/' + course.id);
+    console.log('go here')
+    browserHistory.push('/dashboard/lessons/' + this.state.course.id);
   }
 
   render(){
     return(
-      <div className="course-block" onclick={this.goToCoursePage.bind(this)}>
+      <div className="course-block" onClick={this.goToCoursePage.bind(this)}>
         <div className="offering-content">
           <div>
             <img src={this.state.course.thumbnail} className="offering-image" width="100" height="100"/>
