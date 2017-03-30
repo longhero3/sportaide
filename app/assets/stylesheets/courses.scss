@@ -32,6 +32,11 @@
   }
 }
 
+.course-container {
+  margin-top: 1rem!important;
+  padding-bottom: 64px;
+}
+
 .course-block {
   background-color: #fff;
   border: 1px solid #dcdcdc;
@@ -122,5 +127,126 @@
   h1.default-title {
     margin: 0;
     font-size: 23px;
+  }
+}
+
+.chapter-navigation {
+  .search-navigation {
+    background-color: white;
+    padding: 11px 20px;
+    box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15);
+  }
+
+  .chapter-wrapper {
+    .chapter-content {
+      .accordion {
+        border-radius: 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.overview-content {
+  .author-thumb {
+    width: 100px;
+    text-align: center;
+    h5 {
+      font-size: 15px;
+    }
+
+    a {
+      color: #333;
+      cite.author-name {
+        font-style: normal;
+        font-weight: 300;
+      }
+    }
+  }
+
+  .course-description {
+    h6 {
+      margin-right: 5px;
+      display: inline;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .overview-description {
+      font-size: 15px;
+      margin-top: 10px;
+      font-weight: 300;
+      line-height: 22px;
+    }
+  }
+
+  .course-info-stat-cont {
+    margin: auto;
+    .course-info-stat {
+      background-color: #888;
+      color: #fff;
+      display: block;
+      line-height: 30px;
+      font-size: 20px;
+      text-align: center;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    h6 {
+      color: #888;
+      margin-bottom: 4px;
+      font-weight: 400;
+      font-size: 13px;
+      text-align: center;
+    }
+  }
+}
+
+.video-iframe {
+  margin: auto;
+  display: block;
+}
+
+@media (min-width:320px)  {
+/* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .video-iframe {
+    width: 250px;
+    height: 150px;
+  }
+}
+@media (min-width:480px)  {
+/* smartphones, Android phones, landscape iPhone */
+  .video-iframe {
+    width: 250px;
+    height: 150px;
+  }
+}
+@media (min-width:600px)  {
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+  .video-iframe {
+    width: 500px;
+    height: 350px;
+  }
+}
+@media (min-width:801px)  {
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+  .video-iframe {
+    width: 500px;
+    height: 250px;
+  }
+}
+@media (min-width:1025px) {
+/* big landscape tablets, laptops, and desktops */
+  .video-iframe {
+    width: 500px;
+    height: 250px;
+  }
+}
+@media (min-width:1281px) {
+/* hi-res laptops and desktops */
+  .video-iframe {
+    width: 500px;
+    height: 250px;
   }
 }

@@ -11,14 +11,13 @@
         .header-top
           .shell
             .header-inner
-              %a.logo{ href: '/' }
-                =image_tag('main_logo.png')
-              %p.help Play safe. Play smart.
-              %button.btn-nav
-                %span.bar
-                %span.bar
-                %span.bar
-              %nav.nav-utilities
+              .ui.stackable.grid.relaxed
+                .three.column.row
+                  .column
+                    %a.logo{ href: '/' }
+                      =image_tag('main_logo.png')
+                  .column.computer.only
+                    %p.help Play safe. Play smart.
                 -#%ul
                 -#  %li.has-subnav
                 -#    .nav-dropdown.nav-dropdown-lang

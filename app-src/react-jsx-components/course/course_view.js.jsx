@@ -23,12 +23,12 @@ export class CourseView extends React.Component{
                   <i className="right angle icon divider"></i>
                   <div className="active section">{"Course 101"}</div>
                 </div>
-                <h1 className="default-title"> Introduction to footy 101</h1>
+                <h1 className="default-title"> Footy Integrity 101</h1>
               </div>
             </div>
           </div>
         </div>
-        <div className="ui container courses-container">
+        <div className="ui container course-container">
           <div className="ui two column stackable grid">
             <div className="five wide column">
               <CourseNav/>

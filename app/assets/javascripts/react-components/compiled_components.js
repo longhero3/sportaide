@@ -396,7 +396,16 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
       return _react2.default.createElement(
         "div",
         { className: "chapter-navigation" },
-        _react2.default.createElement("div", { className: "search-navigation" }),
+        _react2.default.createElement(
+          "div",
+          { className: "search-navigation" },
+          _react2.default.createElement(
+            "div",
+            { className: "ui icon input fluid" },
+            _react2.default.createElement("i", { className: "search icon" }),
+            _react2.default.createElement("input", { type: "text", placeholder: "Search for specific chapter..." })
+          )
+        ),
         _react2.default.createElement(
           "div",
           { className: "chapter-wrapper" },
@@ -410,7 +419,7 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
                 "div",
                 { className: "title active" },
                 _react2.default.createElement("i", { className: "dropdown icon" }),
-                "Level 1"
+                "Module 1: Footy Basic Rules"
               ),
               _react2.default.createElement(
                 "div",
@@ -421,17 +430,27 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
                   _react2.default.createElement(
                     "div",
                     { className: "title" },
-                    "Level 1A"
+                    "Lesson 1: The Oval"
                   ),
                   _react2.default.createElement(
                     "div",
                     { className: "title" },
-                    "Level 1B"
+                    "Lesson 2: Running"
                   ),
                   _react2.default.createElement(
                     "div",
                     { className: "title" },
-                    "Level 1C"
+                    "Lesson 3: Catching Ball"
+                  ),
+                  _react2.default.createElement(
+                    "div",
+                    { className: "title" },
+                    "Lesson 4: Marking"
+                  ),
+                  _react2.default.createElement(
+                    "div",
+                    { className: "title" },
+                    "Lesson 5: Tackling"
                   )
                 )
               ),
@@ -439,33 +458,28 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
                 "div",
                 { className: "title" },
                 _react2.default.createElement("i", { className: "dropdown icon" }),
-                "Level 2"
+                "Module 2: Preparation"
               ),
               _react2.default.createElement(
                 "div",
                 { className: "content" },
-                _react2.default.createElement(
-                  "p",
-                  null,
-                  "Welcome to level 2"
-                ),
                 _react2.default.createElement(
                   "div",
                   { className: "accordion" },
                   _react2.default.createElement(
                     "div",
                     { className: "active title" },
-                    "Level 2A"
+                    "Lesson 1: Free kicks"
                   ),
                   _react2.default.createElement(
                     "div",
                     { className: "title" },
-                    "Level 2B"
+                    "Lesson 2: Shepherding"
                   ),
                   _react2.default.createElement(
                     "div",
                     { className: "title" },
-                    "Level 2C"
+                    "Level 3: Warming up"
                   )
                 )
               )
@@ -539,81 +553,112 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
             'Transcript'
           )
         ),
-        _react2.default.createElement('div', { className: 'ui tab active', 'data-tab': 'first' }),
         _react2.default.createElement(
           'div',
-          { className: 'ui tab segment', 'data-tab': 'second' },
+          { className: 'ui tab active', 'data-tab': 'first' },
           _react2.default.createElement(
             'div',
-            { className: 'ui top attached tabular menu' },
+            { className: 'overview-content' },
             _react2.default.createElement(
-              'a',
-              { className: 'item active', 'data-tab': 'second/a' },
-              '2A'
-            ),
-            _react2.default.createElement(
-              'a',
-              { className: 'item', 'data-tab': 'second/b' },
-              '2B'
-            ),
-            _react2.default.createElement(
-              'a',
-              { className: 'item', 'data-tab': 'second/c' },
-              '2C'
+              'div',
+              { className: 'ui three column stackable grid' },
+              _react2.default.createElement(
+                'div',
+                { className: 'three wide column' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'author-thumb' },
+                  _react2.default.createElement(
+                    'h5',
+                    null,
+                    'Author'
+                  ),
+                  _react2.default.createElement(
+                    'a',
+                    { href: '' },
+                    _react2.default.createElement('img', { src: 'https://preview.ibb.co/g1CTrF/fullsizeoutput_3e1.jpg', alt: 'Image and video hosting by TinyPic' }),
+                    _react2.default.createElement(
+                      'cite',
+                      { className: 'author-name' },
+                      'Arvind'
+                    )
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'ten wide column course-description' },
+                _react2.default.createElement(
+                  'h6',
+                  null,
+                  ' Released'
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'release-date' },
+                  '30/03/2017'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'overview-description' },
+                  'Every AFL game takes place on a grass oval which does not have to be a specific size, but must fit into a certain category; 135 to 185 metres in length and 110 to 155 metres wide. There are four posts at either end of the oval, with the inner two being the goal posts, and the outer two the behind posts.'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'three wide column' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'course-info-stat-cont duration' },
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'course-info-stat' },
+                    '25m'
+                  ),
+                  _react2.default.createElement(
+                    'h6',
+                    null,
+                    'Duration'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'course-info-stat-cont viewers' },
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'course-info-stat' },
+                    '2'
+                  ),
+                  _react2.default.createElement(
+                    'h6',
+                    null,
+                    'Views'
+                  )
+                )
+              )
             )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui bottom attached tab segment active', 'data-tab': 'second/a' },
-            '2A'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui bottom attached tab segment', 'data-tab': 'second/b' },
-            '2B'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui bottom attached tab segment', 'data-tab': 'second/c' },
-            '2C'
           )
         ),
         _react2.default.createElement(
           'div',
-          { className: 'ui tab segment', 'data-tab': 'third' },
+          { className: 'ui tab', 'data-tab': 'second' },
           _react2.default.createElement(
             'div',
-            { className: 'ui top attached tabular menu' },
+            { className: 'ui one column stackable grid' },
             _react2.default.createElement(
-              'a',
-              { className: 'item active', 'data-tab': 'third/a' },
-              '3A'
-            ),
-            _react2.default.createElement(
-              'a',
-              { className: 'item', 'data-tab': 'third/b' },
-              '3B'
-            ),
-            _react2.default.createElement(
-              'a',
-              { className: 'item', 'data-tab': 'third/c' },
-              '3C'
+              'div',
+              { className: 'fluid column' },
+              _react2.default.createElement('iframe', { className: 'video-iframe', src: 'https://www.youtube.com/embed/XMZYZcoAcU0', frameborder: '0', allowfullscreen: true })
             )
-          ),
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'ui tab', 'data-tab': 'third' },
           _react2.default.createElement(
             'div',
-            { className: 'ui bottom attached tab segment active', 'data-tab': 'third/a' },
-            '3A'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui bottom attached tab segment', 'data-tab': 'third/b' },
-            '3B'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui bottom attached tab segment', 'data-tab': 'third/c' },
-            '3C'
+            { className: 'transcript-content' },
+            'When a player is running while holding the ball they must perform what is known as a running bounce at least every 15 metres. If a player fails to do so, the umpire calls a free kick for the opposing team at the point where the player overstepped the mark.  The \u2018running too far\u2019 signal by the umpire is indicated by rolling clenched fists around each other. Running bounces are normally carried out by attacking half-back flankers, or link-men, who would receive the ball off a rebound and attack into wide space allowing their team mates to create playing options. Due to the odd shape of the ball, the running bounce is quite a skill, and some players prefer to touch the ball to the ground which is considered the same technically, however slows momentum. One of the major AFL rules is holding the ball which helps prevent players from deliberately slowing down the play. This is put into practice when a player is tackled and they must dispose of the ball by either kicking it or handballing it, and is usually interpreted by the umpire as to whether or not it is a held ball. If it is called as a hold ball the team who performed the tackle is awarded a free kick. When handballing, the ball must be punched from one hand with the alternate fist, and is not allowed to be punched like a volleyball serve. The ball is also not allowed to be simply handed to a teammate. The ball cannot be thrown. In AFL there is no offside rule, so all 18 players on both teams are allowed on any part of the oval at any point in the match.'
           )
         )
       );
@@ -705,7 +750,7 @@ var CourseView = exports.CourseView = function (_React$Component) {
                 _react2.default.createElement(
                   'h1',
                   { className: 'default-title' },
-                  ' Introduction to footy 101'
+                  ' Footy Integrity 101'
                 )
               )
             )
@@ -713,7 +758,7 @@ var CourseView = exports.CourseView = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'ui container courses-container' },
+          { className: 'ui container course-container' },
           _react2.default.createElement(
             'div',
             { className: 'ui two column stackable grid' },

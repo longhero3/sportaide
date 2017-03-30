@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e26c527-a3d7-4111-9aca-01d27f58d1c8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/production.rb" afterPath="$PROJECT_DIR$/config/environments/production.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.haml" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/common.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/common.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js.map" afterPath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/course/course_nav.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/course/course_nav.js.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/course/course_tabs.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/course/course_tabs.js.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/course/course_view.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/course/course_view.js.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/courses.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/courses.scss" />
     </list>
     <ignored path="sportaide.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,18 +35,18 @@
       <file leaf-file-name="course_tabs.js.jsx" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_tabs.js.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.1666665" vertical-offset="0" max-vertical-offset="675">
-              <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
+              <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="course_nav.js.jsx" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_nav.js.jsx">
+      <file leaf-file-name="courses.scss" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/courses.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="855">
-              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.8852459" vertical-offset="0" max-vertical-offset="3855">
+              <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -49,47 +56,7 @@
         <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_view.js.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825">
-              <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="courses.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/courses.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.125" vertical-offset="1164" max-vertical-offset="1965">
-              <caret line="97" column="5" selection-start-line="97" selection-start-column="5" selection-end-line="97" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="production.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.82417583" vertical-offset="810" max-vertical-offset="1470">
-              <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="secrets.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/secrets.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="brunch-config.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/watch_server/brunch-config.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="990">
-              <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+              <caret line="30" column="53" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -114,7 +81,6 @@
         <option value="$PROJECT_DIR$/app/views/dashboard/index.html.haml" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js" />
-        <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/containers/filter_link.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/main_view.js.jsx" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/navbar.scss" />
@@ -128,7 +94,6 @@
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/newsfeed/newsfeed_nav.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/newsfeed/newsfeeds_view.js.jsx" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/application.scss" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/common.scss" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/db/migrate/20170328051702_add_course_img_to_courses.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20170328052400_change_course_attributes.rb" />
@@ -153,12 +118,14 @@
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/root.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/lessons/course_block.js.jsx" />
-        <option value="$PROJECT_DIR$/app-src/react-jsx-components/course/course_nav.js.jsx" />
         <option value="$PROJECT_DIR$/watch_server/brunch-config.coffee" />
+        <option value="$PROJECT_DIR$/config/environments/production.rb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/common.scss" />
+        <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
+        <option value="$PROJECT_DIR$/app-src/react-jsx-components/course/course_nav.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/course/course_tabs.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/course/course_view.js.jsx" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/courses.scss" />
-        <option value="$PROJECT_DIR$/config/environments/production.rb" />
       </list>
     </option>
   </component>
@@ -866,22 +833,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/common.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.9" vertical-offset="120" max-vertical-offset="3450">
-          <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="555">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="975">
@@ -1103,38 +1054,38 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="6385" max-vertical-offset="13995">
           <caret line="446" column="0" selection-start-line="446" selection-start-column="0" selection-end-line="446" selection-end-column="0" />
           <folding>
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'componentDidMount'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;to&quot;: '/dashboard/newsfeeds'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;to&quot;: '/dashboard/lessons'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;className&quot;: 'ui button'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="[...]" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="[...]" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{&quot;textDecoration&quot;: 'none'...}" />
-            <marker date="1490793253000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'componentDidMount'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;to&quot;: '/dashboard/newsfeeds'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;to&quot;: '/dashboard/lessons'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;className&quot;: 'ui button'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="[...]" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="[...]" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'render'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{&quot;textDecoration&quot;: 'none'...}" />
+            <marker date="1490833834000" expanded="true" signature="-1:-1" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -1195,14 +1146,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="795">
-          <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/navbar.js.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.04636785" vertical-offset="0" max-vertical-offset="1125">
@@ -1227,38 +1170,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_tabs.js.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1666665" vertical-offset="0" max-vertical-offset="675">
-          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_nav.js.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="855">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_view.js.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825">
-          <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/courses.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.125" vertical-offset="1164" max-vertical-offset="1965">
-          <caret line="97" column="5" selection-start-line="97" selection-start-column="5" selection-end-line="97" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/watch_server/brunch-config.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="990">
@@ -1277,8 +1188,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.82417583" vertical-offset="810" max-vertical-offset="1470">
+        <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1470">
           <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/common.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.18" vertical-offset="326" max-vertical-offset="3450">
+          <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="540">
+          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_nav.js.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="1005">
+          <caret line="51" column="37" selection-start-line="51" selection-start-column="37" selection-end-line="51" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.84090906" vertical-offset="0" max-vertical-offset="795">
+          <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_tabs.js.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
+          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/course/course_view.js.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825">
+          <caret line="30" column="53" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/courses.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8852459" vertical-offset="0" max-vertical-offset="3855">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
           <folding />
         </state>
       </provider>
