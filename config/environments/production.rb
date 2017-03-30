@@ -87,6 +87,7 @@ Rails.application.configure do
   config.paperclip_defaults = {
     :storage => :s3,
     :s3_host_name => 'sportaides3.s3-website-ap-southeast-2.amazonaws.com',
+    :s3_region => 'ap-southeast-2'
     :bucket => 'sportaides3'
   }
 
