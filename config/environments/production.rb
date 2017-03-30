@@ -89,4 +89,11 @@ Rails.application.configure do
     :s3_host_name => 'sportaides3.s3-website-ap-southeast-2.amazonaws.com',
     :bucket => 'sportaides3'
   }
+
+  require 'aws-sdk'
+
+  Aws.config.update({
+    region: 'ap-southeast-2',
+    credentials: Aws::Credentials.new('AKIAJOB264NP3OUP7LNA', 'jveLUtOtG5Mrw7wNOvxhxS8oDSSYd8hYa+mqUYfn')
+  })
 end
