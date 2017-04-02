@@ -222,25 +222,11 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
   _createClass(LessonsView, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      store.dispatch(loadCourses());
+
       if (this.props.params.keywords) {
         store.dispatch(searchCourses(this.props.params.keywords));
-      }
-    }
-  }, {
-    key: 'courseContent',
-    value: function courseContent() {
-      if (this.props.isFetching == true) {
-        return _react2.default.createElement('div', { className: 'ui active centered inline loader' });
       } else {
-        {
-          this.props.courses.map(function (course) {
-            return _react2.default.createElement(CourseBlock, {
-              key: course.id,
-              course: course
-            });
-          });
-        }
+        store.dispatch(loadCourses());
       }
     }
   }, {

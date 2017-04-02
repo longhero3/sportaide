@@ -4,24 +4,11 @@ import { connect } from 'react-redux'
 export class LessonsView extends React.Component{
 
   componentDidMount(){
-    store.dispatch(loadCourses());
+
     if(this.props.params.keywords){
       store.dispatch(searchCourses(this.props.params.keywords))
-    }
-  }
-
-  courseContent(){
-    if(this.props.isFetching == true) {
-      return(
-        <div className="ui active centered inline loader"></div>
-        );
     } else {
-      {this.props.courses.map(course =>
-      <CourseBlock
-      key={course.id}
-      course={course}
-      />
-      )}
+      store.dispatch(loadCourses())
     }
   }
 
