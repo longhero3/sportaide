@@ -38,6 +38,11 @@ body {
         }
       }
 
+      .dashboard-btn {
+        display: block;
+        float: right;
+      }
+
       .logo {
         float: left;
         img {
@@ -86,7 +91,7 @@ body {
     width: 100%;
     position: absolute;
     left: 0;
-    top: calc(48% - 70px);
+    top: calc(48% - 5rem);
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -95,7 +100,7 @@ body {
       margin: 0;
       width: 45%;
       font-weight: 600;
-      font-size: 37px;
+      font-size: 2.6em;
       color: #392415;
       line-height: 1.22;
       letter-spacing: -0.02em;
@@ -109,10 +114,11 @@ body {
       list-style-type: decimal;
       list-style-position: outside;
       margin-top: 15px;
+      font-size: 14px;
 
       li {
-        font-size: 18px;
-        margin-bottom: 20px;
+        font-size: 1.28rem;
+        margin-bottom: 1.4em;
         font-weight: 100;
         line-height: 1.2;
       }
@@ -199,7 +205,6 @@ body {
 }
 
 a{
- color: inherit;
   text-decoration: none;
 }
 
@@ -222,4 +227,71 @@ img {
   vertical-align: middle;
   border: 0 none;
   max-width: 100%;
+}
+
+
+@media (min-width:320px)  {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .intro-home {
+    .intro-body{
+      font-size: 10px;
+      h1 {
+        width: 100%;
+      }
+    }
+  }
+}
+@media (min-width:480px)  {
+  /* smartphones, Android phones, landscape iPhone */
+  .intro-home {
+    .intro-body{
+      font-size: 10px;
+
+      h1 {
+        width: 100%;
+      }
+    }
+  }
+}
+@media (min-width:600px)  {
+  /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+  .mobile {
+    &.only {
+      display: none!important;
+    }
+  }
+  .intro-home {
+    .intro-body{
+      font-size: 10px;
+    }
+  }
+}
+@media (min-width:801px)  {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+  .intro-home {
+    .intro-body{
+      font-size: 12px;
+    }
+  }
+  .mobile {
+    &.only {
+      display: none!important;
+    }
+  }
+}
+@media (min-width:1025px) {
+  /* big landscape tablets, laptops, and desktops */
+  .mobile {
+    &.only {
+      display: none!important;
+    }
+  }
+}
+@media (min-width:1281px) {
+  /* hi-res laptops and desktops */
+  .mobile {
+    &.only {
+      display: none!important;
+    }
+  }
 }

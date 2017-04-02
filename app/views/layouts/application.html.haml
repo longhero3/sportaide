@@ -4,20 +4,23 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Sportaide
     = csrf_meta_tags
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
   %body.new-sprortaide
     .wrapper.wrapper-inner-pages.small-padding
       %header.header
         .header-top
-          .shell
+          .ui.container
             .header-inner
-              .ui.stackable.grid.relaxed
-                .three.column.row
-                  .column
-                    %a.logo{ href: '/' }
-                      =image_tag('main_logo.png')
-                  .column.computer.only
-                    %p.help Play safe. Play smart.
+              .ui.stackable.three.column.grid.relaxed
+                .column
+                  %a.logo{ href: '/' }
+                    =image_tag('main_logo.png')
+                    %a{ class: 'ui primary button dashboard-btn mobile only', href: '/dashboard/lessons'} Dashboard
+                .column.computer.tablet.only
+                  %p.help Play safe. Play smart.
+                .column.computer.tablet.only
+                  %a{ class: 'ui primary button dashboard-btn', href: '/dashboard/lessons'} Dashboard
                 -#%ul
                 -#  %li.has-subnav
                 -#    .nav-dropdown.nav-dropdown-lang
