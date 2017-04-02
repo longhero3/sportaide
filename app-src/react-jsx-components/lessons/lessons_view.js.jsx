@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 export class LessonsView extends React.Component{
 
   componentDidMount(){
-    store.dispatch(loadCourses());
+    if(this.props.params.keywords){
+      store.dispatch(searchCourses(this.props.params.keywords))
+    } else {
+      store.dispatch(loadCourses());
+    }
   }
 
   courseContent(){

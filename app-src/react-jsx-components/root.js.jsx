@@ -11,6 +11,7 @@ const Root = ({ store }) => (
         <Route path="newsfeeds" component={NewsfeedsView}></Route>
         <Route path="lessons" component={VisibleLessonsView}></Route>
         <Route path="lessons/:course_id" component={CourseView}></Route>
+        <Route path="lessons/search/:keywords" component={VisibleLessonsView}></Route>
       </Route>
     </Router>
   </Provider>

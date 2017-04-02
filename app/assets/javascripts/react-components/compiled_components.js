@@ -217,7 +217,11 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
   _createClass(LessonsView, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      store.dispatch(loadCourses());
+      if (this.props.params.keywords) {
+        store.dispatch(searchCourses(this.props.params.keywords));
+      } else {
+        store.dispatch(loadCourses());
+      }
     }
   }, {
     key: 'courseContent',
@@ -1322,7 +1326,8 @@ var Root = function Root(_ref) {
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: CourseView })
+        _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: CourseView }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'lessons/search/:keywords', component: VisibleLessonsView })
       )
     )
   );
