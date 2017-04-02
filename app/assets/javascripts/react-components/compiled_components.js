@@ -55,6 +55,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.loadCoursesSuccess = loadCoursesSuccess;
+exports.searchCoursesSuccess = searchCoursesSuccess;
 exports.requestSearchCourses = requestSearchCourses;
 exports.loadCourses = loadCourses;
 exports.searchCourses = searchCourses;
@@ -66,11 +67,15 @@ var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LOAD_COURSES_SUCCESS = 'LOAD_COURSES_SUCCESS';
-var SEARCH_COURSES = 'SEARCH_COURSE';
+var SEARCH_COURSES_SUCCESS = 'SEARCH_COURSES_SUCCESS';
 var REQUEST_SEARCH_COURSE = 'REQUEST_SEARCH_COURSE';
 
 function loadCoursesSuccess(courses) {
   return { type: LOAD_COURSES_SUCCESS, courses: courses };
+}
+
+function searchCoursesSuccess(courses) {
+  return { type: SEARCH_COURSES_SUCCESS, courses: courses };
 }
 
 function requestSearchCourses() {
@@ -90,7 +95,7 @@ function loadCourses() {
 function searchCourses(keywords) {
   return function (dispatch) {
     return CourseApi.searchCourses(keywords).then(function (courses) {
-      dispatch(loadCoursesSuccess(courses));
+      dispatch(searchCoursesSuccess(courses));
     }).catch(function (error) {
       throw error;
     });
@@ -217,10 +222,9 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
   _createClass(LessonsView, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      store.dispatch(loadCourses());
       if (this.props.params.keywords) {
         store.dispatch(searchCourses(this.props.params.keywords));
-      } else {
-        store.dispatch(loadCourses());
       }
     }
   }, {
@@ -254,9 +258,26 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
           )
         );
       } else {
+        var searchDiv = _react2.default.createElement('div', null);
+        if (this.props.isSearch == true) {
+          searchDiv = _react2.default.createElement(
+            'div',
+            { className: 'search-message' },
+            'You searched for ',
+            _react2.default.createElement(
+              'b',
+              null,
+              this.props.keywords
+            ),
+            '. ',
+            this.props.resultsFound,
+            ' matches'
+          );
+        }
         courseContent = _react2.default.createElement(
           'div',
           { className: 'ui course-list' },
+          searchDiv,
           this.props.courses.map(function (course) {
             return _react2.default.createElement(CourseBlock, { key: course.id, course: course });
           })
@@ -308,15 +329,6 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
                       { href: '/dashboard/lessons/recommended_courses' },
                       'Recents'
                     )
-                  ),
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                      'a',
-                      { href: '/dashboard/lessons/recommended_courses' },
-                      'Search'
-                    )
                   )
                 )
               )
@@ -339,7 +351,9 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
 LessonsView.propTypes = {
   courses: _react.PropTypes.array.isRequired,
   dispatch: _react.PropTypes.func.isRequired,
-  isFetching: _react.PropTypes.bool.isRequired
+  isFetching: _react.PropTypes.bool.isRequired,
+  keywords: _react.PropTypes.string.isRequired,
+  resultsFound: _react.PropTypes.number.isRequired
 };
 
 'use strict';
@@ -353,7 +367,10 @@ var _reactRedux = require('react-redux');
 var mapStateToProps = function mapStateToProps(state) {
   return {
     courses: state.CoursesReducer.courses,
-    isFetching: state.CoursesReducer.isFetching
+    isFetching: state.CoursesReducer.isFetching,
+    isSearch: state.CoursesReducer.isSearch,
+    keywords: state.CoursesReducer.keywords,
+    resultsFound: state.CoursesReducer.resultsFound
   };
 };
 
@@ -931,20 +948,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var CoursesReducer = function CoursesReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { courses: [], isFetching: true };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { courses: [], isFetching: true, isSearch: false, resultsFound: 0, keywords: "empty" };
   var action = arguments[1];
 
   switch (action.type) {
     case LOAD_COURSES_SUCCESS:
       return Object.assign({}, state, {
-        courses: action.courses,
+        courses: action.courses.courses,
         isFetching: false
       });
 
-    case SEARCH_COURSES:
+    case SEARCH_COURSES_SUCCESS:
       return Object.assign({}, state, {
-        courses: action.courses,
-        isFetching: false
+        courses: action.courses.courses,
+        isFetching: false,
+        isSearch: true,
+        resultsFound: action.courses.results_found,
+        keywords: action.courses.keywords
       });
 
     case REQUEST_SEARCH_COURSE:

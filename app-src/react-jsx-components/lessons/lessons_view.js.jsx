@@ -4,10 +4,9 @@ import { connect } from 'react-redux'
 export class LessonsView extends React.Component{
 
   componentDidMount(){
+    store.dispatch(loadCourses());
     if(this.props.params.keywords){
       store.dispatch(searchCourses(this.props.params.keywords))
-    } else {
-      store.dispatch(loadCourses());
     }
   }
 
@@ -31,7 +30,11 @@ export class LessonsView extends React.Component{
     if(this.props.isFetching == true) {
       courseContent = <div className="ui course-list"><div className="ui active centered inline text loader">Looking for courses ...</div></div>
     } else {
-      courseContent = <div className="ui course-list">{this.props.courses.map(course => <CourseBlock key={course.id} course={course}/>)}</div>;
+      var searchDiv = <div></div>
+      if(this.props.isSearch == true){
+        searchDiv = <div className="search-message">You searched for <b>{this.props.keywords}</b>. {this.props.resultsFound} matches</div>
+      }
+      courseContent = <div className="ui course-list">{searchDiv}{this.props.courses.map(course => <CourseBlock key={course.id} course={course}/>)}</div>;
     }
 
     return(
@@ -45,7 +48,6 @@ export class LessonsView extends React.Component{
                 <li><a href="/dashboard/lessons/recommended_courses">Current Course</a></li>
                 <li><a href="/dashboard/lessons/recommended_courses">Recommended for you</a></li>
                 <li><a href="/dashboard/lessons/recommended_courses">Recents</a></li>
-                <li><a href="/dashboard/lessons/recommended_courses">Search</a></li>
                 </ul>
               </div>
             </div>
@@ -64,5 +66,7 @@ export class LessonsView extends React.Component{
 LessonsView.propTypes = {
   courses: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  keywords: PropTypes.string.isRequired,
+  resultsFound: PropTypes.number.isRequired
 }

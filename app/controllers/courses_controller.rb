@@ -9,6 +9,12 @@ class CoursesController < ApplicationController
   end
 
   def search_courses
+    @keywords = params[:text]
     @courses = Course.search_by_keywords(params[:text])
+    if @keywords && !@keywords.blank?
+      @courses = Course.search_by_keywords(params[:text])
+    else
+      @courses = Course.all
+    end
   end
 end
