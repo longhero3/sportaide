@@ -1163,32 +1163,32 @@ var Footer = function Footer(_ref) {
     { className: 'footer' },
     _react2.default.createElement(
       'div',
-      { className: 'ui two column grid' },
+      { className: 'ui container' },
       _react2.default.createElement(
         'div',
-        { className: 'six wide column' },
+        { className: 'ui two column grid' },
         _react2.default.createElement(
           'div',
-          { className: 'menu-section' },
-          _react2.default.createElement(
-            'button',
-            { className: 'ui button', href: '', onClick: function onClick() {
-                return dispatch(ToggleMenu());
-              } },
-            _react2.default.createElement('i', { className: 'icon align justify' }),
-            'Menu'
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'ten wide column' },
-        _react2.default.createElement(
-          'div',
-          { className: 'ui one column grid' },
+          { className: 'eight wide column' },
           _react2.default.createElement(
             'div',
-            { className: 'fourteen wide column general-search-bar' },
+            { className: 'menu-section' },
+            _react2.default.createElement(
+              'button',
+              { className: 'ui button', href: '', onClick: function onClick() {
+                  return dispatch(ToggleMenu());
+                } },
+              _react2.default.createElement('i', { className: 'icon align justify' }),
+              'Menu'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'eight wide column' },
+          _react2.default.createElement(
+            'div',
+            { className: 'general-search-bar' },
             _react2.default.createElement(
               'div',
               { className: 'ui icon input fluid' },

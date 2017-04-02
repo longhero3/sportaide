@@ -4,13 +4,8 @@
     <list default="true" id="4e26c527-a3d7-4111-9aca-01d27f58d1c8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js.map" afterPath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/react-components/compiled_components.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/actions/course_actions.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/actions/course_actions.js.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/courses_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/courses_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/reducers/courses_reducer.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/reducers/courses_reducer.js.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/courses/index.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/courses/index.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/courses/search_courses.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/courses/search_courses.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/lessons/visible_lessons_view.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/lessons/visible_lessons_view.js.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-src/react-jsx-components/footer.js.jsx" afterPath="$PROJECT_DIR$/app-src/react-jsx-components/footer.js.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/footer.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/footer.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sportaide.iws" />
@@ -34,31 +29,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="visible_lessons_view.js.jsx" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/lessons/visible_lessons_view.js.jsx">
+      <file leaf-file-name="footer.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/footer.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
-              <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+            <state vertical-scroll-proportion="-6.76" vertical-offset="382" max-vertical-offset="1005">
+              <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="courses_reducer.js.jsx" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/reducers/courses_reducer.js.jsx">
+      <file leaf-file-name="navbar.scss" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/navbar.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
-              <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.33251834" vertical-offset="1244" max-vertical-offset="1965">
+              <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lessons_view.js.jsx" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx">
+      <file leaf-file-name="courses.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/courses.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.78571427" vertical-offset="420" max-vertical-offset="1155">
-              <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+            <state vertical-scroll-proportion="4.2083335" vertical-offset="3251" max-vertical-offset="3855">
+              <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="251" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -110,14 +105,11 @@
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.haml" />
         <option value="$PROJECT_DIR$/app/controllers/dashboard_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/dashboard.html.haml" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/common.scss" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/navbar.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/course/course_view.js.jsx" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/footer.scss" />
         <option value="$PROJECT_DIR$/app/models/course.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app-src/react-jsx-components/footer.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/api/course_api.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/root.js.jsx" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/home.coffee" />
@@ -128,6 +120,9 @@
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/actions/course_actions.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/lessons/visible_lessons_view.js.jsx" />
         <option value="$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx" />
+        <option value="$PROJECT_DIR$/app/views/layouts/dashboard.html.haml" />
+        <option value="$PROJECT_DIR$/app-src/react-jsx-components/footer.js.jsx" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/footer.scss" />
       </list>
     </option>
   </component>
@@ -676,49 +671,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/navbar.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="55.375" vertical-offset="1329" max-vertical-offset="1965">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/courses.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.5" vertical-offset="2970" max-vertical-offset="3855">
-          <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="251" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.625" vertical-offset="0" max-vertical-offset="585">
-          <caret line="25" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/dashboard.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/dashboard_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/common.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6" vertical-offset="1055" max-vertical-offset="4545">
-          <caret line="79" column="21" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -743,14 +699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="265" max-vertical-offset="825">
           <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/footer.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.291667" vertical-offset="131" max-vertical-offset="570">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -799,14 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
           <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/footer.js.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="77" max-vertical-offset="600">
-          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -909,8 +849,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/lessons/lessons_view.js.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78571427" vertical-offset="420" max-vertical-offset="1155">
-          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1155">
+          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/common.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.0" vertical-offset="585" max-vertical-offset="4545">
+          <caret line="79" column="21" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8333335" vertical-offset="25" max-vertical-offset="585">
+          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/dashboard.html.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.25" vertical-offset="0" max-vertical-offset="270">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-src/react-jsx-components/footer.js.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <caret line="16" column="44" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/courses.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.2083335" vertical-offset="3251" max-vertical-offset="3855">
+          <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="251" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/footer.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.76" vertical-offset="382" max-vertical-offset="1005">
+          <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/navbar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33251834" vertical-offset="1244" max-vertical-offset="1965">
+          <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
           <folding />
         </state>
       </provider>
