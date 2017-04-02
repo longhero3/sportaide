@@ -7,4 +7,10 @@ class Course < ApplicationRecord
   has_many :chapters, inverse_of: :course, dependent: :destroy
 
   accepts_nested_attributes_for :chapters
+
+  scope :search_by_keywords, -> (term) { basic_search(term) }
+
+  def self.searchable_columns
+    [:name, :overview, :id]
+  end
 end

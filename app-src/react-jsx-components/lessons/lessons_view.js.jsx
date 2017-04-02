@@ -7,7 +7,29 @@ export class LessonsView extends React.Component{
     store.dispatch(loadCourses());
   }
 
+  courseContent(){
+    if(this.props.isFetching == true) {
+      return(
+        <div className="ui active centered inline loader"></div>
+        );
+    } else {
+      {this.props.courses.map(course =>
+      <CourseBlock
+      key={course.id}
+      course={course}
+      />
+      )}
+    }
+  }
+
   render(){
+    var courseContent = null;
+    if(this.props.isFetching == true) {
+      courseContent = <div className="ui course-list"><div className="ui active centered inline text loader">Looking for courses ...</div></div>
+    } else {
+      courseContent = <div className="ui course-list">{this.props.courses.map(course => <CourseBlock key={course.id} course={course}/>)}</div>;
+    }
+
     return(
       <div>
         <NavBar />
@@ -24,14 +46,7 @@ export class LessonsView extends React.Component{
               </div>
             </div>
             <div className="twelve wide column">
-              <div className="ui one course-list">
-              {this.props.courses.map(course =>
-                <CourseBlock
-                key={course.id}
-                course={course}
-                />
-                )}
-              </div>
+              {courseContent}
             </div>
           </div>
         </div>
@@ -44,5 +59,6 @@ export class LessonsView extends React.Component{
 
 LessonsView.propTypes = {
   courses: PropTypes.array.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired
 }

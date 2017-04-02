@@ -9,7 +9,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :courses, only: [:index, :show]
+  resources :courses, only: [:index, :show] do
+    collection do
+      get :search_courses
+    end
+  end
 
   get 'dashboard' => 'dashboard#index'
   get 'dashboard/*path' => 'dashboard#index'

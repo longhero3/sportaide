@@ -22,6 +22,15 @@ var CourseApi = function () {
         return error;
       });
     }
+  }, {
+    key: 'searchCourses',
+    value: function searchCourses(keywords) {
+      return fetch('/courses/search_courses.json?text=' + keywords).then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
   }]);
 
   return CourseApi;
@@ -46,7 +55,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.loadCoursesSuccess = loadCoursesSuccess;
+exports.requestSearchCourses = requestSearchCourses;
 exports.loadCourses = loadCourses;
+exports.searchCourses = searchCourses;
 
 var _isomorphicFetch = require('isomorphic-fetch');
 
@@ -55,14 +66,30 @@ var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LOAD_COURSES_SUCCESS = 'LOAD_COURSES_SUCCESS';
+var SEARCH_COURSES = 'SEARCH_COURSE';
+var REQUEST_SEARCH_COURSE = 'REQUEST_SEARCH_COURSE';
 
 function loadCoursesSuccess(courses) {
   return { type: LOAD_COURSES_SUCCESS, courses: courses };
 }
 
+function requestSearchCourses() {
+  return { type: REQUEST_SEARCH_COURSE };
+}
+
 function loadCourses() {
   return function (dispatch) {
     return CourseApi.getAllCourses().then(function (courses) {
+      dispatch(loadCoursesSuccess(courses));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+function searchCourses(keywords) {
+  return function (dispatch) {
+    return CourseApi.searchCourses(keywords).then(function (courses) {
       dispatch(loadCoursesSuccess(courses));
     }).catch(function (error) {
       throw error;
@@ -193,8 +220,45 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
       store.dispatch(loadCourses());
     }
   }, {
+    key: 'courseContent',
+    value: function courseContent() {
+      if (this.props.isFetching == true) {
+        return _react2.default.createElement('div', { className: 'ui active centered inline loader' });
+      } else {
+        {
+          this.props.courses.map(function (course) {
+            return _react2.default.createElement(CourseBlock, {
+              key: course.id,
+              course: course
+            });
+          });
+        }
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var courseContent = null;
+      if (this.props.isFetching == true) {
+        courseContent = _react2.default.createElement(
+          'div',
+          { className: 'ui course-list' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ui active centered inline text loader' },
+            'Looking for courses ...'
+          )
+        );
+      } else {
+        courseContent = _react2.default.createElement(
+          'div',
+          { className: 'ui course-list' },
+          this.props.courses.map(function (course) {
+            return _react2.default.createElement(CourseBlock, { key: course.id, course: course });
+          })
+        );
+      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -256,16 +320,7 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'twelve wide column' },
-              _react2.default.createElement(
-                'div',
-                { className: 'ui one course-list' },
-                this.props.courses.map(function (course) {
-                  return _react2.default.createElement(CourseBlock, {
-                    key: course.id,
-                    course: course
-                  });
-                })
-              )
+              courseContent
             )
           )
         ),
@@ -279,7 +334,8 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
 
 LessonsView.propTypes = {
   courses: _react.PropTypes.array.isRequired,
-  dispatch: _react.PropTypes.func.isRequired
+  dispatch: _react.PropTypes.func.isRequired,
+  isFetching: _react.PropTypes.bool.isRequired
 };
 
 'use strict';
@@ -292,7 +348,8 @@ var _reactRedux = require('react-redux');
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    courses: state.CoursesReducer
+    courses: state.CoursesReducer.courses,
+    isFetching: state.CoursesReducer.isFetching
   };
 };
 
@@ -730,8 +787,8 @@ var CourseView = exports.CourseView = function (_React$Component) {
                   'div',
                   { className: 'ui breadcrumb' },
                   _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/dashboard/newsfeeds', className: 'section' },
+                    'a',
+                    { href: '/', className: 'section' },
                     'Home'
                   ),
                   _react2.default.createElement('i', { className: 'right angle icon divider' }),
@@ -870,12 +927,26 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var CoursesReducer = function CoursesReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { courses: [], isFetching: true };
   var action = arguments[1];
 
   switch (action.type) {
     case LOAD_COURSES_SUCCESS:
-      return action.courses;
+      return Object.assign({}, state, {
+        courses: action.courses,
+        isFetching: false
+      });
+
+    case SEARCH_COURSES:
+      return Object.assign({}, state, {
+        courses: action.courses,
+        isFetching: false
+      });
+
+    case REQUEST_SEARCH_COURSE:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
     default:
       return state;
   }
@@ -998,8 +1069,8 @@ var NavBar = exports.NavBar = function (_React$Component) {
                 { className: 'c-menu__item' },
                 _react2.default.createElement(
                   'a',
-                  { href: '#', className: 'c-menu__link' },
-                  'Dashboard'
+                  { href: '/', className: 'c-menu__link' },
+                  'Home'
                 )
               ),
               _react2.default.createElement(
@@ -1068,14 +1139,45 @@ var Footer = function Footer(_ref) {
     { className: 'footer' },
     _react2.default.createElement(
       'div',
-      { className: 'menu-section' },
+      { className: 'ui two column grid' },
       _react2.default.createElement(
-        'button',
-        { className: 'ui button', href: '', onClick: function onClick() {
-            return dispatch(ToggleMenu());
-          } },
-        _react2.default.createElement('i', { className: 'icon align justify' }),
-        'Menu'
+        'div',
+        { className: 'six wide column' },
+        _react2.default.createElement(
+          'div',
+          { className: 'menu-section' },
+          _react2.default.createElement(
+            'button',
+            { className: 'ui button', href: '', onClick: function onClick() {
+                return dispatch(ToggleMenu());
+              } },
+            _react2.default.createElement('i', { className: 'icon align justify' }),
+            'Menu'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'ten wide column' },
+        _react2.default.createElement(
+          'div',
+          { className: 'ui one column grid' },
+          _react2.default.createElement(
+            'div',
+            { className: 'fourteen wide column general-search-bar' },
+            _react2.default.createElement(
+              'div',
+              { className: 'ui icon input fluid' },
+              _react2.default.createElement('input', { type: 'text', placeholder: 'Search...', onKeyUp: function onKeyUp(event) {
+                  if (event.keyCode == 13) {
+                    dispatch(requestSearchCourses());
+                    return dispatch(searchCourses(event.target.value));
+                  }
+                } }),
+              _react2.default.createElement('i', { className: 'search icon' })
+            )
+          )
+        )
       )
     )
   );

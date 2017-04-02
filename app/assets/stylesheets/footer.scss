@@ -2,7 +2,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 0;
   border-top: 1px solid rgba(0,0,0,0.5);
   z-index: 102;
   box-sizing: border-box;
@@ -23,8 +23,11 @@
     &:hover, &:focus {
       background-color: #0b161d;
       color: white;
+      height: 49px;
     }
   }
 
-
+  .general-search-bar {
+    padding-top: 19px!important;
+  }
 }

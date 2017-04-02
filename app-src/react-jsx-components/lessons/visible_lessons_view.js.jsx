@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
-  courses: state.CoursesReducer
+  courses: state.CoursesReducer.courses,
+  isFetching: state.CoursesReducer.isFetching
 })
 
 const mapDispatchToProps = (dispatch) => {

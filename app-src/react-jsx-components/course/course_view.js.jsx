@@ -17,7 +17,7 @@ export class CourseView extends React.Component{
             <div className="ui two column stackable grid">
               <div className="ten wide column">
                 <div className="ui breadcrumb">
-                  <Link to="/dashboard/newsfeeds" className="section">Home</Link>
+                  <a href="/" className="section">Home</a>
                   <i className="right angle icon divider"></i>
                   <Link to="/dashboard/lessons" className="section">Lessons</Link>
                   <i className="right angle icon divider"></i>
