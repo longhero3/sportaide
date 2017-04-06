@@ -5,10 +5,13 @@ import { Link } from 'react-router'
 export class CourseView extends React.Component{
 
   componentDidMount(){
-    $('.accordion').accordion()
+    if(this.props.params.course_id) {
+      store.dispatch(loadCourse(this.props.params.course_id))
+    }
   }
 
   render(){
+
     return(
       <div>
         <NavBar />
@@ -21,9 +24,9 @@ export class CourseView extends React.Component{
                   <i className="right angle icon divider"></i>
                   <Link to="/dashboard/lessons" className="section">Lessons</Link>
                   <i className="right angle icon divider"></i>
-                  <div className="active section">{"Course 101"}</div>
+                  <div className="active section">{this.props.course.name}</div>
                 </div>
-                <h1 className="default-title"> Footy Integrity 101</h1>
+                <h1 className="default-title"> {this.props.course.name}</h1>
               </div>
             </div>
           </div>
@@ -31,10 +34,10 @@ export class CourseView extends React.Component{
         <div className="ui container course-container">
           <div className="ui two column stackable grid">
             <div className="five wide column">
-              <CourseNav/>
+              <VisibleCourseNav />
             </div>
             <div className="eleven wide column">
-              <CourseTabs/>
+              <VisibleCourseTabs />
             </div>
           </div>
         </div>
@@ -42,9 +45,9 @@ export class CourseView extends React.Component{
       </div>
       );
   }
-
 }
 
-//CourseView.propTypes = {
-//  courses: PropTypes.array.isRequired
-//}
+CourseView.propTypes = {
+  course: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired
+}

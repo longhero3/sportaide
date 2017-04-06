@@ -38,6 +38,7 @@ gem 'paperclip'
 
 gem 'rails_admin', '~> 1.1.1'
 gem 'aws-sdk', '~> 2'
+gem 'rails-erd'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

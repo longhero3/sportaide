@@ -8,6 +8,7 @@ exports.config =
           '../app-src/react-jsx-components/api/course_api.js.jsx',
 
           '../app-src/react-jsx-components/actions/nav_actions.js.jsx',
+          '../app-src/react-jsx-components/actions/course_details_actions.js.jsx',
           '../app-src/react-jsx-components/actions/course_actions.js.jsx',
 
           '../app-src/react-jsx-components/lessons/course_block.js.jsx',
@@ -16,13 +17,17 @@ exports.config =
           '../app-src/react-jsx-components/newsfeed/newsfeeds_view.js.jsx',
 
           '../app-src/react-jsx-components/course/course_nav.js.jsx',
+          '../app-src/react-jsx-components/course/visible_course_nav.js.jsx',
           '../app-src/react-jsx-components/course/course_tabs.js.jsx',
+          '../app-src/react-jsx-components/course/visible_course_tabs.js.jsx',
           '../app-src/react-jsx-components/course/course_view.js.jsx',
+          '../app-src/react-jsx-components/course/visible_course_view.js.jsx',
 
 
           '../app-src/react-jsx-components/reducers/todos.js.jsx',
           '../app-src/react-jsx-components/reducers/nav_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/courses_reducer.js.jsx',
+          '../app-src/react-jsx-components/reducers/course_details_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/todo_app.js.jsx',
 
           '../app-src/react-jsx-components/navbar.js.jsx',

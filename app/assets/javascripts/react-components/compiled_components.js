@@ -31,6 +31,15 @@ var CourseApi = function () {
         return error;
       });
     }
+  }, {
+    key: 'getCourseById',
+    value: function getCourseById(courseId) {
+      return fetch('/courses/' + courseId + '.json').then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
   }]);
 
   return CourseApi;
@@ -50,6 +59,48 @@ var ToggleMenu = exports.ToggleMenu = function ToggleMenu() {
 };
 
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.requestCourse = requestCourse;
+exports.receiveCourse = receiveCourse;
+exports.selectLesson = selectLesson;
+exports.loadCourse = loadCourse;
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RECEIVE_COURSE_SUCCESS = 'RECEIVE_COURSE_SUCCESS';
+var REQUEST_COURSE = 'REQUEST_COURSE';
+var SELECT_LESSON = 'SELECT_LESSON';
+
+function requestCourse(course) {
+  return { type: LOAD_COURSES_SUCCESS, course: course };
+}
+
+function receiveCourse(course) {
+  return { type: RECEIVE_COURSE_SUCCESS, course: course };
+}
+
+function selectLesson(lesson) {
+  return { type: SELECT_LESSON, lesson: lesson };
+}
+
+function loadCourse(courseID) {
+  return function (dispatch) {
+    return CourseApi.getCourseById(courseID).then(function (course) {
+      dispatch(receiveCourse(course));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+;'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -140,7 +191,6 @@ var CourseBlock = exports.CourseBlock = function (_React$Component) {
   _createClass(CourseBlock, [{
     key: 'goToCoursePage',
     value: function goToCoursePage() {
-      console.log('go here');
       _reactRouter.browserHistory.push('/dashboard/lessons/' + this.state.course.id);
     }
   }, {
@@ -424,7 +474,7 @@ var NewsfeedsView = exports.NewsfeedsView = function (_React$Component) {
   return NewsfeedsView;
 }(React.Component);
 
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -433,9 +483,11 @@ exports.CourseNav = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -455,107 +507,150 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
   }
 
   _createClass(CourseNav, [{
-    key: "render",
-    value: function render() {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prev, next) {
+      $('.accordion').accordion();
+    }
+  }, {
+    key: 'chapterAccordion',
+    value: function chapterAccordion(chapter) {
       return _react2.default.createElement(
-        "div",
-        { className: "chapter-navigation" },
+        'div',
+        { className: 'title', key: "chapter_" + chapter.id },
+        _react2.default.createElement('i', { className: 'dropdown icon' }),
+        chapter.title
+      );
+    }
+  }, {
+    key: 'lessonsAccordion',
+    value: function lessonsAccordion(chapter) {
+      return _react2.default.createElement(
+        'div',
+        { className: 'content' },
         _react2.default.createElement(
-          "div",
-          { className: "search-navigation" },
-          _react2.default.createElement(
-            "div",
-            { className: "ui icon input fluid" },
-            _react2.default.createElement("i", { className: "search icon" }),
-            _react2.default.createElement("input", { type: "text", placeholder: "Search for specific chapter..." })
-          )
-        ),
+          'div',
+          { className: 'accordion' },
+          chapter.lessons.map(function (lesson, index) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'title', key: "lesson_" + index, onClick: function onClick() {
+                  return store.dispatch(selectLesson(lesson));
+                } },
+              lesson.title
+            );
+          })
+        )
+      );
+    }
+  }, {
+    key: 'activeChapterAccordion',
+    value: function activeChapterAccordion(chapter) {
+      return _react2.default.createElement(
+        'div',
+        { className: 'title active', key: "chapter_" + chapter.id },
+        _react2.default.createElement('i', { className: 'dropdown icon' }),
+        chapter.title
+      );
+    }
+  }, {
+    key: 'activeLessonsAccordion',
+    value: function activeLessonsAccordion(chapter) {
+      return _react2.default.createElement(
+        'div',
+        { className: 'content active' },
         _react2.default.createElement(
-          "div",
-          { className: "chapter-wrapper" },
+          'div',
+          { className: 'accordion transition visible', style: { display: "block !important" } },
+          chapter.lessons.map(function (lesson, index) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'title', key: "lesson_" + index, onClick: function onClick() {
+                  return store.dispatch(selectLesson(lesson));
+                } },
+              lesson.title
+            );
+          })
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.props.isFetching == true) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'chapter-navigation' },
+          _react2.default.createElement('div', { className: 'ui active centered inline loader' })
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { className: 'chapter-navigation' },
           _react2.default.createElement(
-            "div",
-            { className: "chapter-content" },
+            'div',
+            { className: 'search-navigation' },
             _react2.default.createElement(
-              "div",
-              { className: "ui styled accordion" },
+              'div',
+              { className: 'ui icon input fluid' },
+              _react2.default.createElement('i', { className: 'search icon' }),
+              _react2.default.createElement('input', { type: 'text', placeholder: 'Search for specific chapter...' })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'chapter-wrapper' },
+            _react2.default.createElement(
+              'div',
+              { className: 'chapter-content' },
               _react2.default.createElement(
-                "div",
-                { className: "title active" },
-                _react2.default.createElement("i", { className: "dropdown icon" }),
-                "Module 1: Footy Basic Rules"
-              ),
-              _react2.default.createElement(
-                "div",
-                { className: "content active" },
-                _react2.default.createElement(
-                  "div",
-                  { className: "accordion transition visible", style: { display: "block !important" } },
-                  _react2.default.createElement(
-                    "div",
-                    { className: "title" },
-                    "Lesson 1: The Oval"
-                  ),
-                  _react2.default.createElement(
-                    "div",
-                    { className: "title" },
-                    "Lesson 2: Running"
-                  ),
-                  _react2.default.createElement(
-                    "div",
-                    { className: "title" },
-                    "Lesson 3: Catching Ball"
-                  ),
-                  _react2.default.createElement(
-                    "div",
-                    { className: "title" },
-                    "Lesson 4: Marking"
-                  ),
-                  _react2.default.createElement(
-                    "div",
-                    { className: "title" },
-                    "Lesson 5: Tackling"
-                  )
-                )
-              ),
-              _react2.default.createElement(
-                "div",
-                { className: "title" },
-                _react2.default.createElement("i", { className: "dropdown icon" }),
-                "Module 2: Preparation"
-              ),
-              _react2.default.createElement(
-                "div",
-                { className: "content" },
-                _react2.default.createElement(
-                  "div",
-                  { className: "accordion" },
-                  _react2.default.createElement(
-                    "div",
-                    { className: "active title" },
-                    "Lesson 1: Free kicks"
-                  ),
-                  _react2.default.createElement(
-                    "div",
-                    { className: "title" },
-                    "Lesson 2: Shepherding"
-                  ),
-                  _react2.default.createElement(
-                    "div",
-                    { className: "title" },
-                    "Level 3: Warming up"
-                  )
-                )
+                'div',
+                { className: 'ui styled accordion' },
+                this.props.course.chapters.map(function (chapter, index) {
+                  var tempChapter = null;
+                  var tempLesson = null;
+                  if (index == 0) {
+                    tempChapter = this.activeChapterAccordion(chapter);
+                    tempLesson = this.activeLessonsAccordion(chapter);
+                  } else {
+                    tempChapter = this.chapterAccordion(chapter);
+                    tempLesson = this.lessonsAccordion(chapter);
+                  }
+                  return [tempChapter, tempLesson];
+                }.bind(this))
               )
             )
           )
-        )
-      );
+        );
+      }
     }
   }]);
 
   return CourseNav;
 }(_react2.default.Component);
+
+CourseNav.propsTypes = {
+  course: _react.PropTypes.object.isRequired,
+  isFetching: _react.PropTypes.bool.isRequired
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var mapCourseNavState = function mapCourseNavState(state) {
+  return {
+    course: state.CourseDetailsReducer.course,
+    isFetching: state.CourseDetailsReducer.isFetching
+  };
+};
+
+var VisibleCourseNav = (0, _reactRedux.connect)(mapCourseNavState)(CourseNav);
+
+exports.default = VisibleCourseNav;
 
 'use strict';
 
@@ -588,149 +683,182 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
   }
 
   _createClass(CourseTabs, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentDidUpdate',
+
+    //  componentDidMount(){
+    //    $('.tab-menu .item').tab()
+    //  }
+
+    value: function componentDidUpdate(prev, next) {
       $('.tab-menu .item').tab();
     }
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'ui segment' },
-        _react2.default.createElement(
+      if (this.props.isFetching == true) {
+        return _react2.default.createElement(
           'div',
-          { className: 'ui pointing secondary menu tab-menu' },
-          _react2.default.createElement(
-            'a',
-            { className: 'item active', 'data-tab': 'first' },
-            'Overview'
-          ),
-          _react2.default.createElement(
-            'a',
-            { className: 'item', 'data-tab': 'second' },
-            'Video'
-          ),
-          _react2.default.createElement(
-            'a',
-            { className: 'item', 'data-tab': 'third' },
-            'Transcript'
-          )
-        ),
-        _react2.default.createElement(
+          { className: 'ui segment' },
+          _react2.default.createElement('div', { className: 'ui active centered inline loader' })
+        );
+      } else {
+        return _react2.default.createElement(
           'div',
-          { className: 'ui tab active', 'data-tab': 'first' },
+          { className: 'ui segment' },
           _react2.default.createElement(
             'div',
-            { className: 'overview-content' },
+            { className: 'ui pointing secondary menu tab-menu' },
+            _react2.default.createElement(
+              'a',
+              { className: 'item active', 'data-tab': 'first' },
+              'Overview'
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'item', 'data-tab': 'second' },
+              'Video'
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'item', 'data-tab': 'third' },
+              'Transcript'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui tab active', 'data-tab': 'first' },
             _react2.default.createElement(
               'div',
-              { className: 'ui three column stackable grid' },
+              { className: 'overview-content' },
               _react2.default.createElement(
                 'div',
-                { className: 'three wide column' },
+                { className: 'ui three column stackable grid' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'author-thumb' },
+                  { className: 'three wide column' },
                   _react2.default.createElement(
-                    'h5',
-                    null,
-                    'Author'
-                  ),
-                  _react2.default.createElement(
-                    'a',
-                    { href: '' },
-                    _react2.default.createElement('img', { src: 'https://preview.ibb.co/g1CTrF/fullsizeoutput_3e1.jpg', alt: 'Image and video hosting by TinyPic' }),
+                    'div',
+                    { className: 'author-thumb' },
                     _react2.default.createElement(
-                      'cite',
-                      { className: 'author-name' },
-                      'Arvind'
+                      'h5',
+                      null,
+                      'Author'
+                    ),
+                    _react2.default.createElement(
+                      'a',
+                      { href: '' },
+                      _react2.default.createElement('img', { src: 'https://preview.ibb.co/g1CTrF/fullsizeoutput_3e1.jpg', alt: 'Image and video hosting by TinyPic' }),
+                      _react2.default.createElement(
+                        'cite',
+                        { className: 'author-name' },
+                        this.props.course.author
+                      )
                     )
                   )
-                )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'ten wide column course-description' },
-                _react2.default.createElement(
-                  'h6',
-                  null,
-                  ' Released'
-                ),
-                _react2.default.createElement(
-                  'span',
-                  { className: 'release-date' },
-                  '30/03/2017'
                 ),
                 _react2.default.createElement(
                   'div',
-                  { className: 'overview-description' },
-                  'Every AFL game takes place on a grass oval which does not have to be a specific size, but must fit into a certain category; 135 to 185 metres in length and 110 to 155 metres wide. There are four posts at either end of the oval, with the inner two being the goal posts, and the outer two the behind posts.'
-                )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'three wide column' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'course-info-stat-cont duration' },
-                  _react2.default.createElement(
-                    'span',
-                    { className: 'course-info-stat' },
-                    '25m'
-                  ),
+                  { className: 'ten wide column course-description' },
                   _react2.default.createElement(
                     'h6',
                     null,
-                    'Duration'
+                    ' Released'
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'release-date' },
+                    this.props.course.release_date
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'overview-description' },
+                    this.props.course.overview
                   )
                 ),
                 _react2.default.createElement(
                   'div',
-                  { className: 'course-info-stat-cont viewers' },
+                  { className: 'three wide column' },
                   _react2.default.createElement(
-                    'span',
-                    { className: 'course-info-stat' },
-                    '2'
+                    'div',
+                    { className: 'course-info-stat-cont duration' },
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'course-info-stat' },
+                      this.props.course.duration + "m"
+                    ),
+                    _react2.default.createElement(
+                      'h6',
+                      null,
+                      'Duration'
+                    )
                   ),
                   _react2.default.createElement(
-                    'h6',
-                    null,
-                    'Views'
+                    'div',
+                    { className: 'course-info-stat-cont viewers' },
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'course-info-stat' },
+                      this.props.course.view
+                    ),
+                    _react2.default.createElement(
+                      'h6',
+                      null,
+                      'Views'
+                    )
                   )
                 )
               )
             )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'ui tab', 'data-tab': 'second' },
+          ),
           _react2.default.createElement(
             'div',
-            { className: 'ui one column stackable grid' },
+            { className: 'ui tab', 'data-tab': 'second' },
             _react2.default.createElement(
               'div',
-              { className: 'fluid column' },
-              _react2.default.createElement('iframe', { className: 'video-iframe', src: 'https://www.youtube.com/embed/XMZYZcoAcU0', frameborder: '0', allowfullscreen: true })
+              { className: 'ui one column stackable grid' },
+              _react2.default.createElement(
+                'div',
+                { className: 'fluid column' },
+                _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
+              )
             )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'ui tab', 'data-tab': 'third' },
+          ),
           _react2.default.createElement(
             'div',
-            { className: 'transcript-content' },
-            'When a player is running while holding the ball they must perform what is known as a running bounce at least every 15 metres. If a player fails to do so, the umpire calls a free kick for the opposing team at the point where the player overstepped the mark.  The \u2018running too far\u2019 signal by the umpire is indicated by rolling clenched fists around each other. Running bounces are normally carried out by attacking half-back flankers, or link-men, who would receive the ball off a rebound and attack into wide space allowing their team mates to create playing options. Due to the odd shape of the ball, the running bounce is quite a skill, and some players prefer to touch the ball to the ground which is considered the same technically, however slows momentum. One of the major AFL rules is holding the ball which helps prevent players from deliberately slowing down the play. This is put into practice when a player is tackled and they must dispose of the ball by either kicking it or handballing it, and is usually interpreted by the umpire as to whether or not it is a held ball. If it is called as a hold ball the team who performed the tackle is awarded a free kick. When handballing, the ball must be punched from one hand with the alternate fist, and is not allowed to be punched like a volleyball serve. The ball is also not allowed to be simply handed to a teammate. The ball cannot be thrown. In AFL there is no offside rule, so all 18 players on both teams are allowed on any part of the oval at any point in the match.'
+            { className: 'ui tab', 'data-tab': 'third' },
+            _react2.default.createElement(
+              'div',
+              { className: 'transcript-content' },
+              this.props.lesson.transcript
+            )
           )
-        )
-      );
+        );
+      }
     }
   }]);
 
   return CourseTabs;
 }(_react2.default.Component);
+
+CourseTabs.propTypes = {
+  course: _react.PropTypes.object.isRequired,
+  lesson: _react.PropTypes.object.isRequired,
+  isFetching: _react.PropTypes.bool.isRequired
+};
+
+'use strict';
+
+var _reactRedux = require('react-redux');
+
+var mapCourseTabsState = function mapCourseTabsState(state) {
+  return {
+    course: state.CourseDetailsReducer.course,
+    lesson: state.CourseDetailsReducer.currentLesson,
+    isFetching: state.CourseDetailsReducer.isFetching
+  };
+};
+
+var VisibleCourseTabs = (0, _reactRedux.connect)(mapCourseTabsState)(CourseTabs);
 
 'use strict';
 
@@ -769,11 +897,14 @@ var CourseView = exports.CourseView = function (_React$Component) {
   _createClass(CourseView, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      $('.accordion').accordion();
+      if (this.props.params.course_id) {
+        store.dispatch(loadCourse(this.props.params.course_id));
+      }
     }
   }, {
     key: 'render',
     value: function render() {
+
       return _react2.default.createElement(
         'div',
         null,
@@ -808,13 +939,14 @@ var CourseView = exports.CourseView = function (_React$Component) {
                   _react2.default.createElement(
                     'div',
                     { className: 'active section' },
-                    "Course 101"
+                    this.props.course.name
                   )
                 ),
                 _react2.default.createElement(
                   'h1',
                   { className: 'default-title' },
-                  ' Footy Integrity 101'
+                  ' ',
+                  this.props.course.name
                 )
               )
             )
@@ -829,12 +961,12 @@ var CourseView = exports.CourseView = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'five wide column' },
-              _react2.default.createElement(CourseNav, null)
+              _react2.default.createElement(VisibleCourseNav, null)
             ),
             _react2.default.createElement(
               'div',
               { className: 'eleven wide column' },
-              _react2.default.createElement(CourseTabs, null)
+              _react2.default.createElement(VisibleCourseTabs, null)
             )
           )
         ),
@@ -846,11 +978,31 @@ var CourseView = exports.CourseView = function (_React$Component) {
   return CourseView;
 }(_react2.default.Component);
 
-//CourseView.propTypes = {
-//  courses: PropTypes.array.isRequired
-//}
+CourseView.propTypes = {
+  course: _react.PropTypes.object.isRequired,
+  isFetching: _react.PropTypes.bool.isRequired
+};
 
-;'use strict';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var mapCourseState = function mapCourseState(state) {
+  return {
+    course: state.CourseDetailsReducer.course,
+    isFetching: state.CourseDetailsReducer.isFetching
+  };
+};
+
+var VisibleCourseView = (0, _reactRedux.connect)(mapCourseState)(CourseView);
+
+exports.default = VisibleCourseView;
+
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -964,6 +1116,40 @@ var CoursesReducer = function CoursesReducer() {
 
 exports.default = CoursesReducer;
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var CourseDetailsReducer = function CourseDetailsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { course: {}, isFetching: true, currentLesson: {} };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case RECEIVE_COURSE_SUCCESS:
+      return Object.assign({}, state, {
+        course: action.course,
+        isFetching: false,
+        currentLesson: action.course.chapters[0].lessons[0]
+      });
+
+    case REQUEST_COURSE:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+
+    case SELECT_LESSON:
+      return Object.assign({}, state, {
+        currentLesson: action.lesson
+      });
+
+    default:
+      return state;
+  }
+};
+
+exports.default = CourseDetailsReducer;
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -973,7 +1159,7 @@ Object.defineProperty(exports, "__esModule", {
 var _redux = require('redux');
 
 var TodoApp = (0, _redux.combineReducers)({
-  NavReducer: NavReducer, CoursesReducer: CoursesReducer
+  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer
 });
 
 exports.default = TodoApp;
@@ -1332,7 +1518,7 @@ var Root = function Root(_ref) {
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: CourseView }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: VisibleCourseView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/search/:keywords', component: VisibleLessonsView })
       )
     )

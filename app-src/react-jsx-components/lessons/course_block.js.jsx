@@ -11,8 +11,7 @@ export class CourseBlock extends React.Component{
   }
 
   goToCoursePage() {
-    console.log('go here')
-    browserHistory.push('/dashboard/lessons/' + this.state.course.id);
+    browserHistory.push('/dashboard/lessons/' + this.state.course.id)
   }
 
   render(){

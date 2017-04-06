@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328151344) do
+ActiveRecord::Schema.define(version: 20170403041244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,8 +57,9 @@ ActiveRecord::Schema.define(version: 20170328151344) do
     t.datetime "vod_updated_at"
     t.text     "transcript"
     t.integer  "chapter_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
+    t.string   "preferred_url",    default: "https://www.youtube.com/embed/XMZYZcoAcU0", null: false
     t.index ["chapter_id"], name: "index_lessons_on_chapter_id", using: :btree
   end
 

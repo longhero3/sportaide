@@ -14,6 +14,14 @@ class CourseApi{
     return error;
     });
   }
+
+  static getCourseById(courseId){
+    return fetch(`/courses/${courseId}.json`).then(response => {
+      return response.json();
+  }).catch(error => {
+    return error;
+  });
+  }
 }
 
 export default CourseApi;
