@@ -1004,6 +1004,76 @@ exports.default = VisibleCourseView;
 
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _googleMapReact = require('google-map-react');
+
+var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AnyReactComponent = function AnyReactComponent(_ref) {
+  var text = _ref.text;
+  return _react2.default.createElement(
+    'div',
+    null,
+    text
+  );
+};
+
+var ClubMap = function (_React$Component) {
+  _inherits(ClubMap, _React$Component);
+
+  function ClubMap(props) {
+    _classCallCheck(this, ClubMap);
+
+    var _this = _possibleConstructorReturn(this, (ClubMap.__proto__ || Object.getPrototypeOf(ClubMap)).call(this, props));
+
+    _this.state = {
+      center: { lat: 59.95, lng: 30.33 },
+      zoom: 11
+    };
+    return _this;
+  }
+
+  _createClass(ClubMap, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(NavBar, null),
+        _react2.default.createElement(
+          _googleMapReact2.default,
+          {
+            defaultCenter: this.state.center,
+            defaultZoom: this.state.zoom,
+            bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" } },
+          _react2.default.createElement(AnyReactComponent, {
+            lat: 59.955413,
+            lng: 30.337844,
+            text: 'Kreyser Avrora' })
+        ),
+        _react2.default.createElement(Footer, null)
+      );
+    }
+  }]);
+
+  return ClubMap;
+}(_react2.default.Component);
+
+'use strict';
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -1265,7 +1335,9 @@ var NavBar = exports.NavBar = function (_React$Component) {
                 { className: 'c-menu__item' },
                 _react2.default.createElement(
                   'a',
-                  { href: '/', className: 'c-menu__link' },
+                  { href: '/', className: 'c-menu__link', onClick: function onClick() {
+                      return _this2.props.dispatch(ToggleMenu());
+                    } },
                   'Home'
                 )
               ),
@@ -1274,10 +1346,10 @@ var NavBar = exports.NavBar = function (_React$Component) {
                 { className: 'c-menu__item' },
                 _react2.default.createElement(
                   _reactRouter.Link,
-                  { to: '/dashboard/newsfeeds', className: 'c-menu__link', onClick: function onClick() {
+                  { to: '/dashboard/clubs/club_map', className: 'c-menu__link', onClick: function onClick() {
                       return _this2.props.dispatch(ToggleMenu());
                     } },
-                  'Newsfeed'
+                  'Club Map'
                 )
               ),
               _react2.default.createElement(
@@ -1517,6 +1589,7 @@ var Root = function Root(_ref) {
         { path: '/dashboard', component: MainApp },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMap }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: VisibleCourseView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/search/:keywords', component: VisibleLessonsView })

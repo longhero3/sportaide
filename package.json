@@ -9,6 +9,7 @@
     "babel-preset-react": "6.3.13",
     "browserify": "13.0.1",
     "browserify-incremental": "3.1.1",
+    "google-map-react": "^0.23.0",
     "isomorphic-fetch": "2.2.1",
     "moment": "2.10.6",
     "react": "0.14.0",

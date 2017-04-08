@@ -46,8 +46,8 @@ export class NavBar extends React.Component{
           </div>
           <div className="menu-header">Sportaide Menu</div>
           <ul className="c-menu__items">
-            <li className="c-menu__item"><a href="/" className="c-menu__link">Home</a></li>
-            <li className="c-menu__item"><Link to="/dashboard/newsfeeds" className="c-menu__link" onClick={ () => this.props.dispatch(ToggleMenu())}>Newsfeed</Link></li>
+            <li className="c-menu__item"><a href="/" className="c-menu__link" onClick={ () => this.props.dispatch(ToggleMenu()) }>Home</a></li>
+            <li className="c-menu__item"><Link to="/dashboard/clubs/club_map" className="c-menu__link" onClick={ () => this.props.dispatch(ToggleMenu())}>Club Map</Link></li>
             <li className="c-menu__item"><Link to="/dashboard/lessons" className="c-menu__link" onClick={ () => this.props.dispatch(ToggleMenu())}>Lessons</Link></li>
           </ul>
         </div>
