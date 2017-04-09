@@ -1,0 +1,11 @@
+.map-overlay{
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  .google-map {
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+}

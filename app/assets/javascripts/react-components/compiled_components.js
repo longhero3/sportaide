@@ -1040,8 +1040,11 @@ var ClubMap = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ClubMap.__proto__ || Object.getPrototypeOf(ClubMap)).call(this, props));
 
     _this.state = {
-      center: { lat: 59.95, lng: 30.33 },
-      zoom: 11
+      center: { lat: -37.33, lng: 144.96 },
+      zoom: 11,
+      mapStyle: {
+        height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight + "px"
+      }
     };
     return _this;
   }
@@ -1049,20 +1052,34 @@ var ClubMap = function (_React$Component) {
   _createClass(ClubMap, [{
     key: 'render',
     value: function render() {
+
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(NavBar, null),
         _react2.default.createElement(
-          _googleMapReact2.default,
-          {
-            defaultCenter: this.state.center,
-            defaultZoom: this.state.zoom,
-            bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" } },
-          _react2.default.createElement(AnyReactComponent, {
-            lat: 59.955413,
-            lng: 30.337844,
-            text: 'Kreyser Avrora' })
+          'div',
+          { className: 'map-overlay ui stackable grid', style: this.state.mapStyle },
+          _react2.default.createElement(
+            'div',
+            { className: 'google-map twelve wide column' },
+            _react2.default.createElement(
+              _googleMapReact2.default,
+              {
+                defaultCenter: this.state.center,
+                defaultZoom: this.state.zoom,
+                bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" } },
+              _react2.default.createElement(AnyReactComponent, {
+                lat: -37.82,
+                lng: 144.96,
+                text: 'Kreyser Avrora' })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'four wide column' },
+            'Club info section'
+          )
         ),
         _react2.default.createElement(Footer, null)
       );
