@@ -8,6 +8,11 @@ export class CourseTabs extends React.Component{
   componentDidUpdate(prev, next) {
     $('.tab-menu .item').tab()
   }
+
+  createMarkup(content) {
+    return {__html: content};
+  }
+
   render(){
     if (this.props.isFetching == true) {
       return (
@@ -63,8 +68,7 @@ export class CourseTabs extends React.Component{
             </div>
           </div>
           <div className="ui tab" data-tab="third">
-            <div className="transcript-content">
-              {this.props.lesson.transcript}
+            <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
             </div>
           </div>
         </div>

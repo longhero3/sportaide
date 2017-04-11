@@ -760,6 +760,11 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
       $('.tab-menu .item').tab();
     }
   }, {
+    key: 'createMarkup',
+    value: function createMarkup(content) {
+      return { __html: content };
+    }
+  }, {
     key: 'render',
     value: function render() {
       if (this.props.isFetching == true) {
@@ -893,11 +898,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'ui tab', 'data-tab': 'third' },
-            _react2.default.createElement(
-              'div',
-              { className: 'transcript-content' },
-              this.props.lesson.transcript
-            )
+            _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
           )
         );
       }
