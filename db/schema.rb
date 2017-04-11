@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403041244) do
+ActiveRecord::Schema.define(version: 20170411073038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,12 @@ ActiveRecord::Schema.define(version: 20170403041244) do
 
   create_table "authors", force: :cascade do |t|
     t.string   "fullname"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "author_image_file_name"
+    t.string   "author_image_content_type"
+    t.integer  "author_image_file_size"
+    t.datetime "author_image_updated_at"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -29,6 +33,23 @@ ActiveRecord::Schema.define(version: 20170403041244) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_chapters_on_course_id", using: :btree
+  end
+
+  create_table "clubs", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "address"
+    t.string   "suburb"
+    t.string   "postcode"
+    t.string   "state"
+    t.string   "business_category"
+    t.string   "lga"
+    t.string   "region"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.decimal  "lng",               default: "0.0"
+    t.decimal  "lat",               default: "0.0"
+    t.integer  "type",              default: 1
   end
 
   create_table "courses", force: :cascade do |t|
