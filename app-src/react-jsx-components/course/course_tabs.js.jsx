@@ -30,7 +30,7 @@ export class CourseTabs extends React.Component{
                   <div className="author-thumb">
                     <h5>Author</h5>
                     <a href="">
-                      <img src="https://preview.ibb.co/g1CTrF/fullsizeoutput_3e1.jpg" alt="Image and video hosting by TinyPic"/>
+                      <img src={this.props.course.author_image} alt="Image and video hosting by TinyPic"/>
                       <cite className="author-name">{this.props.course.author}</cite>
                     </a>
                   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411074326) do
+ActiveRecord::Schema.define(version: 20170411080146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20170411074326) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "name",                                                    null: false
-    t.string   "overview",                                                null: false
+    t.text     "overview",                                                null: false
     t.datetime "release_date",            default: '2017-03-28 05:31:22'
     t.integer  "duration",                default: 0
     t.integer  "view",                    default: 0

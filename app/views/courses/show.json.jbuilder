@@ -1,5 +1,6 @@
 json.extract! @course, :id, :name, :overview, :duration, :view
 json.author @course.author.try(:fullname)
+json.author_image @course.author.try(:author_image).try(:url,:thumb)
 json.release_date @course.release_date.strftime("%d/%m/%Y")
 json.chapters do
   json.array!(@course.chapters) do |chapter|

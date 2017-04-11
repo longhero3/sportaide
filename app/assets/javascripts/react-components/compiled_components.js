@@ -814,7 +814,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
                     _react2.default.createElement(
                       'a',
                       { href: '' },
-                      _react2.default.createElement('img', { src: 'https://preview.ibb.co/g1CTrF/fullsizeoutput_3e1.jpg', alt: 'Image and video hosting by TinyPic' }),
+                      _react2.default.createElement('img', { src: this.props.course.author_image, alt: 'Image and video hosting by TinyPic' }),
                       _react2.default.createElement(
                         'cite',
                         { className: 'author-name' },
