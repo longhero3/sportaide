@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :clubs, only: [:index]
+
   get 'dashboard' => 'dashboard#index'
   get 'dashboard/*path' => 'dashboard#index'
 end

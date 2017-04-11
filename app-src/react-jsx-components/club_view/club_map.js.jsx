@@ -7,12 +7,12 @@ class ClubMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      center: {lat: -37.33, lng: 144.96},
+      center: {lat: -37.863406, lng: 145.032180},
       zoom: 11,
       mapStyle: {
-        height: window.innerHeight
+        height: (window.innerHeight
           || document.documentElement.clientHeight
-          || document.body.clientHeight + "px"
+          || document.body.clientHeight) - 20 + "px"
       }
     }
   }
@@ -29,9 +29,9 @@ class ClubMap extends React.Component {
               defaultZoom={this.state.zoom}
               bootstrapURLKeys={{ key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A"}}>
               <AnyReactComponent
-                lat={-37.82}
-                lng={144.96}
-                text={'Kreyser Avrora'}/>
+                lat={-37.863406}
+                lng={145.032180}
+                text={'Kreyser asdfasdfasdfgasdkfa sdfasd fajklsjkdf jkasdfjk  Avrora'}/>
             </GoogleMapReact>
           </div>
           <div className="four wide column">Club info section</div>

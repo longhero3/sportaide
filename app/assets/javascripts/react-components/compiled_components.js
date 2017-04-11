@@ -52,6 +52,37 @@ exports.default = CourseApi;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ClubApi = function () {
+  function ClubApi() {
+    _classCallCheck(this, ClubApi);
+  }
+
+  _createClass(ClubApi, null, [{
+    key: 'getAllClubs',
+    value: function getAllClubs() {
+      return fetch('/clubs.json').then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
+  }]);
+
+  return ClubApi;
+}();
+
+exports.default = ClubApi;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var ToggleMenu = exports.ToggleMenu = function ToggleMenu() {
   return {
     type: 'TOGGLE_MENU'
@@ -147,6 +178,42 @@ function searchCourses(keywords) {
   return function (dispatch) {
     return CourseApi.searchCourses(keywords).then(function (courses) {
       dispatch(searchCoursesSuccess(courses));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+;'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadClubsSuccess = loadClubsSuccess;
+exports.requestLoadClub = requestLoadClub;
+exports.loadClubs = loadClubs;
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOAD_CLUB_SUCCESS = 'LOAD_CLUB_SUCCESS';
+var REQUEST_LOAD_CLUB = 'REQUEST_LOAD_CLUB';
+
+function loadClubsSuccess(clubs) {
+  return { type: LOAD_CLUB_SUCCESS, clubs: clubs };
+}
+
+function requestLoadClub() {
+  return { type: REQUEST_LOAD_CLUB };
+}
+
+function loadClubs() {
+  return function (dispatch) {
+    return ClubApi.getAllClubs().then(function (clubs) {
+      dispatch(loadClubsSuccess(clubs));
     }).catch(function (error) {
       throw error;
     });
@@ -1040,10 +1107,10 @@ var ClubMap = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ClubMap.__proto__ || Object.getPrototypeOf(ClubMap)).call(this, props));
 
     _this.state = {
-      center: { lat: -37.33, lng: 144.96 },
+      center: { lat: -37.863406, lng: 145.032180 },
       zoom: 11,
       mapStyle: {
-        height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight + "px"
+        height: (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 20 + "px"
       }
     };
     return _this;
@@ -1070,9 +1137,9 @@ var ClubMap = function (_React$Component) {
                 defaultZoom: this.state.zoom,
                 bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" } },
               _react2.default.createElement(AnyReactComponent, {
-                lat: -37.82,
-                lng: 144.96,
-                text: 'Kreyser Avrora' })
+                lat: -37.863406,
+                lng: 145.032180,
+                text: 'Kreyser asdfasdfasdfgasdkfa sdfasd fajklsjkdf jkasdfjk  Avrora' })
             )
           ),
           _react2.default.createElement(
@@ -1088,6 +1155,746 @@ var ClubMap = function (_React$Component) {
 
   return ClubMap;
 }(_react2.default.Component);
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getHintBaloonVerticalPosClass = getHintBaloonVerticalPosClass;
+exports.getHintBaloonHorizontalPosStyle = getHintBaloonHorizontalPosStyle;
+exports.getHintBottomOffsetClass = getHintBottomOffsetClass;
+function getHintBaloonVerticalPosClass(y /*, mapHeight*/) {
+  var K_MAX_BALLOON_HEIGHT = 240;
+  return y > K_MAX_BALLOON_HEIGHT ? 'hint--top' : 'hint--bottom';
+}
+
+function getHintBaloonHorizontalPosStyle(x, markerWidth, markerOffset, mapWidth) {
+  var K_BALLOON_WIDTH_BASE = 250;
+  // offset from map side
+  var K_BALLOON_MAP_OFFSET = 10;
+  // balloon with not more than map width
+  var K_BALLOON_WIDTH = Math.min(K_BALLOON_WIDTH_BASE, mapWidth - 2 * K_BALLOON_MAP_OFFSET);
+  // default ballon offset from arrow center i want
+  var K_BALLOON_DEFAULT_OFFSET = K_BALLOON_WIDTH * 0.15;
+  // from corner
+  var offset = -K_BALLOON_DEFAULT_OFFSET + markerWidth * 0.5;
+  // overflow in px (marker assymetric)
+  var leftX = x + offset - markerWidth * markerOffset;
+  var rightX = leftX + K_BALLOON_WIDTH;
+  // recalc if overflow
+  var mapOffset = offset + Math.min(0, mapWidth - K_BALLOON_MAP_OFFSET - rightX) + Math.max(0, K_BALLOON_MAP_OFFSET - leftX);
+
+  var K_BALLOON_WIDTH_STYLE = {
+    width: K_BALLOON_WIDTH + 'px',
+    left: mapOffset + 'px',
+    marginLeft: '0px'
+  };
+  return K_BALLOON_WIDTH_STYLE;
+}
+
+function getHintBottomOffsetClass(markerWidth, markerOffset) {
+  var K_HINT_ARROW_WIDTH = 12;
+  var offset = Math.round(-(markerWidth / 2 + K_HINT_ARROW_WIDTH / 2 - markerOffset * markerWidth));
+  if (__DEV__) {
+    if (offset < -40 || offset > 40) {
+      console.error('HintBottomOffset is out of range, extend range at sass/markers/map_marker.sass'); // eslint-disable-line no-console
+    }
+  }
+  // classes generated at sass/markers/map_marker.sass
+  return 'map-marker--hint-bottom-delta-' + offset;
+}
+
+;"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getScale = getScale;
+exports.getRealFromTo = getRealFromTo;
+// import {K_SCALE_NORMAL} from 'components/markers/map_marker.jsx';
+// import invariant from 'fixed-data-table-ice/internal/invariant.js';
+
+// {l: 10, scale: 0.3}, {l: 5, scale: 0.4} - означает
+// 10 элементов размера 0.3, потом 5 размера 0.4, потом те что видны в табличке обычного размера
+// потом снова потом 5 размера 0.4, и 10 элементов размера 0.3
+// если поставить пусто то на карте будут видны тока те что на экране
+var K_SCALE_SMALL = 0.3;
+var K_SCALE_MEDIUM = 0.45;
+var K_BEFORE_AFTER_SCALES = [{ l: 15, scale: K_SCALE_SMALL }, { l: 10, scale: K_SCALE_MEDIUM }];
+var K_SCALES_SUM = K_BEFORE_AFTER_SCALES.reduce(function (sum, el) {
+  return el.l + sum;
+}, 0);
+
+function getScale(rowIndex, rowFrom, rowTo, K_SCALE_NORMAL) {
+  if (rowIndex >= rowFrom && rowIndex <= rowTo) {
+    return K_SCALE_NORMAL;
+  }
+
+  if (K_BEFORE_AFTER_SCALES.length) {
+    if (rowIndex < rowFrom) {
+      var deltaS = rowFrom;
+      for (var index = K_BEFORE_AFTER_SCALES.length - 1; index >= 0; --index) {
+        deltaS -= K_BEFORE_AFTER_SCALES[index].l;
+        if (rowIndex >= deltaS) {
+          return K_BEFORE_AFTER_SCALES[index].scale;
+        }
+      }
+
+      // yes, the code can be here (dirty calculus)
+      return K_BEFORE_AFTER_SCALES[0].scale;
+    }
+
+    if (rowIndex > rowTo) {
+      var _deltaS = rowTo;
+      for (var _index = K_BEFORE_AFTER_SCALES.length - 1; _index >= 0; --_index) {
+        _deltaS += K_BEFORE_AFTER_SCALES[_index].l;
+        if (rowIndex <= _deltaS) {
+          return K_BEFORE_AFTER_SCALES[_index].scale;
+        }
+      }
+
+      // yes, the code can be here (dirty calculus)
+      return K_BEFORE_AFTER_SCALES[0].scale;
+    }
+  }
+  return K_SCALE_NORMAL;
+}
+
+// this calculations is not precise (dirty)
+function _getRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize) {
+  var addFrom = rowFrom + maxVisibleRows + K_SCALES_SUM > totalSize - 1 ? rowFrom + maxVisibleRows + K_SCALES_SUM - (totalSize - 1) : 0;
+
+  var dadd = K_SCALES_SUM - rowFrom;
+  var addTo = dadd >= 0 ? dadd : 0;
+
+  return {
+    rowFrom: Math.max(0, rowFrom - K_SCALES_SUM - addFrom),
+    rowTo: Math.min(totalSize - 1, rowFrom + maxVisibleRows + K_SCALES_SUM + addTo)
+  };
+}
+
+function getRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize) {
+  var current = _getRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize);
+
+  var result = {
+    rowFrom: current.rowFrom,
+    rowTo: current.rowTo
+  };
+
+  return result;
+}
+
+;"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.customDistanceToMouse = customDistanceToMouse;
+function customDistanceToMouse(pt, mousePos, markerProps) {
+  var K_SCALE_NORMAL = 0.65;
+
+  var K_MARKER_HEIGHT = 60;
+  // marker is more tall at top, so calc distance to some point at marker top
+  var K_MARKER_WEIGHT_PT = K_MARKER_HEIGHT * 0.7;
+  // distance to markers depends on scale so hover on big markers is more probable
+  var scale = markerProps.scale;
+  var x = pt.x;
+  var y = pt.y - K_MARKER_WEIGHT_PT * scale;
+
+  var scaleNormalized = Math.min(scale / K_SCALE_NORMAL, 1);
+  var K_MIN_DIST_MIN_KOEF = 0.6;
+
+  var distKoef = 1 + scaleNormalized * (K_MIN_DIST_MIN_KOEF - 1);
+  return distKoef * Math.sqrt((x - mousePos.x) * (x - mousePos.x) + (y - mousePos.y) * (y - mousePos.y));
+}
+
+;'use strict';
+
+/*
+ * marker visual parameters
+ * image param is more prior than imageClass if both defined
+ */
+
+var markerDescriptions = [{
+  size: { width: 62, height: 60 },
+  origin: { x: 15 / 62, y: 1 },
+  withText: true,
+  // image: require('icons/map_icons/map_icon_text_red.svg')
+  imageClass: 'map_icon_text_red'
+}, {
+  size: { width: 62, height: 60 },
+  origin: { x: 15 / 62, y: 1 },
+  withText: true,
+  // image: require('icons/map_icons/map_icon_text_indigo.svg')
+  imageClass: 'map_icon_text_indigo'
+}, {
+  size: { width: 44, height: 62 },
+  origin: { x: 0.37, y: 1 },
+  imageClass: 'map-marker__marker--as'
+}, {
+  size: { width: 44, height: 62 },
+  origin: { x: 0.37, y: 1 },
+  imageClass: 'map-marker__marker--ap'
+}, {
+  size: { width: 61, height: 65 },
+  origin: { x: 24 / 61, y: 63 / 65 },
+  imageClass: 'map_icon_flag_orange',
+  hintType: 'hint--error'
+}, {
+  size: { width: 49, height: 64 },
+  origin: { x: 0.5, y: 1 },
+  imageClass: 'map_icon_std'
+}, {
+  size: { width: 49, height: 64 },
+  origin: { x: 0.5, y: 1 },
+  imageClass: 'map_icon_std_orange'
+}];
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _reactControllables = require('react-controllables');
+
+var _reactControllables2 = _interopRequireDefault(_reactControllables);
+
+var _function = require('react-pure-render/function');
+
+var _function2 = _interopRequireDefault(_function);
+
+var _component = require('react-pure-render/component');
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Marker example
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var K_HINT_HTML_DEFAULT_Z_INDEX = 1000000;
+var K_SCALE_HOVER = 1;
+var K_SCALE_TABLE_HOVER = 1;
+var K_SCALE_NORMAL = 0.65;
+var K_MIN_CONTRAST = 0.4;
+
+function calcMarkerMarkerStyle(scale, zIndexStyle, markerStyle, imageStyle) {
+  var contrast = K_MIN_CONTRAST + (1 - K_MIN_CONTRAST) * Math.min(scale / K_SCALE_NORMAL, 1);
+
+  return {
+    transform: 'scale(' + scale + ' , ' + scale + ')',
+    WebkitTransform: 'scale(' + scale + ' , ' + scale + ')',
+    filter: 'contrast(' + contrast + ')',
+    WebkitFilter: 'contrast(' + contrast + ')',
+    markerStyle: markerStyle,
+    zIndexStyle: zIndexStyle,
+    imageStyle: imageStyle
+  };
+}
+
+function calcMarkerTextStyle(scale, markerTextStyle) {
+  var K_MAX_COLOR_VALUE = 0;
+  var K_MIN_COLOR_VALUE = 8;
+  var colorV = Math.ceil(K_MIN_COLOR_VALUE + (K_MAX_COLOR_VALUE - K_MIN_COLOR_VALUE) * Math.min(scale / K_SCALE_NORMAL, 1));
+  var colorHex = colorV.toString(16);
+  var colorHTML = '#' + colorHex + colorHex + colorHex;
+
+  return {
+    markerTextStyle: markerTextStyle,
+    color: colorHTML
+  };
+}
+
+var MapMarker = function (_PureComponent) {
+  _inherits(MapMarker, _PureComponent);
+
+  function MapMarker(props) {
+    _classCallCheck(this, MapMarker);
+
+    var _this = _possibleConstructorReturn(this, (MapMarker.__proto__ || Object.getPrototypeOf(MapMarker)).call(this, props));
+
+    _this.alive = true;
+    return _this;
+  }
+
+  _createClass(MapMarker, [{
+    key: 'onShowBalloonStateChange',
+    value: function onShowBalloonStateChange() {
+      var _props;
+
+      if (!this.alive) return;
+      (_props = this.props).onShowBalloonStateChange.apply(_props, arguments);
+    }
+  }, {
+    key: 'onHoverStateChange',
+    value: function onHoverStateChange() {
+      var _props2;
+
+      if (!this.alive) return;
+      (_props2 = this.props).onHoverStateChange.apply(_props2, arguments);
+    }
+  }, {
+    key: 'onMouseEnterContent',
+    value: function onMouseEnterContent() {
+      this.props.$onMouseAllow(false); // disable mouse move hovers
+    }
+  }, {
+    key: 'onMouseLeaveContent',
+    value: function onMouseLeaveContent() {
+      this.props.$onMouseAllow(true); // enable mouse move hovers
+    }
+  }, {
+    key: 'onCloseClick',
+    value: function onCloseClick() {
+      if (this.props.onCloseClick) {
+        this.props.onCloseClick();
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // if (this.props.onCloseClick) {
+      //   this.props.onCloseClick();
+      // }
+      this.alive = false;
+    }
+
+    // no optimizations at all
+
+  }, {
+    key: 'render',
+    value: function render() {
+      // TODO add http://schema.org/docs/gs.html
+      var scale = this.props.$hover || this.props.showBalloon ? K_SCALE_HOVER : this.props.scale;
+      scale = this.props.hoveredAtTable ? K_SCALE_TABLE_HOVER : scale;
+
+      var markerHolderStyle = getMarkerHolderStyle(this.props.size, this.props.origin);
+      var markerStyle = getMarkerStyle(this.props.size, this.props.origin);
+
+      var zIndexStyle = {
+        zIndex: Math.round(scale * 10000) - (this.props.showBalloon ? 20 : 0) + (this.props.$hover ? K_HINT_HTML_DEFAULT_Z_INDEX : 0) // balloon
+      };
+
+      var textStyleDef = getMarkerTextStyle();
+      var textStyle = calcMarkerTextStyle(scale, textStyleDef);
+
+      var showHint = this.props.hoverState || this.props.showBalloonState; // || this.props.hoveredAtTable;
+
+      // baloon position calc
+      var mapWidth = this.props.$geoService.getWidth();
+      var mapHeight = this.props.$geoService.getHeight();
+      var markerDim = this.props.$getDimensions(this.props.$dimensionKey);
+
+      var hintBaloonHorizontalPosStyle = getHintBaloonHorizontalPosStyle(markerDim.x, this.props.size.width, this.props.origin.x, mapWidth);
+      var hintBaloonVerticalPosClass = getHintBaloonVerticalPosClass(markerDim.y, mapHeight);
+
+      var hintBalloonBottomOffsetClass = getHintBottomOffsetClass(this.props.size.width, this.props.origin.x);
+
+      // set baloon position at first and then animate (it must be some lib for react animations)
+      var noTransClass = this.props.$hover === true && this.props.hoverState !== true ? 'hint--notrans' : '';
+      var noTransBalloonClass = this.props.showBalloon === true && this.props.showBalloonState !== true ? 'hint--notrans' : '';
+
+      var imageClass = this.props.image ? '' : this.props.imageClass;
+      var imageStyle = this.props.image ? {
+        backgroundImage: 'url(' + this.props.image + ')'
+      } : null;
+
+      var styleMarkerMarker = calcMarkerMarkerStyle(scale, zIndexStyle, markerStyle, imageStyle);
+
+      // css hints library https://github.com/istarkov/html-hint
+      return _react2.default.createElement(
+        'div',
+        {
+          style: markerHolderStyle,
+          className: (0, _classnames2.default)('map-marker hint hint--html', this.props.hintType, hintBalloonBottomOffsetClass, noTransClass, noTransBalloonClass, hintBaloonVerticalPosClass, this.props.showBalloon ? 'hint--balloon' : '', showHint ? 'hint--always' : 'hint--hidden') },
+        _react2.default.createElement(
+          'div',
+          {
+            style: styleMarkerMarker,
+            className: (0, _classnames2.default)('map-marker__marker', imageClass) },
+          this.props.withText ? _react2.default.createElement(
+            'div',
+            { style: textStyle },
+            this.props.marker.get('id')
+          ) : _react2.default.createElement('div', null)
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            style: hintBaloonHorizontalPosStyle,
+            className: (0, _classnames2.default)('hint__content map-marker-hint', this.props.showBalloon ? '' : 'noevents'),
+            onMouseEnter: this.onMouseEnterContent.bind(this),
+            onMouseLeave: this.onMouseLeaveContent.bind(this) },
+          _react2.default.createElement(
+            'div',
+            {
+              onClick: this._onCloseClick,
+              className: (0, _classnames2.default)('map-marker-hint__close-button', this.props.showBalloon ? 'map-marker-hint__close-button--visible' : '') },
+            'close'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'map-marker-hint__title' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              this.props.marker.get('name')
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'map-marker-hint__address' },
+            this.props.marker.get('address')
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: (0, _classnames2.default)('map-marker-hint__content', this.props.showBalloon ? 'map-marker-hint__content--visible' : '') },
+            this.props.marker.get('description')
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'a',
+              { className: (0, _classnames2.default)('map-marker-hint__ap-link', this.props.showBalloon ? 'map-marker-hint__ap-link--hidden' : '') },
+              'Click to view more info'
+            )
+          )
+        )
+      );
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      var _this2 = this;
+
+      var K_TRANS_DELAY = 30;
+
+      if (prevProps.$hover !== this.props.$hover) {
+        setTimeout(function () {
+          return _this2._onHoverStateChange(_this2.props.$hover);
+        }, K_TRANS_DELAY);
+      }
+
+      if (prevProps.showBalloon !== this.props.showBalloon) {
+        setTimeout(function () {
+          return _this2._onShowBalloonStateChange(_this2.props.showBalloon);
+        }, K_TRANS_DELAY);
+      }
+    }
+  }]);
+
+  return MapMarker;
+}(_component2.default);
+
+exports.default = MapMarker;
+
+
+MapMarker = (0, _reactControllables2.default)(MapMarker, ['hoverState', 'showBalloonState']);
+
+MapMarker.propTypes = {
+  $hover: _react.PropTypes.bool,
+  $dimensionKey: _react.PropTypes.any,
+  $getDimensions: _react.PropTypes.func,
+  $geoService: _react.PropTypes.any,
+  $onMouseAllow: _react.PropTypes.func,
+
+  marker: _react.PropTypes.any,
+  hoveredAtTable: _react.PropTypes.bool,
+  scale: _react.PropTypes.number,
+  showBalloon: _react.PropTypes.bool,
+  onCloseClick: _react.PropTypes.func,
+  showBalloonState: _react.PropTypes.bool,
+  onShowBalloonStateChange: _react.PropTypes.func,
+
+  // animation helpers
+  hoverState: _react.PropTypes.bool,
+  onHoverStateChange: _react.PropTypes.func,
+
+  size: _react.PropTypes.any,
+  origin: _react.PropTypes.any,
+  imageClass: _react.PropTypes.string,
+  image: _react.PropTypes.string,
+  withText: _react.PropTypes.bool,
+  hintType: _react.PropTypes.string
+};
+
+MapMarker.defaultProps = {
+  scale: K_SCALE_NORMAL,
+  hoverState: false,
+  showBalloonState: false,
+  withText: false,
+  size: { width: 62, height: 60 },
+  origin: { x: 15 / 62, y: 1 },
+  imageClass: 'map-marker__marker--big',
+  hintType: 'hint--info'
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MainMapBlock = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactControllables = require('react-controllables');
+
+var _reactControllables2 = _interopRequireDefault(_reactControllables);
+
+var _component = require('react-pure-render/component');
+
+var _component2 = _interopRequireDefault(_component);
+
+var _googleMapReact = require('google-map-react');
+
+var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
+
+var _immutable = require('immutable');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var K_MARGIN_TOP = 30;
+var K_MARGIN_RIGHT = 30;
+var K_MARGIN_BOTTOM = 30;
+var K_MARGIN_LEFT = 30;
+
+var K_HOVER_DISTANCE = 30;
+
+var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
+  _inherits(MainMapBlock, _PureComponent);
+
+  function MainMapBlock(props) {
+    _classCallCheck(this, MainMapBlock);
+
+    var _this = _possibleConstructorReturn(this, (MainMapBlock.__proto__ || Object.getPrototypeOf(MainMapBlock)).call(this, props));
+
+    _this.state = {
+      center: { lat: -37.33, lng: 144.96 },
+      zoom: 11,
+      mapStyle: {
+        height: (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 20 + "px"
+      }
+    };
+    return _this;
+  }
+
+  _createClass(MainMapBlock, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      store.dispatch(loadClubs());
+    }
+  }, {
+    key: 'onBoundsChange',
+    value: function onBoundsChange(center, zoom, bounds, marginBounds) {
+      if (this.props.onBoundsChange) {
+        this.props.onBoundsChange({ center: center, zoom: zoom, bounds: bounds, marginBounds: marginBounds });
+      } else {
+        this.props.onCenterChange(center);
+        this.props.onZoomChange(zoom);
+      }
+    }
+  }, {
+    key: 'onChildClick',
+    value: function onChildClick(key, childProps) {
+      var markerId = childProps.marker.get('id');
+      var index = this.props.markers.findIndex(function (m) {
+        return m.get('id') === markerId;
+      });
+      if (this.props.onChildClick) {
+        this.props.onChildClick(index);
+      }
+    }
+  }, {
+    key: 'onChildMouseEnter',
+    value: function onChildMouseEnter(key, childProps) {
+      var markerId = childProps.marker.get('id');
+      var index = this.props.markers.findIndex(function (m) {
+        return m.get('id') === markerId;
+      });
+      if (this.props.onMarkerHover) {
+        this.props.onMarkerHover(index);
+      }
+    }
+  }, {
+    key: 'onChildMouseLeave',
+    value: function onChildMouseLeave() {
+      if (this.props.onMarkerHover) {
+        this.props.onMarkerHover(-1);
+      }
+    }
+  }, {
+    key: 'onBalloonCloseClick',
+    value: function onBalloonCloseClick() {
+      if (this.props.onChildClick) {
+        this.props.onChildClick(-1);
+      }
+    }
+  }, {
+    key: 'distanceToMouse',
+    value: function distanceToMouse() {
+      return customDistanceToMouse();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      if (this.props.isFetching == true) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(NavBar, null),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui container' },
+            _react2.default.createElement('div', { className: 'ui active centered inline loader' })
+          ),
+          _react2.default.createElement(Footer, null)
+        );
+      } else {
+
+        //      const {rowFrom, rowTo} = getRealFromTo(this.props.visibleRowFirst, this.props.visibleRowLast, this.props.maxVisibleRows, this.props.markers.size);
+        var rowFrom = 0;
+        var rowTo = 20;
+        var Markers = this.props.markers && this.props.markers.filter(function (m, index) {
+          return index >= rowFrom && index <= rowTo;
+        }).map(function (marker, index) {
+          return _react2.default.createElement(MapMarker
+          // required props
+          , _extends({ key: marker.id,
+            lat: marker.lat,
+            lng: marker.lng,
+            showBalloon: index + rowFrom === _this2.props.openBalloonIndex,
+            onCloseClick: _this2.onBalloonCloseClick,
+            hoveredAtTable: index + rowFrom === _this2.props.hoveredRowIndex,
+            scale: getScale(index + rowFrom, _this2.props.visibleRowFirst, _this2.props.visibleRowLast, K_SCALE_NORMAL)
+          }, markerDescriptions[marker.type], {
+            marker: marker }));
+        });
+
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(NavBar, null),
+          _react2.default.createElement(
+            'div',
+            { className: 'map-overlay ui stackable grid', style: this.state.mapStyle },
+            _react2.default.createElement(
+              'div',
+              { className: 'google-map twelve wide column' },
+              _react2.default.createElement(
+                _googleMapReact2.default,
+                {
+                  bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" },
+                  center: this.props.center.toJS(),
+                  zoom: this.props.zoom,
+                  onChildClick: this.onChildClick.bind(this),
+                  onChildMouseEnter: this.onChildMouseEnter.bind(this),
+                  onChildMouseLeave: this.onChildMouseLeave.bind(this),
+                  margin: [K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT],
+                  hoverDistance: K_HOVER_DISTANCE,
+                  distanceToMouse: this.distanceToMouse.bind(this)
+                },
+                Markers
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'four wide column' },
+              'Club info section'
+            )
+          ),
+          _react2.default.createElement(Footer, null)
+        );
+      }
+    }
+  }]);
+
+  return MainMapBlock;
+}(_component2.default);
+
+exports.MainMapBlock = MainMapBlock = (0, _reactControllables2.default)(MainMapBlock, ['center', 'zoom', 'markers']);
+
+MainMapBlock.propTypes = {
+  onCenterChange: _react.PropTypes.func, // @controllable generated fn
+  onZoomChange: _react.PropTypes.func, // @controllable generated fn
+  onBoundsChange: _react.PropTypes.func,
+  onMarkerHover: _react.PropTypes.func,
+  onChildClick: _react.PropTypes.func,
+  center: _react.PropTypes.any,
+  zoom: _react.PropTypes.number,
+  markers: _react.PropTypes.any,
+  visibleRowFirst: _react.PropTypes.number,
+  visibleRowLast: _react.PropTypes.number,
+  maxVisibleRows: _react.PropTypes.number,
+  hoveredRowIndex: _react.PropTypes.number,
+  openBalloonIndex: _react.PropTypes.number,
+  isFetching: _react.PropTypes.bool
+};
+
+MainMapBlock.defaultProps = {
+  center: new _immutable.List([-37.851221000000002, 144.72653700000001]),
+  zoom: 10,
+  visibleRowFirst: -1,
+  visibleRowLast: -1,
+  hoveredRowIndex: -1
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var clubMapState = function clubMapState(state) {
+  return {
+    isFetching: state.ClubsReducer.get('isFetching'),
+    center: state.ClubsReducer.get('mapInfo').get('center'),
+    zoom: state.ClubsReducer.get('mapInfo').get('zoom'),
+    markers: state.ClubsReducer.get('dataFiltered'),
+    visibleRowFirst: state.ClubsReducer.get('tableRowsInfo').get('visibleRowFirst'),
+    visibleRowLast: state.ClubsReducer.get('tableRowsInfo').get('visibleRowLast'),
+    maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
+    hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
+    openBalloonIndex: state.ClubsReducer.get('openBalloonIndex')
+  };
+};
+
+var ClubMapMain = (0, _reactRedux.connect)(clubMapState)(MainMapBlock);
+exports.default = ClubMapMain;
 
 'use strict';
 
@@ -1243,10 +2050,90 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _immutable = require('immutable');
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var K_LAST_VISIBLE_ROW_AT_SERVER_RENDERING = 5;
+
+function ptInSect(x, a, b) {
+  return (x - a) * (x - b) <= 0;
+}
+
+function ptInRect(pt, rect) {
+  return ptInSect(pt.lat, rect.get(0), rect.get(2)) && ptInSect(pt.lng, rect.get(1), rect.get(3));
+}
+
+// use rbush https://github.com/mourner/rbush if you have really big amount of points
+function calcFilteredAndSortedMarkers(data, mapInfo) {
+  var marginBounds = mapInfo && mapInfo.get('marginBounds');
+
+  if (!data || !marginBounds) {
+    return new _immutable.List();
+  }
+
+  return data.filter(function (m) {
+    return ptInRect(m, marginBounds);
+  });
+}
+
+function defaultMapState() {
+  var _mapInfo;
+
+  return _immutable2.default.fromJS({
+    data: [],
+    dataFiltered: [],
+
+    mapInfo: (_mapInfo = {
+      center: [59.938043, 30.337157]
+    }, _defineProperty(_mapInfo, 'center', [-37.851221000000002, 144.72653700000001]), _defineProperty(_mapInfo, 'bounds', [60.325132160343145, 29.13415407031249, 59.546382183279206, 31.54015992968749]), _defineProperty(_mapInfo, 'marginBounds', [-36.2843135300829, 143.21655153124999, -38.58811868963835, 145.45776246874999]), _defineProperty(_mapInfo, 'zoom', 9), _mapInfo),
+
+    openBalloonIndex: -1,
+
+    hoverMarkerIndex: -1,
+
+    tableRowsInfo: {
+      hoveredRowIndex: -1,
+      visibleRowFirst: 0,
+      visibleRowLast: K_LAST_VISIBLE_ROW_AT_SERVER_RENDERING,
+      maxVisibleRows: K_LAST_VISIBLE_ROW_AT_SERVER_RENDERING
+    },
+    clubs: [],
+    isFetching: true
+  });
+}
+
+var ClubsReducer = function ClubsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultMapState();
+  var action = arguments[1];
+
+  switch (action.type) {
+    case LOAD_CLUB_SUCCESS:
+      return state.set('data', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).set('isFetching', false);
+
+    case REQUEST_SEARCH_COURSE:
+      return state.set('isFetching', true);
+    default:
+      return state;
+  }
+};
+
+exports.default = ClubsReducer;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _redux = require('redux');
 
 var TodoApp = (0, _redux.combineReducers)({
-  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer
+  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer, ClubsReducer: ClubsReducer
 });
 
 exports.default = TodoApp;
@@ -1606,7 +2493,7 @@ var Root = function Root(_ref) {
         { path: '/dashboard', component: MainApp },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMap }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMapMain }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: VisibleCourseView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/search/:keywords', component: VisibleLessonsView })
@@ -1643,7 +2530,55 @@ var store = (0, _redux.createStore)(TodoApp, (0, _redux.applyMiddleware)(_reduxT
 
 (0, _reactDom.render)(_react2.default.createElement(Root, { store: store }), document.getElementById('dashboard'));
 
-'use strict';
+
+function getMarkerHolderStyle(size, origin){
+  const left = -size.width * origin.x;
+  const top = -size.height * origin.y;
+  return {
+    position: 'absolute',
+    width: size.width,
+    height: size.height,
+    left: left,
+    top: top,
+    cursor: 'pointer'
+  };
+}
+
+function getMarkerStyle(size, origin) {
+  const sizeOriginX = size.width * origin.x;
+  const sizeOriginY = size.height * origin.y;
+
+  return {
+    position: 'absolute',
+    width: size.width,
+    height: size.height,
+    left: 0,
+    top: 0,
+    willChange: 'transform', // it looks like this setting make firefox random marker movements smaller
+    backgroundSize: `${size.width}px ${size.height}px`,
+    backgroundRepeat: 'no-repeat',
+    // transition: 'transform 0.25s ease',
+    transition: 'transform 0.25s cubic-bezier(0.485, 1.650, 0.545, 0.835)',
+    WebkitTransition: '-webkit-transform 0.25s cubic-bezier(0.485, 1.650, 0.545, 0.835)',
+    transformOrigin: `${sizeOriginX}px ${sizeOriginY}px`,
+    WebkitTransformOrigin: `${sizeOriginX}px ${sizeOriginY}px`
+  };
+}
+
+var textStyle = {
+  width: '100%',
+  textAlign: 'center',
+  marginTop: 10,
+  fontWeight: 'bold',
+  fontSize: '18px',
+  color: 'black'
+};
+
+function getMarkerTextStyle() {
+  return textStyle;
+}
+
+;'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
