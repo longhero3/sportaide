@@ -1170,6 +1170,12 @@ function getHintBaloonVerticalPosClass(y /*, mapHeight*/) {
   return y > K_MAX_BALLOON_HEIGHT ? 'hint--top' : 'hint--bottom';
 }
 
+function getElementPosition(el) {
+  // yay readability
+  for (var lx = 0, ly = 0; el != null; lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent) {}
+  return { x: lx, y: ly };
+}
+
 function getHintBaloonHorizontalPosStyle(x, markerWidth, markerOffset, mapWidth) {
   var K_BALLOON_WIDTH_BASE = 250;
   // offset from map side
@@ -1197,11 +1203,6 @@ function getHintBaloonHorizontalPosStyle(x, markerWidth, markerOffset, mapWidth)
 function getHintBottomOffsetClass(markerWidth, markerOffset) {
   var K_HINT_ARROW_WIDTH = 12;
   var offset = Math.round(-(markerWidth / 2 + K_HINT_ARROW_WIDTH / 2 - markerOffset * markerWidth));
-  if (__DEV__) {
-    if (offset < -40 || offset > 40) {
-      console.error('HintBottomOffset is out of range, extend range at sass/markers/map_marker.sass'); // eslint-disable-line no-console
-    }
-  }
   // classes generated at sass/markers/map_marker.sass
   return 'map-marker--hint-bottom-delta-' + offset;
 }
@@ -1503,12 +1504,12 @@ var MapMarker = function (_PureComponent) {
   }, {
     key: 'onMouseEnterContent',
     value: function onMouseEnterContent() {
-      this.props.$onMouseAllow(false); // disable mouse move hovers
+      //    this.props.onMouseAllow(false); // disable mouse move hovers
     }
   }, {
     key: 'onMouseLeaveContent',
     value: function onMouseLeaveContent() {
-      this.props.$onMouseAllow(true); // enable mouse move hovers
+      //    this.props.onMouseAllow(true); // enable mouse move hovers
     }
   }, {
     key: 'onCloseClick',
@@ -1531,15 +1532,14 @@ var MapMarker = function (_PureComponent) {
   }, {
     key: 'render',
     value: function render() {
-      // TODO add http://schema.org/docs/gs.html
-      var scale = this.props.$hover || this.props.showBalloon ? K_SCALE_HOVER : this.props.scale;
+      var scale = this.props.hover || this.props.showBalloon ? K_SCALE_HOVER : this.props.scale;
       scale = this.props.hoveredAtTable ? K_SCALE_TABLE_HOVER : scale;
 
       var markerHolderStyle = getMarkerHolderStyle(this.props.size, this.props.origin);
       var markerStyle = getMarkerStyle(this.props.size, this.props.origin);
 
       var zIndexStyle = {
-        zIndex: Math.round(scale * 10000) - (this.props.showBalloon ? 20 : 0) + (this.props.$hover ? K_HINT_HTML_DEFAULT_Z_INDEX : 0) // balloon
+        zIndex: Math.round(scale * 10000) - (this.props.showBalloon ? 20 : 0) + (this.props.hover ? K_HINT_HTML_DEFAULT_Z_INDEX : 0) // balloon
       };
 
       var textStyleDef = getMarkerTextStyle();
@@ -1548,9 +1548,9 @@ var MapMarker = function (_PureComponent) {
       var showHint = this.props.hoverState || this.props.showBalloonState; // || this.props.hoveredAtTable;
 
       // baloon position calc
-      var mapWidth = this.props.$geoService.getWidth();
-      var mapHeight = this.props.$geoService.getHeight();
-      var markerDim = this.props.$getDimensions(this.props.$dimensionKey);
+      var mapWidth = document.getElementById('actual-map').offsetWidth;
+      var mapHeight = document.getElementById('actual-map').offsetHeight;
+      var markerDim = getElementPosition(document.getElementById('actual-map'));
 
       var hintBaloonHorizontalPosStyle = getHintBaloonHorizontalPosStyle(markerDim.x, this.props.size.width, this.props.origin.x, mapWidth);
       var hintBaloonVerticalPosClass = getHintBaloonVerticalPosClass(markerDim.y, mapHeight);
@@ -1558,7 +1558,7 @@ var MapMarker = function (_PureComponent) {
       var hintBalloonBottomOffsetClass = getHintBottomOffsetClass(this.props.size.width, this.props.origin.x);
 
       // set baloon position at first and then animate (it must be some lib for react animations)
-      var noTransClass = this.props.$hover === true && this.props.hoverState !== true ? 'hint--notrans' : '';
+      var noTransClass = this.props.hover === true && this.props.hoverState !== true ? 'hint--notrans' : '';
       var noTransBalloonClass = this.props.showBalloon === true && this.props.showBalloonState !== true ? 'hint--notrans' : '';
 
       var imageClass = this.props.image ? '' : this.props.imageClass;
@@ -1582,7 +1582,7 @@ var MapMarker = function (_PureComponent) {
           this.props.withText ? _react2.default.createElement(
             'div',
             { style: textStyle },
-            this.props.marker.get('id')
+            this.props.marker.id
           ) : _react2.default.createElement('div', null)
         ),
         _react2.default.createElement(
@@ -1605,18 +1605,18 @@ var MapMarker = function (_PureComponent) {
             _react2.default.createElement(
               'strong',
               null,
-              this.props.marker.get('name')
+              this.props.marker.name
             )
           ),
           _react2.default.createElement(
             'div',
             { className: 'map-marker-hint__address' },
-            this.props.marker.get('address')
+            this.props.marker.address
           ),
           _react2.default.createElement(
             'div',
             { className: (0, _classnames2.default)('map-marker-hint__content', this.props.showBalloon ? 'map-marker-hint__content--visible' : '') },
-            this.props.marker.get('description')
+            this.props.marker.description
           ),
           _react2.default.createElement(
             'div',
@@ -1637,9 +1637,9 @@ var MapMarker = function (_PureComponent) {
 
       var K_TRANS_DELAY = 30;
 
-      if (prevProps.$hover !== this.props.$hover) {
+      if (prevProps.hover !== this.props.hover) {
         setTimeout(function () {
-          return _this2._onHoverStateChange(_this2.props.$hover);
+          return _this2._onHoverStateChange(_this2.props.hover);
         }, K_TRANS_DELAY);
       }
 
@@ -1660,11 +1660,8 @@ exports.default = MapMarker;
 MapMarker = (0, _reactControllables2.default)(MapMarker, ['hoverState', 'showBalloonState']);
 
 MapMarker.propTypes = {
-  $hover: _react.PropTypes.bool,
-  $dimensionKey: _react.PropTypes.any,
-  $getDimensions: _react.PropTypes.func,
-  $geoService: _react.PropTypes.any,
-  $onMouseAllow: _react.PropTypes.func,
+  hover: _react.PropTypes.bool,
+  onMouseAllow: _react.PropTypes.func,
 
   marker: _react.PropTypes.any,
   hoveredAtTable: _react.PropTypes.bool,
@@ -1840,9 +1837,8 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
         var Markers = this.props.markers && this.props.markers.filter(function (m, index) {
           return index >= rowFrom && index <= rowTo;
         }).map(function (marker, index) {
-          return _react2.default.createElement(MapMarker
-          // required props
-          , _extends({ key: marker.id,
+          return _react2.default.createElement(MapMarker, _extends({
+            key: marker.id,
             lat: marker.lat,
             lng: marker.lng,
             showBalloon: index + rowFrom === _this2.props.openBalloonIndex,
@@ -1862,13 +1858,14 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
             { className: 'map-overlay ui stackable grid', style: this.state.mapStyle },
             _react2.default.createElement(
               'div',
-              { className: 'google-map twelve wide column' },
+              { className: 'google-map twelve wide column', id: 'actual-map' },
               _react2.default.createElement(
                 _googleMapReact2.default,
                 {
                   bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" },
                   center: this.props.center.toJS(),
                   zoom: this.props.zoom,
+                  onChange: this._onBoundsChange,
                   onChildClick: this.onChildClick.bind(this),
                   onChildMouseEnter: this.onChildMouseEnter.bind(this),
                   onChildMouseLeave: this.onChildMouseLeave.bind(this),

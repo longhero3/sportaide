@@ -92,7 +92,6 @@ export class MainMapBlock extends PureComponent {
         this.props.markers.filter((m, index) => index >= rowFrom && index <= rowTo)
         .map((marker, index) => (
           <MapMarker
-            // required props
             key={marker.id}
             lat={marker.lat}
             lng={marker.lng}
@@ -108,11 +107,12 @@ export class MainMapBlock extends PureComponent {
         <div>
           <NavBar />
           <div className="map-overlay ui stackable grid" style={ this.state.mapStyle }>
-            <div className="google-map twelve wide column">
+            <div className="google-map twelve wide column" id="actual-map">
               <GoogleMap
                 bootstrapURLKeys={{ key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A"}}
                 center={this.props.center.toJS()}
                 zoom={this.props.zoom}
+                onChange={this._onBoundsChange}
                 onChildClick={this.onChildClick.bind(this)}
                 onChildMouseEnter={this.onChildMouseEnter.bind(this)}
                 onChildMouseLeave={this.onChildMouseLeave.bind(this)}

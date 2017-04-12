@@ -63,11 +63,11 @@ export default class MapMarker extends PureComponent {
   }
 
   onMouseEnterContent() {
-    this.props.$onMouseAllow(false); // disable mouse move hovers
+//    this.props.onMouseAllow(false); // disable mouse move hovers
   }
 
   onMouseLeaveContent(){
-    this.props.$onMouseAllow(true); // enable mouse move hovers
+//    this.props.onMouseAllow(true); // enable mouse move hovers
   }
 
   onCloseClick() {
@@ -85,15 +85,14 @@ export default class MapMarker extends PureComponent {
 
   // no optimizations at all
   render() {
-    // TODO add http://schema.org/docs/gs.html
-    let scale = this.props.$hover || this.props.showBalloon ? K_SCALE_HOVER : this.props.scale;
+    let scale = this.props.hover || this.props.showBalloon ? K_SCALE_HOVER : this.props.scale;
     scale = this.props.hoveredAtTable ? K_SCALE_TABLE_HOVER : scale;
 
     const markerHolderStyle = getMarkerHolderStyle(this.props.size, this.props.origin);
     const markerStyle = getMarkerStyle(this.props.size, this.props.origin);
 
     const zIndexStyle = {
-      zIndex: Math.round(scale * 10000) - (this.props.showBalloon ? 20 : 0) + (this.props.$hover ? K_HINT_HTML_DEFAULT_Z_INDEX : 0) // balloon
+      zIndex: Math.round(scale * 10000) - (this.props.showBalloon ? 20 : 0) + (this.props.hover ? K_HINT_HTML_DEFAULT_Z_INDEX : 0) // balloon
     };
 
     const textStyleDef = getMarkerTextStyle();
@@ -102,9 +101,9 @@ export default class MapMarker extends PureComponent {
     const showHint = this.props.hoverState || this.props.showBalloonState; // || this.props.hoveredAtTable;
 
     // baloon position calc
-    const mapWidth = this.props.$geoService.getWidth();
-    const mapHeight = this.props.$geoService.getHeight();
-    const markerDim = this.props.$getDimensions(this.props.$dimensionKey);
+    const mapWidth = document.getElementById('actual-map').offsetWidth;
+    const mapHeight = document.getElementById('actual-map').offsetHeight;
+    const markerDim = getElementPosition(document.getElementById('actual-map'));
 
     const hintBaloonHorizontalPosStyle = getHintBaloonHorizontalPosStyle(markerDim.x, this.props.size.width, this.props.origin.x, mapWidth);
     const hintBaloonVerticalPosClass = getHintBaloonVerticalPosClass(markerDim.y, mapHeight);
@@ -112,7 +111,7 @@ export default class MapMarker extends PureComponent {
     const hintBalloonBottomOffsetClass = getHintBottomOffsetClass(this.props.size.width, this.props.origin.x);
 
     // set baloon position at first and then animate (it must be some lib for react animations)
-    const noTransClass = this.props.$hover === true && this.props.hoverState !== true ? 'hint--notrans' : '';
+    const noTransClass = this.props.hover === true && this.props.hoverState !== true ? 'hint--notrans' : '';
     const noTransBalloonClass = this.props.showBalloon === true && this.props.showBalloonState !== true ? 'hint--notrans' : '';
 
     const imageClass = this.props.image ? '' : this.props.imageClass;
@@ -137,7 +136,7 @@ export default class MapMarker extends PureComponent {
           className={cx('map-marker__marker', imageClass)}>
           {this.props.withText ?
             <div style={textStyle}>
-            {this.props.marker.get('id')}
+            {this.props.marker.id}
             </div>
             :
             <div/>}
@@ -154,14 +153,14 @@ export default class MapMarker extends PureComponent {
           </div>
 
           <div className="map-marker-hint__title">
-            <strong>{this.props.marker.get('name')}</strong>
+            <strong>{this.props.marker.name}</strong>
           </div>
           <div className="map-marker-hint__address">
-            {this.props.marker.get('address')}
+            {this.props.marker.address}
           </div>
 
           <div className={cx('map-marker-hint__content', this.props.showBalloon ? 'map-marker-hint__content--visible' : '')}>
-            {this.props.marker.get('description')}
+            {this.props.marker.description}
           </div>
 
           <div>
@@ -176,8 +175,8 @@ export default class MapMarker extends PureComponent {
   componentDidUpdate(prevProps) {
     const K_TRANS_DELAY = 30;
 
-    if (prevProps.$hover !== this.props.$hover) {
-      setTimeout(() => this._onHoverStateChange(this.props.$hover), K_TRANS_DELAY);
+    if (prevProps.hover !== this.props.hover) {
+      setTimeout(() => this._onHoverStateChange(this.props.hover), K_TRANS_DELAY);
     }
 
     if (prevProps.showBalloon !== this.props.showBalloon) {
@@ -189,11 +188,8 @@ export default class MapMarker extends PureComponent {
 MapMarker = controllable(MapMarker, ['hoverState', 'showBalloonState'])
 
 MapMarker.propTypes = {
-  $hover: PropTypes.bool,
-  $dimensionKey: PropTypes.any,
-  $getDimensions: PropTypes.func,
-  $geoService: PropTypes.any,
-  $onMouseAllow: PropTypes.func,
+  hover: PropTypes.bool,
+  onMouseAllow: PropTypes.func,
 
   marker: PropTypes.any,
   hoveredAtTable: PropTypes.bool,

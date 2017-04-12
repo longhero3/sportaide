@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :courses, only: [:index, :show] do
     collection do
       get :search_courses
+      get :search_courses_main
     end
   end
 

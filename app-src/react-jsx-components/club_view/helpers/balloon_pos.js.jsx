@@ -4,6 +4,14 @@ export function getHintBaloonVerticalPosClass(y /*, mapHeight*/) {
   return y > K_MAX_BALLOON_HEIGHT ? 'hint--top' : 'hint--bottom';
 }
 
+function getElementPosition(el) {
+  // yay readability
+  for (var lx=0, ly=0;
+       el != null;
+       lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+  return {x: lx,y: ly};
+}
+
 export function getHintBaloonHorizontalPosStyle(x, markerWidth, markerOffset, mapWidth) {
   const K_BALLOON_WIDTH_BASE = 250;
   // offset from map side
@@ -31,11 +39,6 @@ export function getHintBaloonHorizontalPosStyle(x, markerWidth, markerOffset, ma
 export function getHintBottomOffsetClass(markerWidth, markerOffset) {
   const K_HINT_ARROW_WIDTH = 12;
   const offset = Math.round(-(markerWidth / 2 + K_HINT_ARROW_WIDTH / 2 - markerOffset * markerWidth));
-  if (__DEV__) {
-    if (offset < -40 || offset > 40) {
-      console.error('HintBottomOffset is out of range, extend range at sass/markers/map_marker.sass'); // eslint-disable-line no-console
-    }
-  }
   // classes generated at sass/markers/map_marker.sass
   return 'map-marker--hint-bottom-delta-' + offset;
 }
