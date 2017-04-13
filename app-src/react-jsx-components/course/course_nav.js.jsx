@@ -57,12 +57,12 @@ export class CourseNav extends React.Component {
     } else {
       return (
         <div className="chapter-navigation">
-          <div className="search-navigation">
+      {/*<div className="search-navigation">
             <div className="ui icon input fluid">
               <i className="search icon"></i>
               <input type="text" placeholder="Search for specific chapter..."/>
             </div>
-          </div>
+          </div>*/}
           <div className="chapter-wrapper">
             <div className="chapter-content">
               <div className="ui styled accordion">

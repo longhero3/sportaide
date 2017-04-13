@@ -655,16 +655,6 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
           { className: 'chapter-navigation' },
           _react2.default.createElement(
             'div',
-            { className: 'search-navigation' },
-            _react2.default.createElement(
-              'div',
-              { className: 'ui icon input fluid' },
-              _react2.default.createElement('i', { className: 'search icon' }),
-              _react2.default.createElement('input', { type: 'text', placeholder: 'Search for specific chapter...' })
-            )
-          ),
-          _react2.default.createElement(
-            'div',
             { className: 'chapter-wrapper' },
             _react2.default.createElement(
               'div',
@@ -1138,8 +1128,8 @@ var ClubMap = function (_React$Component) {
                 defaultZoom: this.state.zoom,
                 bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" } },
               _react2.default.createElement(AnyReactComponent, {
-                lat: -37.863406,
-                lng: 145.032180,
+                lat: -37.853406,
+                lng: 145.142180,
                 text: 'Kreyser asdfasdfasdfgasdkfa sdfasd fajklsjkdf jkasdfjk  Avrora' })
             )
           ),
@@ -1317,11 +1307,8 @@ function getMarkerHolderStyle(size, origin) {
   var left = -size.width * origin.x;
   var top = -size.height * origin.y;
   return {
-    position: 'absolute',
-    width: size.width,
+    width: 100,
     height: size.height,
-    left: left,
-    top: top,
     cursor: 'pointer'
   };
 }
@@ -1331,7 +1318,6 @@ function getMarkerStyle(size, origin) {
   var sizeOriginY = size.height * origin.y;
 
   return {
-    position: 'absolute',
     width: size.width,
     height: size.height,
     left: 0,
@@ -1573,12 +1559,12 @@ var MapMarker = function (_PureComponent) {
         'div',
         {
           style: markerHolderStyle,
-          className: (0, _classnames2.default)('map-marker hint hint--html', this.props.hintType, hintBalloonBottomOffsetClass, noTransClass, noTransBalloonClass, hintBaloonVerticalPosClass, this.props.showBalloon ? 'hint--balloon' : '', showHint ? 'hint--always' : 'hint--hidden') },
+          className: 'map-marker hint hint--html hint--balloon' },
         _react2.default.createElement(
           'div',
           {
             style: styleMarkerMarker,
-            className: (0, _classnames2.default)('map-marker__marker', imageClass) },
+            className: 'map-marker__marker map-marker__marker--ap' },
           this.props.withText ? _react2.default.createElement(
             'div',
             { style: textStyle },
@@ -1588,7 +1574,6 @@ var MapMarker = function (_PureComponent) {
         _react2.default.createElement(
           'div',
           {
-            style: hintBaloonHorizontalPosStyle,
             className: (0, _classnames2.default)('hint__content map-marker-hint', this.props.showBalloon ? '' : 'noevents'),
             onMouseEnter: this.onMouseEnterContent.bind(this),
             onMouseLeave: this.onMouseLeaveContent.bind(this) },
@@ -1680,7 +1665,9 @@ MapMarker.propTypes = {
   imageClass: _react.PropTypes.string,
   image: _react.PropTypes.string,
   withText: _react.PropTypes.bool,
-  hintType: _react.PropTypes.string
+  hintType: _react.PropTypes.string,
+  lng: _react.PropTypes.any,
+  lat: _react.PropTypes.any
 };
 
 MapMarker.defaultProps = {
@@ -1688,7 +1675,7 @@ MapMarker.defaultProps = {
   hoverState: false,
   showBalloonState: false,
   withText: false,
-  size: { width: 62, height: 60 },
+  size: { width: 100, height: 60 },
   origin: { x: 15 / 62, y: 1 },
   imageClass: 'map-marker__marker--big',
   hintType: 'hint--info'
@@ -1700,8 +1687,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MainMapBlock = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1815,8 +1800,6 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       if (this.props.isFetching == true) {
         return _react2.default.createElement(
           'div',
@@ -1837,16 +1820,11 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
         var Markers = this.props.markers && this.props.markers.filter(function (m, index) {
           return index >= rowFrom && index <= rowTo;
         }).map(function (marker, index) {
-          return _react2.default.createElement(MapMarker, _extends({
-            key: marker.id,
+          return _react2.default.createElement(AnyReactComponent, {
+            key: "marker_" + marker.id,
             lat: marker.lat,
             lng: marker.lng,
-            showBalloon: index + rowFrom === _this2.props.openBalloonIndex,
-            onCloseClick: _this2.onBalloonCloseClick,
-            hoveredAtTable: index + rowFrom === _this2.props.hoveredRowIndex,
-            scale: getScale(index + rowFrom, _this2.props.visibleRowFirst, _this2.props.visibleRowLast, K_SCALE_NORMAL)
-          }, markerDescriptions[marker.type], {
-            marker: marker }));
+            text: marker.id });
         });
 
         return _react2.default.createElement(
@@ -2349,6 +2327,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Footer = function Footer(_ref) {
@@ -2389,6 +2369,7 @@ var Footer = function Footer(_ref) {
               { className: 'ui icon input fluid' },
               _react2.default.createElement('input', { type: 'text', placeholder: 'Search...', onKeyUp: function onKeyUp(event) {
                   if (event.keyCode == 13) {
+                    _reactRouter.browserHistory.push('/dashboard/lessons');
                     dispatch(requestSearchCourses());
                     return dispatch(searchCourses(event.target.value));
                   }

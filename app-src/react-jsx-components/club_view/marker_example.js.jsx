@@ -125,15 +125,10 @@ export default class MapMarker extends PureComponent {
     return (
       <div
         style={markerHolderStyle}
-        className={cx('map-marker hint hint--html',
-          this.props.hintType,
-          hintBalloonBottomOffsetClass,
-          noTransClass, noTransBalloonClass, hintBaloonVerticalPosClass,
-          this.props.showBalloon ? 'hint--balloon' : '',
-          showHint ? 'hint--always' : 'hint--hidden')}>
+        className={'map-marker hint hint--html hint--balloon'}>
         <div
           style={styleMarkerMarker}
-          className={cx('map-marker__marker', imageClass)}>
+          className={'map-marker__marker map-marker__marker--ap'}>
           {this.props.withText ?
             <div style={textStyle}>
             {this.props.marker.id}
@@ -142,7 +137,6 @@ export default class MapMarker extends PureComponent {
             <div/>}
         </div>
         <div
-          style={hintBaloonHorizontalPosStyle}
           className={cx('hint__content map-marker-hint', this.props.showBalloon ? '' : 'noevents')}
           onMouseEnter={this.onMouseEnterContent.bind(this)}
           onMouseLeave={this.onMouseLeaveContent.bind(this)}>
@@ -208,7 +202,9 @@ MapMarker.propTypes = {
   imageClass: PropTypes.string,
   image: PropTypes.string,
   withText: PropTypes.bool,
-  hintType: PropTypes.string
+  hintType: PropTypes.string,
+  lng: PropTypes.any,
+  lat: PropTypes.any
 };
 
 MapMarker.defaultProps = {
@@ -216,7 +212,7 @@ MapMarker.defaultProps = {
   hoverState: false,
   showBalloonState: false,
   withText: false,
-  size: {width: 62, height: 60},
+  size: {width: 100, height: 60},
   origin: {x: 15 / 62, y: 1},
   imageClass: 'map-marker__marker--big',
   hintType: 'hint--info'

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router';
 
 let Footer = ({dispatch}) => (
   <nav className='footer'>
@@ -18,6 +19,7 @@ let Footer = ({dispatch}) => (
             <div className="ui icon input fluid">
               <input type="text" placeholder="Search..." onKeyUp={(event) => {
                 if(event.keyCode == 13) {
+                  browserHistory.push('/dashboard/lessons')
                   dispatch(requestSearchCourses())
                   return dispatch(searchCourses(event.target.value))}
                 }}/>

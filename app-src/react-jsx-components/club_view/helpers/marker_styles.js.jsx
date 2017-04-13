@@ -3,11 +3,8 @@ function getMarkerHolderStyle(size, origin){
   const left = -size.width * origin.x;
   const top = -size.height * origin.y;
   return {
-    position: 'absolute',
-    width: size.width,
+    width: 100,
     height: size.height,
-    left: left,
-    top: top,
     cursor: 'pointer'
   };
 }
@@ -17,7 +14,6 @@ function getMarkerStyle(size, origin) {
   const sizeOriginY = size.height * origin.y;
 
   return {
-    position: 'absolute',
     width: size.width,
     height: size.height,
     left: 0,

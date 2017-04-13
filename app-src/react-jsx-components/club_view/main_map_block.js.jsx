@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from 'react';
 import controllable from 'react-controllables';
 import PureComponent from 'react-pure-render/component';
 
-import GoogleMap from 'google-map-react';
+import GoogleMapReact from 'google-map-react';
 
 import {List} from 'immutable';
 
@@ -91,16 +91,11 @@ export class MainMapBlock extends PureComponent {
       const Markers = this.props.markers &&
         this.props.markers.filter((m, index) => index >= rowFrom && index <= rowTo)
         .map((marker, index) => (
-          <MapMarker
-            key={marker.id}
+          <AnyReactComponent
+            key={"marker_"+ marker.id}
             lat={marker.lat}
             lng={marker.lng}
-            showBalloon={index + rowFrom === this.props.openBalloonIndex}
-            onCloseClick={this.onBalloonCloseClick}
-            hoveredAtTable={index + rowFrom === this.props.hoveredRowIndex}
-            scale={getScale(index + rowFrom, this.props.visibleRowFirst, this.props.visibleRowLast, K_SCALE_NORMAL)}
-            {...markerDescriptions[marker.type]}
-            marker={marker} />
+            text={marker.id}/>
         ));
 
       return (
@@ -108,7 +103,7 @@ export class MainMapBlock extends PureComponent {
           <NavBar />
           <div className="map-overlay ui stackable grid" style={ this.state.mapStyle }>
             <div className="google-map twelve wide column" id="actual-map">
-              <GoogleMap
+              <GoogleMapReact
                 bootstrapURLKeys={{ key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A"}}
                 center={this.props.center.toJS()}
                 zoom={this.props.zoom}
@@ -121,7 +116,7 @@ export class MainMapBlock extends PureComponent {
                 distanceToMouse={this.distanceToMouse.bind(this)}
                 >
                 {Markers}
-              </GoogleMap>
+              </GoogleMapReact>
             </div>
             <div className="four wide column">Club info section</div>
           </div>

@@ -29,8 +29,8 @@ class ClubMap extends React.Component {
               defaultZoom={this.state.zoom}
               bootstrapURLKeys={{ key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A"}}>
               <AnyReactComponent
-                lat={-37.863406}
-                lng={145.032180}
+                lat={-37.853406}
+                lng={145.142180}
                 text={'Kreyser asdfasdfasdfgasdkfa sdfasd fajklsjkdf jkasdfjk  Avrora'}/>
             </GoogleMapReact>
           </div>
