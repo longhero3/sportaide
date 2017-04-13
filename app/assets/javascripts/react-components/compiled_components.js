@@ -773,7 +773,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
             _react2.default.createElement(
               'a',
               { className: 'item active', 'data-tab': 'first' },
-              'Overview'
+              'Transcript'
             ),
             _react2.default.createElement(
               'a',
@@ -783,12 +783,30 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
             _react2.default.createElement(
               'a',
               { className: 'item', 'data-tab': 'third' },
-              'Transcript'
+              'Overview'
             )
           ),
           _react2.default.createElement(
             'div',
             { className: 'ui tab active', 'data-tab': 'first' },
+            _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui tab', 'data-tab': 'second' },
+            _react2.default.createElement(
+              'div',
+              { className: 'ui one column stackable grid' },
+              _react2.default.createElement(
+                'div',
+                { className: 'fluid column' },
+                _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui tab', 'data-tab': 'third' },
             _react2.default.createElement(
               'div',
               { className: 'overview-content' },
@@ -871,24 +889,6 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
                 )
               )
             )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui tab', 'data-tab': 'second' },
-            _react2.default.createElement(
-              'div',
-              { className: 'ui one column stackable grid' },
-              _react2.default.createElement(
-                'div',
-                { className: 'fluid column' },
-                _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui tab', 'data-tab': 'third' },
-            _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
           )
         );
       }

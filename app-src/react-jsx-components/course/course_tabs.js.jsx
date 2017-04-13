@@ -24,11 +24,22 @@ export class CourseTabs extends React.Component{
       return (
         <div className="ui segment">
           <div className="ui pointing secondary menu tab-menu">
-            <a className="item active" data-tab="first">Overview</a>
+            <a className="item active" data-tab="first">Transcript</a>
             <a className="item" data-tab="second">Video</a>
-            <a className="item" data-tab="third">Transcript</a>
+            <a className="item" data-tab="third">Overview</a>
           </div>
           <div className="ui tab active" data-tab="first">
+            <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
+            </div>
+          </div>
+          <div className="ui tab" data-tab="second">
+            <div className="ui one column stackable grid">
+              <div className="fluid column">
+                <iframe className="video-iframe" src={this.props.lesson.preferred_url} frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+          <div className="ui tab" data-tab="third">
             <div className="overview-content">
               <div className="ui three column stackable grid">
                 <div className="three wide column">
@@ -58,17 +69,6 @@ export class CourseTabs extends React.Component{
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="ui tab" data-tab="second">
-            <div className="ui one column stackable grid">
-              <div className="fluid column">
-                <iframe className="video-iframe" src={this.props.lesson.preferred_url} frameborder="0" allowfullscreen></iframe>
-              </div>
-            </div>
-          </div>
-          <div className="ui tab" data-tab="third">
-            <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
             </div>
           </div>
         </div>
