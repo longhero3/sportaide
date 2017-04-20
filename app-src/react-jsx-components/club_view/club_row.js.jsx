@@ -11,7 +11,7 @@ export class ClubRow extends React.Component {
   render(){
     var validClub = <div></div>
     if (this.props.club.indoor_outdoor == "indoor" || this.props.weatherClass == "sunny" || this.props.weatherClass == "cloudy" ) {
-      validClub = <i className="checkmark icon able-club-tick"></i>
+      validClub = <i className="checkmark icon green able-club-tick"></i>
     }
     return(
     <div className="club-row" onClick={this.handleSelectClub.bind(this)}>

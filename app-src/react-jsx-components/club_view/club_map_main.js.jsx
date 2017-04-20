@@ -9,7 +9,8 @@ const clubMapState = (state) => ({
   visibleRowLast: state.ClubsReducer.get('tableRowsInfo').get('visibleRowLast'),
   maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
   hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
-  openBalloonIndex: state.ClubsReducer.get('openBalloonIndex')
+  openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
+  selectedMarker: state.ClubsReducer.get('selectedMarker')
 })
 
 const ClubMapMain = connect(clubMapState)(MainMapBlock)

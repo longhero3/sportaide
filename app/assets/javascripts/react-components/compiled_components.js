@@ -1713,11 +1713,14 @@ var MapMarker = function (_PureComponent) {
   }, {
     key: 'render',
     value: function render() {
-
+      var selectedClass = "";
+      if (this.props.isSelected == true) {
+        selectedClass = "selected";
+      }
       return _react2.default.createElement(
         'div',
         { className: 'marker-content', 'data-hint': this.props.marker.name, onClick: this.selectMarker.bind(this) },
-        _react2.default.createElement('i', { className: 'soccer icon club-icon' })
+        _react2.default.createElement('i', { className: "soccer icon club-icon " + selectedClass })
       );
     }
   }, {
@@ -1924,6 +1927,10 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
         //      const {rowFrom, rowTo} = getRealFromTo(this.props.visibleRowFirst, this.props.visibleRowLast, this.props.maxVisibleRows, this.props.markers.size);
         var rowFrom = 0;
         var rowTo = 20;
+        var selectedId = -1;
+        if (this.props.selectedMarker) {
+          selectedId = this.props.selectedMarker.id;
+        }
         var Markers = this.props.markers && this.props.markers.map(function (marker, index) {
           return _react2.default.createElement(MapMarker, _extends({
             key: marker.id,
@@ -1931,7 +1938,9 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
             lng: marker.lng,
             scale: getScale(index + rowFrom, _this2.props.visibleRowFirst, _this2.props.visibleRowLast, K_SCALE_NORMAL)
           }, markerDescriptions[marker.type], {
-            marker: marker }));
+            marker: marker,
+            isSelected: selectedId === marker.id
+          }));
         });
 
         return _react2.default.createElement(
@@ -1976,7 +1985,8 @@ MainMapBlock.propTypes = {
   maxVisibleRows: _react.PropTypes.number,
   hoveredRowIndex: _react.PropTypes.number,
   openBalloonIndex: _react.PropTypes.number,
-  isFetching: _react.PropTypes.bool
+  isFetching: _react.PropTypes.bool,
+  selectedMarker: _react.PropTypes.any
 };
 
 'use strict';
@@ -1997,7 +2007,8 @@ var clubMapState = function clubMapState(state) {
     visibleRowLast: state.ClubsReducer.get('tableRowsInfo').get('visibleRowLast'),
     maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
     hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
-    openBalloonIndex: state.ClubsReducer.get('openBalloonIndex')
+    openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
+    selectedMarker: state.ClubsReducer.get('selectedMarker')
   };
 };
 
@@ -2048,7 +2059,7 @@ var ClubRow = exports.ClubRow = function (_React$Component) {
     value: function render() {
       var validClub = _react2.default.createElement('div', null);
       if (this.props.club.indoor_outdoor == "indoor" || this.props.weatherClass == "sunny" || this.props.weatherClass == "cloudy") {
-        validClub = _react2.default.createElement('i', { className: 'checkmark icon able-club-tick' });
+        validClub = _react2.default.createElement('i', { className: 'checkmark icon green able-club-tick' });
       }
       return _react2.default.createElement(
         'div',
@@ -2251,17 +2262,110 @@ var ClubDetails = exports.ClubDetails = function (_React$Component) {
   _createClass(ClubDetails, [{
     key: 'render',
     value: function render() {
+
       if (this.props.selectedClub) {
+        var validClub = _react2.default.createElement('i', { className: 'remove icon red' });
+        if (this.props.selectedClub.indoor_outdoor == "indoor" || this.props.weatherClass == "sunny" || this.props.weatherClass == "cloudy") {
+          validClub = _react2.default.createElement('i', { className: 'checkmark icon green' });
+        }
+
         return _react2.default.createElement(
           'div',
-          { className: 'six wide column' },
+          { className: 'six wide column no-padding' },
           _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/dashboard/clubs/club_map' },
-            'Back'
-          ),
-          'You have selected ',
-          this.props.selectedClub.name
+            'div',
+            { className: "weather-container-" + this.props.weatherClass },
+            _react2.default.createElement('div', { className: this.props.weatherClass }),
+            _react2.default.createElement(
+              'div',
+              { className: 'weather-panel' },
+              _react2.default.createElement(
+                'div',
+                { className: 'temperature' },
+                this.props.weatherTemp,
+                '\xB0C'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'weather-text' },
+                this.props.weatherText
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'club-details-wrapper' },
+              _react2.default.createElement(
+                'div',
+                { className: 'ui stackable grid' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'two wide column' },
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/dashboard/clubs/club_map' },
+                    _react2.default.createElement('i', { className: 'angle left icon back-to-map-icon' })
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'fourteen wide column' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'club-name' },
+                    this.props.selectedClub.name
+                  ),
+                  _react2.default.createElement('div', { className: 'club-name-separator' }),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'club-details-content' },
+                    _react2.default.createElement(
+                      'b',
+                      { className: 'title' },
+                      'Address:'
+                    ),
+                    this.props.selectedClub.address,
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                      'b',
+                      { className: 'title' },
+                      'Suburb:'
+                    ),
+                    this.props.selectedClub.suburb,
+                    ' ',
+                    this.props.selectedClub.postcode,
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                      'b',
+                      { className: 'title' },
+                      'State:'
+                    ),
+                    this.props.selectedClub.state,
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                      'b',
+                      { className: 'title' },
+                      'Description:'
+                    ),
+                    this.props.selectedClub.description,
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                      'b',
+                      { className: 'title' },
+                      'Available sports:'
+                    ),
+                    this.props.selectedClub.business_category,
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                      'b',
+                      { className: 'title' },
+                      'Ok to go today:'
+                    ),
+                    validClub
+                  )
+                )
+              )
+            )
+          )
         );
       } else {
         return _react2.default.createElement(
@@ -2291,7 +2395,10 @@ ClubDetails.propTypes = {
   hoveredRowIndex: _react.PropTypes.number,
   openBalloonIndex: _react.PropTypes.number,
   isFetching: _react.PropTypes.bool,
-  selectedClub: _react.PropTypes.any
+  selectedClub: _react.PropTypes.any,
+  weatherClass: _react.PropTypes.any,
+  weatherTemp: _react.PropTypes.any,
+  weatherText: _react.PropTypes.any
 };
 
 'use strict';
@@ -2313,7 +2420,10 @@ var mapClubDetailsState = function mapClubDetailsState(state) {
     maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
     hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
     openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
-    selectedClub: state.ClubsReducer.get('selectedMarker')
+    selectedClub: state.ClubsReducer.get('selectedMarker'),
+    weatherClass: state.WeatherReducer.weatherClass,
+    weatherTemp: state.WeatherReducer.temp,
+    weatherText: state.WeatherReducer.text
   };
 };
 

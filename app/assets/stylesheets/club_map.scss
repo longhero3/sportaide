@@ -16,7 +16,12 @@
   -webkit-transition: all .2s ease-in-out;
   display: block;
   &:hover {
-    transform: scale(2.1);;
+    transform: scale(2.1);
+  }
+
+  &.selected {
+    transform: scale(2.1);
+    color: blue;
   }
 }
 
@@ -130,5 +135,31 @@ $cubic: cubic-bezier(.64,.09,.08,1);
     .club-row-name {
       font-weight: bold;
     }
+  }
+}
+
+.club-details-wrapper {
+  margin-top: 200px;
+  background: white;
+  height: 100%;
+  opacity: 0.8;
+  padding: 0 20px;
+  overflow: auto;
+
+  .back-to-map-icon {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .club-name {
+    font-size: 18px;
+    font-weight: lighter;
+  }
+
+  .club-name-separator {
+    height: 1px;
+    width: 100%;
+    opacity: 0.2;
+    background: black;
   }
 }

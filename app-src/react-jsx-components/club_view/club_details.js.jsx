@@ -4,12 +4,46 @@ import {Link} from 'react-router';
 export class ClubDetails extends React.Component {
 
   render(){
+
     if(this.props.selectedClub) {
+      var validClub = <i className="remove icon red"></i>
+      if (this.props.selectedClub.indoor_outdoor == "indoor" || this.props.weatherClass == "sunny" || this.props.weatherClass == "cloudy" ) {
+        validClub = <i className="checkmark icon green"></i>
+      }
+
       return (
-      <div className="six wide column">
-        <Link to="/dashboard/clubs/club_map">Back</Link>
-        You have selected {this.props.selectedClub.name}
-      </div>)
+        <div className="six wide column no-padding">
+          <div className={"weather-container-"+ this.props.weatherClass}>
+            <div className={this.props.weatherClass}/>
+            <div className="weather-panel">
+              <div className="temperature">{this.props.weatherTemp}&deg;C</div>
+              <div className="weather-text">{this.props.weatherText}</div>
+            </div>
+
+            <div className="club-details-wrapper">
+              <div className="ui stackable grid">
+                <div className="two wide column">
+                  <Link to="/dashboard/clubs/club_map"><i className="angle left icon back-to-map-icon"/></Link>
+                </div>
+                <div className="fourteen wide column">
+                  <div className="club-name">
+                    {this.props.selectedClub.name}
+                  </div>
+                  <div className="club-name-separator"></div>
+                  <div className="club-details-content">
+                    <b className="title">Address:</b>{this.props.selectedClub.address}<br/>
+                    <b className="title">Suburb:</b>{this.props.selectedClub.suburb} {this.props.selectedClub.postcode}<br/>
+                    <b className="title">State:</b>{this.props.selectedClub.state}<br/>
+                    <b className="title">Description:</b>{this.props.selectedClub.description}<br/>
+                    <b className="title">Available sports:</b>{this.props.selectedClub.business_category}<br/>
+                    <b className="title">Ok to go today:</b>{validClub}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
     } else {
       return (
         <div className="six wide column">
@@ -36,5 +70,8 @@ ClubDetails.propTypes = {
   hoveredRowIndex: PropTypes.number,
   openBalloonIndex: PropTypes.number,
   isFetching: PropTypes.bool,
-  selectedClub: PropTypes.any
+  selectedClub: PropTypes.any,
+  weatherClass: PropTypes.any,
+  weatherTemp: PropTypes.any,
+  weatherText: PropTypes.any
 }

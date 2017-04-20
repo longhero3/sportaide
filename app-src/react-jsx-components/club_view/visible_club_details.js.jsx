@@ -11,7 +11,10 @@ const mapClubDetailsState = (state) => (
   maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
   hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
   openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
-  selectedClub: state.ClubsReducer.get('selectedMarker')
+  selectedClub: state.ClubsReducer.get('selectedMarker'),
+  weatherClass: state.WeatherReducer.weatherClass,
+  weatherTemp: state.WeatherReducer.temp,
+  weatherText: state.WeatherReducer.text
 }
   )
 

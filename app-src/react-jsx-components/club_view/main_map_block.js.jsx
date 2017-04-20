@@ -88,6 +88,10 @@ export class MainMapBlock extends PureComponent {
 //      const {rowFrom, rowTo} = getRealFromTo(this.props.visibleRowFirst, this.props.visibleRowLast, this.props.maxVisibleRows, this.props.markers.size);
       const rowFrom = 0
       const rowTo = 20
+      var selectedId = -1
+      if(this.props.selectedMarker){
+        selectedId = this.props.selectedMarker.id
+      }
       const Markers = this.props.markers &&
         this.props.markers
         .map((marker, index) => (
@@ -97,7 +101,9 @@ export class MainMapBlock extends PureComponent {
             lng={marker.lng}
             scale={getScale(index + rowFrom, this.props.visibleRowFirst, this.props.visibleRowLast, K_SCALE_NORMAL)}
             {...markerDescriptions[marker.type]}
-            marker={marker} />
+            marker={marker}
+            isSelected={selectedId === marker.id}
+            />
         ));
 
       return (
@@ -137,5 +143,6 @@ MainMapBlock.propTypes = {
   maxVisibleRows: PropTypes.number,
   hoveredRowIndex: PropTypes.number,
   openBalloonIndex: PropTypes.number,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  selectedMarker: PropTypes.any
 }

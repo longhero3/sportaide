@@ -90,10 +90,13 @@ export default class MapMarker extends PureComponent {
 
   // no optimizations at all
   render() {
-
+    var selectedClass = ""
+    if(this.props.isSelected == true) {
+      selectedClass = "selected"
+    }
     return (
       <div className="marker-content" data-hint={this.props.marker.name} onClick={this.selectMarker.bind(this)}>
-        <i className="soccer icon club-icon"></i>
+        <i className={"soccer icon club-icon " + selectedClass}></i>
       </div>
     );
   }
