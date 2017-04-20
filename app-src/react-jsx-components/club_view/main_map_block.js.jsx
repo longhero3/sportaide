@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from 'react';
 import controllable from 'react-controllables';
 import PureComponent from 'react-pure-render/component';
 
-import GoogleMapReact from 'google-map-react';
+import GoogleMap from 'google-map-react';
 
 import {List} from 'immutable';
 
@@ -32,6 +32,10 @@ export class MainMapBlock extends PureComponent {
     store.dispatch(loadClubs())
   }
 
+  componentDidUpdate(prev, next) {
+    store.dispatch(setMap(this.refs.google_map))
+  }
+
   onBoundsChange(center, zoom, bounds, marginBounds) {
     if (this.props.onBoundsChange) {
       this.props.onBoundsChange({center, zoom, bounds, marginBounds});
@@ -42,16 +46,16 @@ export class MainMapBlock extends PureComponent {
   }
 
   onChildClick(key, childProps) {
-    const markerId = childProps.marker.get('id');
-    const index = this.props.markers.findIndex(m => m.get('id') === markerId);
+    const markerId = childProps.marker.id;
+    const index = this.props.markers.findIndex(m => m.id === markerId);
     if (this.props.onChildClick) {
       this.props.onChildClick(index);
     }
   }
 
   onChildMouseEnter(key, childProps) {
-    const markerId = childProps.marker.get('id');
-    const index = this.props.markers.findIndex(m => m.get('id') === markerId);
+    const markerId = childProps.marker.id;
+    const index = this.props.markers.findIndex(m => m.id === markerId);
     if (this.props.onMarkerHover) {
       this.props.onMarkerHover(index);
     }
@@ -76,51 +80,41 @@ export class MainMapBlock extends PureComponent {
   render() {
     if(this.props.isFetching == true) {
       return (
-        <div>
-          <NavBar />
-          <div className="ui container">
-            <div className="ui active centered inline loader"></div>
-          </div>
-          <Footer />
-        </div>)
+        <div className="ui container">
+          <div className="ui active centered inline loader"></div>
+        </div>
+      )
     } else {
-
 //      const {rowFrom, rowTo} = getRealFromTo(this.props.visibleRowFirst, this.props.visibleRowLast, this.props.maxVisibleRows, this.props.markers.size);
       const rowFrom = 0
       const rowTo = 20
       const Markers = this.props.markers &&
-        this.props.markers.filter((m, index) => index >= rowFrom && index <= rowTo)
+        this.props.markers
         .map((marker, index) => (
-          <AnyReactComponent
-            key={"marker_"+ marker.id}
+          <MapMarker
+            key={marker.id}
             lat={marker.lat}
             lng={marker.lng}
-            text={marker.id}/>
+            scale={getScale(index + rowFrom, this.props.visibleRowFirst, this.props.visibleRowLast, K_SCALE_NORMAL)}
+            {...markerDescriptions[marker.type]}
+            marker={marker} />
         ));
 
       return (
-        <div>
-          <NavBar />
-          <div className="map-overlay ui stackable grid" style={ this.state.mapStyle }>
-            <div className="google-map twelve wide column" id="actual-map">
-              <GoogleMapReact
-                bootstrapURLKeys={{ key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A"}}
-                center={this.props.center.toJS()}
-                zoom={this.props.zoom}
-                onChange={this._onBoundsChange}
-                onChildClick={this.onChildClick.bind(this)}
-                onChildMouseEnter={this.onChildMouseEnter.bind(this)}
-                onChildMouseLeave={this.onChildMouseLeave.bind(this)}
-                margin={[K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT]}
-                hoverDistance={K_HOVER_DISTANCE}
-                distanceToMouse={this.distanceToMouse.bind(this)}
-                >
-                {Markers}
-              </GoogleMapReact>
-            </div>
-            <div className="four wide column">Club info section</div>
-          </div>
-          <Footer />
+        <div className="google-map ten wide column no-padding" id="actual-map" style={ this.state.mapStyle }>
+          <GoogleMap ref="google_map"
+            bootstrapURLKeys={{ key: "AIzaSyAB6t6xXm61ML-tLF8f_5PBIYQtrFIEVQs"}}
+            center={this.props.center.toJS()}
+            zoom={this.props.zoom}
+            onChange={this.onBoundsChange.bind(this)}
+            onChildClick={this.onChildClick.bind(this)}
+            onChildMouseEnter={this.onChildMouseEnter.bind(this)}
+            onChildMouseLeave={this.onChildMouseLeave.bind(this)}
+            margin={[K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT]}
+            hoverDistance={K_HOVER_DISTANCE}
+            >
+            {Markers}
+          </GoogleMap>
         </div>
       );
     }
@@ -144,12 +138,4 @@ MainMapBlock.propTypes = {
   hoveredRowIndex: PropTypes.number,
   openBalloonIndex: PropTypes.number,
   isFetching: PropTypes.bool
-}
-
-MainMapBlock.defaultProps = {
-  center: new List([-37.851221000000002, 144.72653700000001]),
-  zoom: 10,
-  visibleRowFirst: -1,
-  visibleRowLast: -1,
-  hoveredRowIndex: -1
 }

@@ -4,6 +4,10 @@ class ClubsController < ApplicationController
     @clubs = Club.all
   end
 
+  def show
+    @club = Club.find(params[:id])
+  end
+
   def search_clubs
     @keywords = params[:text]
     if @keywords && !@keywords.blank?

@@ -71,12 +71,61 @@ var ClubApi = function () {
         return error;
       });
     }
+  }, {
+    key: 'searchClubs',
+    value: function searchClubs(keywords) {
+      return fetch('/clubs/search_clubs.json?text=' + keywords).then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: 'getClub',
+    value: function getClub(id) {
+      return fetch('/clubs/' + id + '.json').then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
   }]);
 
   return ClubApi;
 }();
 
 exports.default = ClubApi;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WeatherApi = function () {
+  function WeatherApi() {
+    _classCallCheck(this, WeatherApi);
+  }
+
+  _createClass(WeatherApi, null, [{
+    key: 'getWeatherInfo',
+    value: function getWeatherInfo() {
+      return fetch('/weather.json').then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
+  }]);
+
+  return WeatherApi;
+}();
+
+exports.default = WeatherApi;
 
 'use strict';
 
@@ -191,7 +240,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.loadClubsSuccess = loadClubsSuccess;
 exports.requestLoadClub = requestLoadClub;
+exports.requestSearchClub = requestSearchClub;
+exports.searchClubSuccess = searchClubSuccess;
+exports.selectClub = selectClub;
+exports.selectClubByID = selectClubByID;
+exports.setMap = setMap;
 exports.loadClubs = loadClubs;
+exports.searchClubs = searchClubs;
+exports.getClub = getClub;
 
 var _isomorphicFetch = require('isomorphic-fetch');
 
@@ -201,6 +257,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var LOAD_CLUB_SUCCESS = 'LOAD_CLUB_SUCCESS';
 var REQUEST_LOAD_CLUB = 'REQUEST_LOAD_CLUB';
+var REQUEST_SEARCH_CLUB = 'REQUEST_SEARCH_CLUB';
+var SEARCH_CLUB_SUCCESS = 'SEARCH_CLUB_SUCCESS';
+var SELECT_CLUB = 'SELECT_CLUB';
+var SELECT_CLUB_BY_ID = 'SELECT_CLUB_BY_ID';
+var SET_MAP = 'SET_MAP';
 
 function loadClubsSuccess(clubs) {
   return { type: LOAD_CLUB_SUCCESS, clubs: clubs };
@@ -210,10 +271,80 @@ function requestLoadClub() {
   return { type: REQUEST_LOAD_CLUB };
 }
 
+function requestSearchClub() {
+  return { type: REQUEST_SEARCH_CLUB };
+}
+
+function searchClubSuccess(clubs) {
+  return { type: SEARCH_CLUB_SUCCESS, clubs: clubs };
+}
+
+function selectClub(club) {
+  return { type: SELECT_CLUB, club: club };
+}
+
+function selectClubByID(club) {
+  return { type: SELECT_CLUB_BY_ID, club: club };
+}
+
+function setMap(map) {
+  return { type: SET_MAP, map: map };
+}
+
 function loadClubs() {
   return function (dispatch) {
     return ClubApi.getAllClubs().then(function (clubs) {
       dispatch(loadClubsSuccess(clubs));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+function searchClubs(term) {
+  return function (dispatch) {
+    return ClubApi.searchClubs(term).then(function (clubs) {
+      dispatch(searchClubSuccess(clubs));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+function getClub(id) {
+  return function (dispatch) {
+    return ClubApi.getClub(id).then(function (club) {
+      dispatch(selectClubByID(club));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+;'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadWeatherSuccess = loadWeatherSuccess;
+exports.loadWeatherInfo = loadWeatherInfo;
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOAD_WEATHER_DATA_SUCCESS = 'LOAD_WEATHER_DATA_SUCCESS';
+
+function loadWeatherSuccess(weather) {
+  return { type: LOAD_WEATHER_DATA_SUCCESS, weather: weather };
+}
+
+function loadWeatherInfo() {
+  return function (dispatch) {
+    return WeatherApi.getWeatherInfo().then(function (weather) {
+      dispatch(loadWeatherSuccess(weather));
     }).catch(function (error) {
       throw error;
     });
@@ -1098,19 +1229,63 @@ var ClubMap = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ClubMap.__proto__ || Object.getPrototypeOf(ClubMap)).call(this, props));
 
     _this.state = {
-      center: { lat: -37.863406, lng: 145.032180 },
+      center: { lat: -37.851221, lng: 144.726537 },
       zoom: 11,
       mapStyle: {
         height: (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 20 + "px"
+      },
+      map: null,
+      goldStar: {
+        path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+        fillColor: 'yellow',
+        fillOpacity: 0.8,
+        scale: 1,
+        strokeColor: 'gold',
+        strokeWeight: 14
       }
     };
     return _this;
   }
 
   _createClass(ClubMap, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.state.map = new google.maps.Map(document.getElementById('google-club-map'), {
+        zoom: 11,
+        center: this.state.center
+      });
+      store.dispatch(loadClubs());
+      var marker = new google.maps.Marker({
+        position: this.state.center,
+        map: this.state.map
+      });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prev, next) {
+      var _this2 = this;
+
+      this.props.markers.forEach(function (club) {
+        var latLng = new google.maps.LatLng(club.lat, club.lng);
+        var marker = new google.maps.Marker({
+          position: latLng,
+          animation: google.maps.Animation.DROP,
+          map: _this2.state.map
+        });
+        var infoWindow = new google.maps.InfoWindow({
+          content: club.description
+        });
+
+        marker.addListener('click', function () {
+          infoWindow.open(this.state.map, marker);
+        }.bind(_this2));
+
+        return marker;
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-
       return _react2.default.createElement(
         'div',
         null,
@@ -1118,25 +1293,11 @@ var ClubMap = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'map-overlay ui stackable grid', style: this.state.mapStyle },
-          _react2.default.createElement(
-            'div',
-            { className: 'google-map twelve wide column' },
-            _react2.default.createElement(
-              _googleMapReact2.default,
-              {
-                defaultCenter: this.state.center,
-                defaultZoom: this.state.zoom,
-                bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" } },
-              _react2.default.createElement(AnyReactComponent, {
-                lat: -37.853406,
-                lng: 145.142180,
-                text: 'Kreyser asdfasdfasdfgasdkfa sdfasd fajklsjkdf jkasdfjk  Avrora' })
-            )
-          ),
+          _react2.default.createElement('div', { className: 'google-map twelve wide column', id: 'google-club-map' }),
           _react2.default.createElement(
             'div',
             { className: 'four wide column' },
-            'Club info section'
+            'Club inf section'
           )
         ),
         _react2.default.createElement(Footer, null)
@@ -1146,6 +1307,23 @@ var ClubMap = function (_React$Component) {
 
   return ClubMap;
 }(_react2.default.Component);
+
+ClubMap.propTypes = {
+  onCenterChange: _react.PropTypes.func, // @controllable generated fn
+  onZoomChange: _react.PropTypes.func, // @controllable generated fn
+  onBoundsChange: _react.PropTypes.func,
+  onMarkerHover: _react.PropTypes.func,
+  onChildClick: _react.PropTypes.func,
+  center: _react.PropTypes.any,
+  zoom: _react.PropTypes.number,
+  markers: _react.PropTypes.any,
+  visibleRowFirst: _react.PropTypes.number,
+  visibleRowLast: _react.PropTypes.number,
+  maxVisibleRows: _react.PropTypes.number,
+  hoveredRowIndex: _react.PropTypes.number,
+  openBalloonIndex: _react.PropTypes.number,
+  isFetching: _react.PropTypes.bool
+};
 
 'use strict';
 
@@ -1303,12 +1481,21 @@ function customDistanceToMouse(pt, mousePos, markerProps) {
 
 ;'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getMarkerHolderStyle = getMarkerHolderStyle;
+exports.getMarkerStyle = getMarkerStyle;
+exports.getMarkerTextStyle = getMarkerTextStyle;
 function getMarkerHolderStyle(size, origin) {
   var left = -size.width * origin.x;
   var top = -size.height * origin.y;
   return {
-    width: 100,
+    position: 'absolute',
+    width: size.width,
     height: size.height,
+    left: left,
+    top: top,
     cursor: 'pointer'
   };
 }
@@ -1318,6 +1505,7 @@ function getMarkerStyle(size, origin) {
   var sizeOriginY = size.height * origin.y;
 
   return {
+    position: 'absolute',
     width: size.width,
     height: size.height,
     left: 0,
@@ -1333,7 +1521,7 @@ function getMarkerStyle(size, origin) {
   };
 }
 
-var textStyle = {
+var textStyle_ = {
   width: '100%',
   textAlign: 'center',
   marginTop: 10,
@@ -1343,7 +1531,7 @@ var textStyle = {
 };
 
 function getMarkerTextStyle() {
-  return textStyle;
+  return textStyle_;
 }
 
 ;'use strict';
@@ -1415,6 +1603,8 @@ var _function2 = _interopRequireDefault(_function);
 var _component = require('react-pure-render/component');
 
 var _component2 = _interopRequireDefault(_component);
+
+var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1512,107 +1702,22 @@ var MapMarker = function (_PureComponent) {
       // }
       this.alive = false;
     }
+  }, {
+    key: 'selectMarker',
+    value: function selectMarker() {
+      _reactRouter.browserHistory.push('/dashboard/clubs/club_map/' + this.props.marker.id);
+    }
 
     // no optimizations at all
 
   }, {
     key: 'render',
     value: function render() {
-      var scale = this.props.hover || this.props.showBalloon ? K_SCALE_HOVER : this.props.scale;
-      scale = this.props.hoveredAtTable ? K_SCALE_TABLE_HOVER : scale;
 
-      var markerHolderStyle = getMarkerHolderStyle(this.props.size, this.props.origin);
-      var markerStyle = getMarkerStyle(this.props.size, this.props.origin);
-
-      var zIndexStyle = {
-        zIndex: Math.round(scale * 10000) - (this.props.showBalloon ? 20 : 0) + (this.props.hover ? K_HINT_HTML_DEFAULT_Z_INDEX : 0) // balloon
-      };
-
-      var textStyleDef = getMarkerTextStyle();
-      var textStyle = calcMarkerTextStyle(scale, textStyleDef);
-
-      var showHint = this.props.hoverState || this.props.showBalloonState; // || this.props.hoveredAtTable;
-
-      // baloon position calc
-      var mapWidth = document.getElementById('actual-map').offsetWidth;
-      var mapHeight = document.getElementById('actual-map').offsetHeight;
-      var markerDim = getElementPosition(document.getElementById('actual-map'));
-
-      var hintBaloonHorizontalPosStyle = getHintBaloonHorizontalPosStyle(markerDim.x, this.props.size.width, this.props.origin.x, mapWidth);
-      var hintBaloonVerticalPosClass = getHintBaloonVerticalPosClass(markerDim.y, mapHeight);
-
-      var hintBalloonBottomOffsetClass = getHintBottomOffsetClass(this.props.size.width, this.props.origin.x);
-
-      // set baloon position at first and then animate (it must be some lib for react animations)
-      var noTransClass = this.props.hover === true && this.props.hoverState !== true ? 'hint--notrans' : '';
-      var noTransBalloonClass = this.props.showBalloon === true && this.props.showBalloonState !== true ? 'hint--notrans' : '';
-
-      var imageClass = this.props.image ? '' : this.props.imageClass;
-      var imageStyle = this.props.image ? {
-        backgroundImage: 'url(' + this.props.image + ')'
-      } : null;
-
-      var styleMarkerMarker = calcMarkerMarkerStyle(scale, zIndexStyle, markerStyle, imageStyle);
-
-      // css hints library https://github.com/istarkov/html-hint
       return _react2.default.createElement(
         'div',
-        {
-          style: markerHolderStyle,
-          className: 'map-marker hint hint--html hint--balloon' },
-        _react2.default.createElement(
-          'div',
-          {
-            style: styleMarkerMarker,
-            className: 'map-marker__marker map-marker__marker--ap' },
-          this.props.withText ? _react2.default.createElement(
-            'div',
-            { style: textStyle },
-            this.props.marker.id
-          ) : _react2.default.createElement('div', null)
-        ),
-        _react2.default.createElement(
-          'div',
-          {
-            className: (0, _classnames2.default)('hint__content map-marker-hint', this.props.showBalloon ? '' : 'noevents'),
-            onMouseEnter: this.onMouseEnterContent.bind(this),
-            onMouseLeave: this.onMouseLeaveContent.bind(this) },
-          _react2.default.createElement(
-            'div',
-            {
-              onClick: this._onCloseClick,
-              className: (0, _classnames2.default)('map-marker-hint__close-button', this.props.showBalloon ? 'map-marker-hint__close-button--visible' : '') },
-            'close'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'map-marker-hint__title' },
-            _react2.default.createElement(
-              'strong',
-              null,
-              this.props.marker.name
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'map-marker-hint__address' },
-            this.props.marker.address
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: (0, _classnames2.default)('map-marker-hint__content', this.props.showBalloon ? 'map-marker-hint__content--visible' : '') },
-            this.props.marker.description
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'a',
-              { className: (0, _classnames2.default)('map-marker-hint__ap-link', this.props.showBalloon ? 'map-marker-hint__ap-link--hidden' : '') },
-              'Click to view more info'
-            )
-          )
-        )
+        { className: 'marker-content', 'data-hint': this.props.marker.name, onClick: this.selectMarker.bind(this) },
+        _react2.default.createElement('i', { className: 'soccer icon club-icon' })
       );
     }
   }, {
@@ -1622,15 +1727,15 @@ var MapMarker = function (_PureComponent) {
 
       var K_TRANS_DELAY = 30;
 
-      if (prevProps.hover !== this.props.hover) {
+      if (prevProps.$hover !== this.props.$hover) {
         setTimeout(function () {
-          return _this2._onHoverStateChange(_this2.props.hover);
+          return _this2.onHoverStateChange(_this2.props.$hover);
         }, K_TRANS_DELAY);
       }
 
       if (prevProps.showBalloon !== this.props.showBalloon) {
         setTimeout(function () {
-          return _this2._onShowBalloonStateChange(_this2.props.showBalloon);
+          return _this2.onShowBalloonStateChange(_this2.props.showBalloon);
         }, K_TRANS_DELAY);
       }
     }
@@ -1645,7 +1750,7 @@ exports.default = MapMarker;
 MapMarker = (0, _reactControllables2.default)(MapMarker, ['hoverState', 'showBalloonState']);
 
 MapMarker.propTypes = {
-  hover: _react.PropTypes.bool,
+  $hover: _react.PropTypes.bool,
   onMouseAllow: _react.PropTypes.func,
 
   marker: _react.PropTypes.any,
@@ -1687,6 +1792,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MainMapBlock = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1747,6 +1854,11 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
       store.dispatch(loadClubs());
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prev, next) {
+      store.dispatch(setMap(this.refs.google_map));
+    }
+  }, {
     key: 'onBoundsChange',
     value: function onBoundsChange(center, zoom, bounds, marginBounds) {
       if (this.props.onBoundsChange) {
@@ -1759,9 +1871,9 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
   }, {
     key: 'onChildClick',
     value: function onChildClick(key, childProps) {
-      var markerId = childProps.marker.get('id');
+      var markerId = childProps.marker.id;
       var index = this.props.markers.findIndex(function (m) {
-        return m.get('id') === markerId;
+        return m.id === markerId;
       });
       if (this.props.onChildClick) {
         this.props.onChildClick(index);
@@ -1770,9 +1882,9 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
   }, {
     key: 'onChildMouseEnter',
     value: function onChildMouseEnter(key, childProps) {
-      var markerId = childProps.marker.get('id');
+      var markerId = childProps.marker.id;
       var index = this.props.markers.findIndex(function (m) {
-        return m.get('id') === markerId;
+        return m.id === markerId;
       });
       if (this.props.onMarkerHover) {
         this.props.onMarkerHover(index);
@@ -1800,67 +1912,46 @@ var MainMapBlock = exports.MainMapBlock = function (_PureComponent) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       if (this.props.isFetching == true) {
         return _react2.default.createElement(
           'div',
-          null,
-          _react2.default.createElement(NavBar, null),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui container' },
-            _react2.default.createElement('div', { className: 'ui active centered inline loader' })
-          ),
-          _react2.default.createElement(Footer, null)
+          { className: 'ui container' },
+          _react2.default.createElement('div', { className: 'ui active centered inline loader' })
         );
       } else {
-
         //      const {rowFrom, rowTo} = getRealFromTo(this.props.visibleRowFirst, this.props.visibleRowLast, this.props.maxVisibleRows, this.props.markers.size);
         var rowFrom = 0;
         var rowTo = 20;
-        var Markers = this.props.markers && this.props.markers.filter(function (m, index) {
-          return index >= rowFrom && index <= rowTo;
-        }).map(function (marker, index) {
-          return _react2.default.createElement(AnyReactComponent, {
-            key: "marker_" + marker.id,
+        var Markers = this.props.markers && this.props.markers.map(function (marker, index) {
+          return _react2.default.createElement(MapMarker, _extends({
+            key: marker.id,
             lat: marker.lat,
             lng: marker.lng,
-            text: marker.id });
+            scale: getScale(index + rowFrom, _this2.props.visibleRowFirst, _this2.props.visibleRowLast, K_SCALE_NORMAL)
+          }, markerDescriptions[marker.type], {
+            marker: marker }));
         });
 
         return _react2.default.createElement(
           'div',
-          null,
-          _react2.default.createElement(NavBar, null),
+          { className: 'google-map ten wide column no-padding', id: 'actual-map', style: this.state.mapStyle },
           _react2.default.createElement(
-            'div',
-            { className: 'map-overlay ui stackable grid', style: this.state.mapStyle },
-            _react2.default.createElement(
-              'div',
-              { className: 'google-map twelve wide column', id: 'actual-map' },
-              _react2.default.createElement(
-                _googleMapReact2.default,
-                {
-                  bootstrapURLKeys: { key: "AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A" },
-                  center: this.props.center.toJS(),
-                  zoom: this.props.zoom,
-                  onChange: this._onBoundsChange,
-                  onChildClick: this.onChildClick.bind(this),
-                  onChildMouseEnter: this.onChildMouseEnter.bind(this),
-                  onChildMouseLeave: this.onChildMouseLeave.bind(this),
-                  margin: [K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT],
-                  hoverDistance: K_HOVER_DISTANCE,
-                  distanceToMouse: this.distanceToMouse.bind(this)
-                },
-                Markers
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'four wide column' },
-              'Club info section'
-            )
-          ),
-          _react2.default.createElement(Footer, null)
+            _googleMapReact2.default,
+            { ref: 'google_map',
+              bootstrapURLKeys: { key: "AIzaSyAB6t6xXm61ML-tLF8f_5PBIYQtrFIEVQs" },
+              center: this.props.center.toJS(),
+              zoom: this.props.zoom,
+              onChange: this.onBoundsChange.bind(this),
+              onChildClick: this.onChildClick.bind(this),
+              onChildMouseEnter: this.onChildMouseEnter.bind(this),
+              onChildMouseLeave: this.onChildMouseLeave.bind(this),
+              margin: [K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT],
+              hoverDistance: K_HOVER_DISTANCE
+            },
+            Markers
+          )
         );
       }
     }
@@ -1888,14 +1979,6 @@ MainMapBlock.propTypes = {
   isFetching: _react.PropTypes.bool
 };
 
-MainMapBlock.defaultProps = {
-  center: new _immutable.List([-37.851221000000002, 144.72653700000001]),
-  zoom: 10,
-  visibleRowFirst: -1,
-  visibleRowLast: -1,
-  hoveredRowIndex: -1
-};
-
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1920,6 +2003,439 @@ var clubMapState = function clubMapState(state) {
 
 var ClubMapMain = (0, _reactRedux.connect)(clubMapState)(MainMapBlock);
 exports.default = ClubMapMain;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ClubRow = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _reactRedux = require('react-redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ClubRow = exports.ClubRow = function (_React$Component) {
+  _inherits(ClubRow, _React$Component);
+
+  function ClubRow() {
+    _classCallCheck(this, ClubRow);
+
+    return _possibleConstructorReturn(this, (ClubRow.__proto__ || Object.getPrototypeOf(ClubRow)).apply(this, arguments));
+  }
+
+  _createClass(ClubRow, [{
+    key: 'handleSelectClub',
+    value: function handleSelectClub() {
+      _reactRouter.browserHistory.push('/dashboard/clubs/club_map/' + this.props.club.id);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var validClub = _react2.default.createElement('div', null);
+      if (this.props.club.indoor_outdoor == "indoor" || this.props.weatherClass == "sunny" || this.props.weatherClass == "cloudy") {
+        validClub = _react2.default.createElement('i', { className: 'checkmark icon able-club-tick' });
+      }
+      return _react2.default.createElement(
+        'div',
+        { className: 'club-row', onClick: this.handleSelectClub.bind(this) },
+        _react2.default.createElement(
+          'div',
+          { className: 'fourteen wide column no-padding' },
+          _react2.default.createElement(
+            'div',
+            { className: 'club-row-name' },
+            this.props.club.name
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'club-row-address' },
+            this.props.club.address
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'two wide column no-padding' },
+          validClub
+        )
+      );
+    }
+  }]);
+
+  return ClubRow;
+}(_react2.default.Component);
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MarkerTable = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MarkerTable = exports.MarkerTable = function (_React$Component) {
+  _inherits(MarkerTable, _React$Component);
+
+  function MarkerTable() {
+    _classCallCheck(this, MarkerTable);
+
+    return _possibleConstructorReturn(this, (MarkerTable.__proto__ || Object.getPrototypeOf(MarkerTable)).apply(this, arguments));
+  }
+
+  _createClass(MarkerTable, [{
+    key: "handleSearchClub",
+    value: function handleSearchClub(event) {
+      if (event.keyCode == 13) {
+        store.dispatch(requestSearchClub());
+        return store.dispatch(searchClubs(event.target.value));
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        "div",
+        { className: "six wide column no-padding" },
+        _react2.default.createElement(
+          "div",
+          { className: "weather-container-" + this.props.weatherClass },
+          _react2.default.createElement("div", { className: this.props.weatherClass }),
+          _react2.default.createElement(
+            "div",
+            { className: "weather-panel" },
+            _react2.default.createElement(
+              "div",
+              { className: "temperature" },
+              this.props.weatherTemp,
+              "\xB0C"
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "weather-text" },
+              this.props.weatherText
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "input-effect-wrapper" },
+            _react2.default.createElement("input", { className: "input-effect search-club", onKeyUp: this.handleSearchClub.bind(this), placeholder: "Search for club ..." }),
+            _react2.default.createElement("span", { className: "input-focus-border" })
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "club-list" },
+            this.props.filteredClubs.map(function (club) {
+              return _react2.default.createElement(ClubRow, { club: club, weatherClass: _this2.props.weatherClass, key: "club_" + club.id });
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return MarkerTable;
+}(_react2.default.Component);
+
+MarkerTable.propTypes = {
+  onCenterChange: _react.PropTypes.func, // @controllable generated fn
+  onZoomChange: _react.PropTypes.func, // @controllable generated fn
+  onBoundsChange: _react.PropTypes.func,
+  onMarkerHover: _react.PropTypes.func,
+  onChildClick: _react.PropTypes.func,
+  center: _react.PropTypes.any,
+  zoom: _react.PropTypes.number,
+  markers: _react.PropTypes.any,
+  visibleRowFirst: _react.PropTypes.number,
+  visibleRowLast: _react.PropTypes.number,
+  maxVisibleRows: _react.PropTypes.number,
+  hoveredRowIndex: _react.PropTypes.number,
+  openBalloonIndex: _react.PropTypes.number,
+  isFetching: _react.PropTypes.bool,
+  filteredClubs: _react.PropTypes.any,
+  weatherClass: _react.PropTypes.any,
+  weatherTemp: _react.PropTypes.any,
+  weatherText: _react.PropTypes.any
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var mapMarkerTableState = function mapMarkerTableState(state) {
+  return {
+    isFetching: state.ClubsReducer.get('isFetching'),
+    center: state.ClubsReducer.get('mapInfo').get('center'),
+    zoom: state.ClubsReducer.get('mapInfo').get('zoom'),
+    markers: state.ClubsReducer.get('dataFiltered'),
+    visibleRowFirst: state.ClubsReducer.get('tableRowsInfo').get('visibleRowFirst'),
+    visibleRowLast: state.ClubsReducer.get('tableRowsInfo').get('visibleRowLast'),
+    maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
+    hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
+    openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
+    filteredClubs: state.ClubsReducer.get('filteredClubs'),
+    weatherClass: state.WeatherReducer.weatherClass,
+    weatherTemp: state.WeatherReducer.temp,
+    weatherText: state.WeatherReducer.text
+  };
+};
+
+var VisibleMarkerTable = (0, _reactRedux.connect)(mapMarkerTableState)(MarkerTable);
+
+exports.default = VisibleMarkerTable;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ClubDetails = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ClubDetails = exports.ClubDetails = function (_React$Component) {
+  _inherits(ClubDetails, _React$Component);
+
+  function ClubDetails() {
+    _classCallCheck(this, ClubDetails);
+
+    return _possibleConstructorReturn(this, (ClubDetails.__proto__ || Object.getPrototypeOf(ClubDetails)).apply(this, arguments));
+  }
+
+  _createClass(ClubDetails, [{
+    key: 'render',
+    value: function render() {
+      if (this.props.selectedClub) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'six wide column' },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/dashboard/clubs/club_map' },
+            'Back'
+          ),
+          'You have selected ',
+          this.props.selectedClub.name
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { className: 'six wide column' },
+          _react2.default.createElement('div', { className: 'ui active centered inline loader' })
+        );
+      }
+    }
+  }]);
+
+  return ClubDetails;
+}(_react2.default.Component);
+
+ClubDetails.propTypes = {
+  onCenterChange: _react.PropTypes.func, // @controllable generated fn
+  onZoomChange: _react.PropTypes.func, // @controllable generated fn
+  onBoundsChange: _react.PropTypes.func,
+  onMarkerHover: _react.PropTypes.func,
+  onChildClick: _react.PropTypes.func,
+  center: _react.PropTypes.any,
+  zoom: _react.PropTypes.number,
+  markers: _react.PropTypes.any,
+  visibleRowFirst: _react.PropTypes.number,
+  visibleRowLast: _react.PropTypes.number,
+  maxVisibleRows: _react.PropTypes.number,
+  hoveredRowIndex: _react.PropTypes.number,
+  openBalloonIndex: _react.PropTypes.number,
+  isFetching: _react.PropTypes.bool,
+  selectedClub: _react.PropTypes.any
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var mapClubDetailsState = function mapClubDetailsState(state) {
+  return {
+    isFetching: state.ClubsReducer.get('isFetching'),
+    center: state.ClubsReducer.get('mapInfo').get('center'),
+    zoom: state.ClubsReducer.get('mapInfo').get('zoom'),
+    markers: state.ClubsReducer.get('dataFiltered'),
+    visibleRowFirst: state.ClubsReducer.get('tableRowsInfo').get('visibleRowFirst'),
+    visibleRowLast: state.ClubsReducer.get('tableRowsInfo').get('visibleRowLast'),
+    maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
+    hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
+    openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
+    selectedClub: state.ClubsReducer.get('selectedMarker')
+  };
+};
+
+var VisibleClubDetails = (0, _reactRedux.connect)(mapClubDetailsState)(ClubDetails);
+
+exports.default = VisibleClubDetails;
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ClubDetailsPage = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ClubDetailsPage = exports.ClubDetailsPage = function (_React$Component) {
+  _inherits(ClubDetailsPage, _React$Component);
+
+  function ClubDetailsPage() {
+    _classCallCheck(this, ClubDetailsPage);
+
+    return _possibleConstructorReturn(this, (ClubDetailsPage.__proto__ || Object.getPrototypeOf(ClubDetailsPage)).apply(this, arguments));
+  }
+
+  _createClass(ClubDetailsPage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      setTimeout(function () {
+        store.dispatch(getClub(this.props.params.club_id));
+      }.bind(this), 10);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prev, state) {
+      setTimeout(function () {
+        store.dispatch(getClub(this.props.params.club_id));
+      }.bind(this), 10);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(NavBar, null),
+        _react2.default.createElement(
+          "div",
+          { className: "map-overlay ui stackable grid" },
+          _react2.default.createElement(ClubMapMain, null),
+          _react2.default.createElement(VisibleClubDetails, null)
+        ),
+        _react2.default.createElement(Footer, null)
+      );
+    }
+  }]);
+
+  return ClubDetailsPage;
+}(_react2.default.Component);
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ClubMainPage = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ClubMainPage = exports.ClubMainPage = function (_React$Component) {
+  _inherits(ClubMainPage, _React$Component);
+
+  function ClubMainPage() {
+    _classCallCheck(this, ClubMainPage);
+
+    return _possibleConstructorReturn(this, (ClubMainPage.__proto__ || Object.getPrototypeOf(ClubMainPage)).apply(this, arguments));
+  }
+
+  _createClass(ClubMainPage, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(NavBar, null),
+        _react2.default.createElement(
+          "div",
+          { className: "map-overlay ui stackable grid no-margin-left-right" },
+          _react2.default.createElement(ClubMapMain, null),
+          _react2.default.createElement(VisibleMarkerTable, null)
+        ),
+        _react2.default.createElement(Footer, null)
+      );
+    }
+  }]);
+
+  return ClubMainPage;
+}(_react2.default.Component);
 
 'use strict';
 
@@ -2069,6 +2585,29 @@ var CourseDetailsReducer = function CourseDetailsReducer() {
 
 exports.default = CourseDetailsReducer;
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var WeatherReducer = function WeatherReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { weatherClass: "sunny", text: "Sunny Day", temp: 16 };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case LOAD_WEATHER_DATA_SUCCESS:
+      return Object.assign({}, state, {
+        weatherClass: action.weather.class_name,
+        text: action.weather.text,
+        temp: action.weather.temp
+      });
+    default:
+      return state;
+  }
+};
+
+exports.default = WeatherReducer;
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2080,8 +2619,6 @@ var _immutable = require('immutable');
 var _immutable2 = _interopRequireDefault(_immutable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var K_LAST_VISIBLE_ROW_AT_SERVER_RENDERING = 5;
 
@@ -2107,15 +2644,17 @@ function calcFilteredAndSortedMarkers(data, mapInfo) {
 }
 
 function defaultMapState() {
-  var _mapInfo;
-
   return _immutable2.default.fromJS({
     data: [],
     dataFiltered: [],
 
-    mapInfo: (_mapInfo = {
-      center: [59.938043, 30.337157]
-    }, _defineProperty(_mapInfo, 'center', [-37.851221000000002, 144.72653700000001]), _defineProperty(_mapInfo, 'bounds', [60.325132160343145, 29.13415407031249, 59.546382183279206, 31.54015992968749]), _defineProperty(_mapInfo, 'marginBounds', [-36.2843135300829, 143.21655153124999, -38.58811868963835, 145.45776246874999]), _defineProperty(_mapInfo, 'zoom', 9), _mapInfo),
+    mapInfo: {
+      center: [-37.851221000000002, 144.72653700000001],
+      // set for server rendering for popular screen res
+      bounds: [60.325132160343145, 29.13415407031249, 59.546382183279206, 31.54015992968749],
+      marginBounds: [-36.2843135300829, 143.21655153124999, -38.58811868963835, 145.45776246874999],
+      zoom: 13
+    },
 
     openBalloonIndex: -1,
 
@@ -2128,7 +2667,11 @@ function defaultMapState() {
       maxVisibleRows: K_LAST_VISIBLE_ROW_AT_SERVER_RENDERING
     },
     clubs: [],
-    isFetching: true
+    isFetching: true,
+    selectedMarker: null,
+    filteredClubs: [],
+    isSearchingClubs: false,
+    map: null
   });
 }
 
@@ -2142,6 +2685,24 @@ var ClubsReducer = function ClubsReducer() {
 
     case REQUEST_SEARCH_COURSE:
       return state.set('isFetching', true);
+
+    case SELECT_CLUB:
+      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng));
+      return state.set('selectedMarker', action.club);
+
+    case SELECT_CLUB_BY_ID:
+      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng));
+      return state.set('selectedMarker', action.club);
+
+    case REQUEST_SEARCH_CLUB:
+      return state.set('isSearchingClub', true);
+
+    case SEARCH_CLUB_SUCCESS:
+      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs);
+
+    case SET_MAP:
+      return state.set('map', action.map);
+
     default:
       return state;
   }
@@ -2158,7 +2719,7 @@ Object.defineProperty(exports, "__esModule", {
 var _redux = require('redux');
 
 var TodoApp = (0, _redux.combineReducers)({
-  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer, ClubsReducer: ClubsReducer
+  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer, ClubsReducer: ClubsReducer, WeatherReducer: WeatherReducer
 });
 
 exports.default = TodoApp;
@@ -2521,7 +3082,8 @@ var Root = function Root(_ref) {
         { path: '/dashboard', component: MainApp },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMapMain }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMainPage }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map/:club_id', component: ClubDetailsPage }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: VisibleCourseView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/search/:keywords', component: VisibleLessonsView })
@@ -2555,6 +3117,8 @@ var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var store = (0, _redux.createStore)(TodoApp, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+store.dispatch(loadWeatherInfo());
 
 (0, _reactDom.render)(_react2.default.createElement(Root, { store: store }), document.getElementById('dashboard'));
 

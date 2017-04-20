@@ -9,6 +9,7 @@ import controllable from 'react-controllables';
 
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import PureComponent from 'react-pure-render/component';
+import { browserHistory } from 'react-router';
 
 const K_HINT_HTML_DEFAULT_Z_INDEX = 1000000;
 const K_SCALE_HOVER = 1;
@@ -83,85 +84,16 @@ export default class MapMarker extends PureComponent {
     this.alive = false;
   }
 
+  selectMarker(){
+    browserHistory.push('/dashboard/clubs/club_map/' + this.props.marker.id)
+  }
+
   // no optimizations at all
   render() {
-    let scale = this.props.hover || this.props.showBalloon ? K_SCALE_HOVER : this.props.scale;
-    scale = this.props.hoveredAtTable ? K_SCALE_TABLE_HOVER : scale;
 
-    const markerHolderStyle = getMarkerHolderStyle(this.props.size, this.props.origin);
-    const markerStyle = getMarkerStyle(this.props.size, this.props.origin);
-
-    const zIndexStyle = {
-      zIndex: Math.round(scale * 10000) - (this.props.showBalloon ? 20 : 0) + (this.props.hover ? K_HINT_HTML_DEFAULT_Z_INDEX : 0) // balloon
-    };
-
-    const textStyleDef = getMarkerTextStyle();
-    const textStyle = calcMarkerTextStyle(scale, textStyleDef);
-
-    const showHint = this.props.hoverState || this.props.showBalloonState; // || this.props.hoveredAtTable;
-
-    // baloon position calc
-    const mapWidth = document.getElementById('actual-map').offsetWidth;
-    const mapHeight = document.getElementById('actual-map').offsetHeight;
-    const markerDim = getElementPosition(document.getElementById('actual-map'));
-
-    const hintBaloonHorizontalPosStyle = getHintBaloonHorizontalPosStyle(markerDim.x, this.props.size.width, this.props.origin.x, mapWidth);
-    const hintBaloonVerticalPosClass = getHintBaloonVerticalPosClass(markerDim.y, mapHeight);
-
-    const hintBalloonBottomOffsetClass = getHintBottomOffsetClass(this.props.size.width, this.props.origin.x);
-
-    // set baloon position at first and then animate (it must be some lib for react animations)
-    const noTransClass = this.props.hover === true && this.props.hoverState !== true ? 'hint--notrans' : '';
-    const noTransBalloonClass = this.props.showBalloon === true && this.props.showBalloonState !== true ? 'hint--notrans' : '';
-
-    const imageClass = this.props.image ? '' : this.props.imageClass;
-    const imageStyle = this.props.image ? {
-      backgroundImage: `url(${this.props.image})`
-    } : null;
-
-    const styleMarkerMarker = calcMarkerMarkerStyle(scale, zIndexStyle, markerStyle, imageStyle);
-
-    // css hints library https://github.com/istarkov/html-hint
     return (
-      <div
-        style={markerHolderStyle}
-        className={'map-marker hint hint--html hint--balloon'}>
-        <div
-          style={styleMarkerMarker}
-          className={'map-marker__marker map-marker__marker--ap'}>
-          {this.props.withText ?
-            <div style={textStyle}>
-            {this.props.marker.id}
-            </div>
-            :
-            <div/>}
-        </div>
-        <div
-          className={cx('hint__content map-marker-hint', this.props.showBalloon ? '' : 'noevents')}
-          onMouseEnter={this.onMouseEnterContent.bind(this)}
-          onMouseLeave={this.onMouseLeaveContent.bind(this)}>
-          <div
-            onClick={this._onCloseClick}
-            className={cx('map-marker-hint__close-button', this.props.showBalloon ? 'map-marker-hint__close-button--visible' : '')}>
-            close
-          </div>
-
-          <div className="map-marker-hint__title">
-            <strong>{this.props.marker.name}</strong>
-          </div>
-          <div className="map-marker-hint__address">
-            {this.props.marker.address}
-          </div>
-
-          <div className={cx('map-marker-hint__content', this.props.showBalloon ? 'map-marker-hint__content--visible' : '')}>
-            {this.props.marker.description}
-          </div>
-
-          <div>
-            <a className={cx('map-marker-hint__ap-link', this.props.showBalloon ? 'map-marker-hint__ap-link--hidden' : '')}>Click to view more info</a>
-          </div>
-
-        </div>
+      <div className="marker-content" data-hint={this.props.marker.name} onClick={this.selectMarker.bind(this)}>
+        <i className="soccer icon club-icon"></i>
       </div>
     );
   }
@@ -169,12 +101,12 @@ export default class MapMarker extends PureComponent {
   componentDidUpdate(prevProps) {
     const K_TRANS_DELAY = 30;
 
-    if (prevProps.hover !== this.props.hover) {
-      setTimeout(() => this._onHoverStateChange(this.props.hover), K_TRANS_DELAY);
+    if (prevProps.$hover !== this.props.$hover) {
+      setTimeout(() => this.onHoverStateChange(this.props.$hover), K_TRANS_DELAY);
     }
 
     if (prevProps.showBalloon !== this.props.showBalloon) {
-      setTimeout(() => this._onShowBalloonStateChange(this.props.showBalloon), K_TRANS_DELAY);
+      setTimeout(() => this.onShowBalloonStateChange(this.props.showBalloon), K_TRANS_DELAY);
     }
   }
 }
@@ -182,7 +114,7 @@ export default class MapMarker extends PureComponent {
 MapMarker = controllable(MapMarker, ['hoverState', 'showBalloonState'])
 
 MapMarker.propTypes = {
-  hover: PropTypes.bool,
+  $hover: PropTypes.bool,
   onMouseAllow: PropTypes.func,
 
   marker: PropTypes.any,

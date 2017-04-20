@@ -6,6 +6,7 @@
     = csrf_meta_tags
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyAgYzJwB6ihmfL635-dcwEFz7siTI9ke6A"}
   %body.new-sprortaide
     .wrapper.wrapper-inner-pages.small-padding
       = yield

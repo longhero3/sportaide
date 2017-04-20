@@ -9,3 +9,126 @@
     height: 100%;
   }
 }
+
+.club-icon {
+  font-size: 20px!important;
+  transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  display: block;
+  &:hover {
+    transform: scale(2.1);;
+  }
+}
+
+$pink: #e91e63;
+$paper: #efefef;
+$clouds: #ecf0f1;
+$teal: #009688;
+$yellow: #ffeb3b;
+$cubic: cubic-bezier(.64,.09,.08,1);
+
+.marker-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  &:after {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    content: attr(data-hint);
+    padding: 6px 10px;
+    top: 3.5em;
+    left: 50%;
+    transform: translateX(-50%) translateY(-2px);
+    background: grey;
+    color: white;
+    white-space: nowrap;
+    z-index: 2;
+    border-radius: 2px;
+    transition: opacity 0.2s $cubic, transform 0.2s $cubic;
+  }
+  &:hover {
+    &:after {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-40%) translateY(0);
+    }
+  }
+
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: solid 5px transparent;
+    border-right: solid 5px transparent;
+    border-bottom: solid 5px grey;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    transform: translateX(70%) translateY(-2px);
+    top: 3.2em;
+    left: 60%;
+    transition: opacity 0.2s $cubic, transform 0.2s $cubic;
+    z-index: 3;
+  }
+  &:hover {
+    &:before {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(70%) translateY(0);
+    }
+  }
+}
+
+.input-effect-wrapper{
+  position: relative;
+  margin-top: 150px;
+  padding: 0 20px;
+}
+
+.input-effect ~ .input-focus-border{ position: absolute;
+  bottom: 0;
+  left: 20px;
+  width: 0;
+  height: 2px;
+  background-color: #3399FF;
+  transition: 0.4s;
+}
+:focus{outline: none;}
+.input-effect:focus ~ .input-focus-border{width: 100%; transition: 0.4s;}
+.input-effect {
+  border: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid #ccc;
+  font: 15px/24px "Lato", Arial, sans-serif;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  background: transparent;
+}
+
+.club-list {
+  height: 100%;
+  overflow: auto;
+  padding: 0 20px;
+
+  .club-row {
+    margin-top: 20px;
+    background-color: white;
+    opacity: 0.8;
+    padding: 5px 20px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    .club-row-name {
+      font-weight: bold;
+    }
+  }
+}

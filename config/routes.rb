@@ -16,8 +16,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :clubs, only: [:index]
+  resources :clubs, only: [:index, :show] do
+    collection do
+      get :search_clubs
+    end
+  end
 
   get 'dashboard' => 'dashboard#index'
+  get 'weather' => 'weather#index'
   get 'dashboard/*path' => 'dashboard#index'
 end

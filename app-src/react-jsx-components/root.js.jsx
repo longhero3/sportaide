@@ -9,7 +9,8 @@ const Root = ({ store }) => (
       <Route path="/dashboard" component={MainApp}>
         <IndexRoute component={MainView}/>
         <Route path="newsfeeds" component={NewsfeedsView}></Route>
-        <Route path="clubs/club_map" component={ClubMapMain}></Route>
+        <Route path="clubs/club_map" component={ClubMainPage}></Route>
+        <Route path="clubs/club_map/:club_id" component={ClubDetailsPage}></Route>
         <Route path="lessons" component={VisibleLessonsView}></Route>
         <Route path="lessons/:course_id" component={VisibleCourseView}></Route>
         <Route path="lessons/search/:keywords" component={VisibleLessonsView}></Route>

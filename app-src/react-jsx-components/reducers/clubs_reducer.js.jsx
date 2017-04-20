@@ -28,12 +28,11 @@ function defaultMapState() {
     dataFiltered: [],
 
     mapInfo: {
-      center: [59.938043, 30.337157],
       center: [-37.851221000000002, 144.72653700000001],
       // set for server rendering for popular screen res
       bounds: [60.325132160343145, 29.13415407031249, 59.546382183279206, 31.54015992968749],
       marginBounds: [-36.2843135300829, 143.21655153124999, -38.58811868963835, 145.45776246874999],
-      zoom: 9
+      zoom: 13
     },
 
     openBalloonIndex: -1,
@@ -47,7 +46,11 @@ function defaultMapState() {
       maxVisibleRows: K_LAST_VISIBLE_ROW_AT_SERVER_RENDERING
     },
     clubs: [],
-    isFetching: true
+    isFetching: true,
+    selectedMarker: null,
+    filteredClubs: [],
+    isSearchingClubs: false,
+    map: null
   });
 }
 
@@ -57,9 +60,26 @@ const ClubsReducer = (state = defaultMapState(), action) => {
       return state.set('data', action.clubs.clubs).set('dataFiltered', action.clubs.clubs)
                   .set('isFetching', false)
 
-
     case REQUEST_SEARCH_COURSE:
       return state.set('isFetching', true)
+
+    case SELECT_CLUB:
+      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng))
+      return state.set('selectedMarker', action.club)
+
+    case SELECT_CLUB_BY_ID:
+      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng))
+      return state.set('selectedMarker', action.club);
+
+    case REQUEST_SEARCH_CLUB:
+      return state.set('isSearchingClub', true)
+
+    case SEARCH_CLUB_SUCCESS:
+      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs)
+
+    case SET_MAP:
+      return state.set('map', action.map)
+
     default:
       return state;
   }

@@ -7,11 +7,13 @@ exports.config =
         before: [
           '../app-src/react-jsx-components/api/course_api.js.jsx',
           '../app-src/react-jsx-components/api/club_api.js.jsx',
+          '../app-src/react-jsx-components/api/weather_api.js.jsx',
 
           '../app-src/react-jsx-components/actions/nav_actions.js.jsx',
           '../app-src/react-jsx-components/actions/course_details_actions.js.jsx',
           '../app-src/react-jsx-components/actions/course_actions.js.jsx',
           '../app-src/react-jsx-components/actions/club_actions.js.jsx',
+          '../app-src/react-jsx-components/actions/weather_actions.js.jsx',
 
           '../app-src/react-jsx-components/lessons/course_block.js.jsx',
           '../app-src/react-jsx-components/lessons/lessons_view.js.jsx',
@@ -37,11 +39,19 @@ exports.config =
           '../app-src/react-jsx-components/club_view/marker_example.js.jsx',
           '../app-src/react-jsx-components/club_view/main_map_block.js.jsx',
           '../app-src/react-jsx-components/club_view/club_map_main.js.jsx',
+          '../app-src/react-jsx-components/club_view/club_row.js.jsx',
+          '../app-src/react-jsx-components/club_view/marker_table.js.jsx',
+          '../app-src/react-jsx-components/club_view/visible_marker_table.js.jsx',
+          '../app-src/react-jsx-components/club_view/club_details.js.jsx',
+          '../app-src/react-jsx-components/club_view/visible_club_details.js.jsx',
+          '../app-src/react-jsx-components/club_view/club_details_page.js.jsx',
+          '../app-src/react-jsx-components/club_view/club_main_page.js.jsx',
 
           '../app-src/react-jsx-components/reducers/todos.js.jsx',
           '../app-src/react-jsx-components/reducers/nav_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/courses_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/course_details_reducer.js.jsx',
+          '../app-src/react-jsx-components/reducers/weather_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/clubs_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/todo_app.js.jsx',
 
