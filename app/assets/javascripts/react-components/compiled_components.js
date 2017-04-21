@@ -2075,7 +2075,9 @@ var ClubRow = exports.ClubRow = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'club-row-address' },
-            this.props.club.address
+            this.props.club.address,
+            ', ',
+            this.props.club.postcode
           )
         ),
         _react2.default.createElement(
