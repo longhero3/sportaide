@@ -14,7 +14,9 @@ const mapClubDetailsState = (state) => (
   selectedClub: state.ClubsReducer.get('selectedMarker'),
   weatherClass: state.WeatherReducer.weatherClass,
   weatherTemp: state.WeatherReducer.temp,
-  weatherText: state.WeatherReducer.text
+  weatherText: state.WeatherReducer.text,
+  tmr: state.WeatherReducer.tmr,
+  otherDay: state.WeatherReducer.otherDay
 }
   )
 

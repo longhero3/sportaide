@@ -120,6 +120,7 @@ $cubic: cubic-bezier(.64,.09,.08,1);
   height: 100%;
   overflow: auto;
   padding: 0 20px;
+  padding-bottom: 200px;
 
   .club-row {
     margin-top: 20px;
@@ -141,9 +142,10 @@ $cubic: cubic-bezier(.64,.09,.08,1);
 .club-details-wrapper {
   margin-top: 200px;
   background: white;
-  height: 100%;
   opacity: 0.8;
   padding: 0 20px;
+  height: 100%;
+  padding-bottom: 200px;
   overflow: auto;
 
   .back-to-map-icon {

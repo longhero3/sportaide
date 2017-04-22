@@ -16,8 +16,20 @@ export class ClubDetails extends React.Component {
           <div className={"weather-container-"+ this.props.weatherClass}>
             <div className={this.props.weatherClass}/>
             <div className="weather-panel">
-              <div className="temperature">{this.props.weatherTemp}&deg;C</div>
-              <div className="weather-text">{this.props.weatherText}</div>
+              <div className="today-weather">
+                <div className="location">{this.props.selectedClub.suburb}</div>
+                <div className="temperature">{this.props.weatherTemp}&deg;C</div>
+                <div className="weather-text">{this.props.weatherText}</div>
+              </div>
+              <div className="forecasts">
+                <div className="tomorrow">
+                  <div className="label">{this.props.tmr.text}</div>
+                  {this.props.tmr.low}&deg; - {this.props.tmr.high}&deg;
+                </div>
+                <div className="day-after"><div className="label">{this.props.otherDay.text}</div>
+                  {this.props.otherDay.low}&deg; - {this.props.otherDay.high}&deg;
+                </div>
+              </div>
             </div>
 
             <div className="club-details-wrapper">
@@ -73,5 +85,7 @@ ClubDetails.propTypes = {
   selectedClub: PropTypes.any,
   weatherClass: PropTypes.any,
   weatherTemp: PropTypes.any,
-  weatherText: PropTypes.any
+  weatherText: PropTypes.any,
+  tmr: PropTypes.any,
+  otherDay: PropTypes.any
 }

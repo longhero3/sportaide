@@ -16,3 +16,13 @@ export function loadWeatherInfo() {
 });
 };
 }
+
+export function loadWeatherOnLocation(location) {
+  return function(dispatch) {
+    return WeatherApi.searchWeather(location).then(weather => {
+      dispatch(loadWeatherSuccess(weather));
+  }).catch(error => {
+    throw(error);
+});
+};
+}

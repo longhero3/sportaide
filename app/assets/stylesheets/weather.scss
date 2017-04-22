@@ -669,6 +669,30 @@ body {
   top: 50px;
   color: white;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 19px;
   left: 154px;
+  width: 50%;
+
+  .today-weather {
+    display: inline-block;
+    .temperature {
+      font-weight: lighter;
+    }
+
+    .weather-text {
+      font-weight: normal;
+    }
+  }
+
+  .forecasts {
+    float: right;
+    font-size: 12px;
+    display: inline-block;
+    padding-top: 8px;
+    .tomorrow {
+      border-bottom: 1px solid white;
+    }
+
+
+  }
 }

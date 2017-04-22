@@ -6,6 +6,14 @@ class WeatherApi {
       return error;
     });
   }
+
+  static searchWeather(location){
+    return fetch('/weather/search_weather.json?location=' + location).then(response => {
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+  }
 }
 
 export default WeatherApi;

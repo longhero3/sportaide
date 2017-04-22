@@ -30,13 +30,6 @@ export class LessonsView extends React.Component{
         <div className="ui container courses-container">
           <div className="ui two column stackable grid">
             <div className="four wide column">
-              <div className="course-navigation">
-                <ul>
-                <li><a href="/dashboard/lessons/recommended_courses">Current Course</a></li>
-                <li><a href="/dashboard/lessons/recommended_courses">Recommended for you</a></li>
-                <li><a href="/dashboard/lessons/recommended_courses">Recents</a></li>
-                </ul>
-              </div>
             </div>
             <div className="twelve wide column">
               {courseContent}

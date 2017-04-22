@@ -14,7 +14,10 @@ const mapMarkerTableState = (state) => (
     filteredClubs: state.ClubsReducer.get('filteredClubs'),
     weatherClass: state.WeatherReducer.weatherClass,
     weatherTemp: state.WeatherReducer.temp,
-    weatherText: state.WeatherReducer.text
+    weatherText: state.WeatherReducer.text,
+    subLocation: state.WeatherReducer.subLocation,
+    tmr: state.WeatherReducer.tmr,
+    otherDay: state.WeatherReducer.otherDay
   }
   )
 

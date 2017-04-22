@@ -120,6 +120,15 @@ var WeatherApi = function () {
         return error;
       });
     }
+  }, {
+    key: 'searchWeather',
+    value: function searchWeather(location) {
+      return fetch('/weather/search_weather.json?location=' + location).then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
   }]);
 
   return WeatherApi;
@@ -328,6 +337,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.loadWeatherSuccess = loadWeatherSuccess;
 exports.loadWeatherInfo = loadWeatherInfo;
+exports.loadWeatherOnLocation = loadWeatherOnLocation;
 
 var _isomorphicFetch = require('isomorphic-fetch');
 
@@ -344,6 +354,16 @@ function loadWeatherSuccess(weather) {
 function loadWeatherInfo() {
   return function (dispatch) {
     return WeatherApi.getWeatherInfo().then(function (weather) {
+      dispatch(loadWeatherSuccess(weather));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+function loadWeatherOnLocation(location) {
+  return function (dispatch) {
+    return WeatherApi.searchWeather(location).then(function (weather) {
       dispatch(loadWeatherSuccess(weather));
     }).catch(function (error) {
       throw error;
@@ -528,45 +548,7 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'ui two column stackable grid' },
-            _react2.default.createElement(
-              'div',
-              { className: 'four wide column' },
-              _react2.default.createElement(
-                'div',
-                { className: 'course-navigation' },
-                _react2.default.createElement(
-                  'ul',
-                  null,
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                      'a',
-                      { href: '/dashboard/lessons/recommended_courses' },
-                      'Current Course'
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                      'a',
-                      { href: '/dashboard/lessons/recommended_courses' },
-                      'Recommended for you'
-                    )
-                  ),
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                      'a',
-                      { href: '/dashboard/lessons/recommended_courses' },
-                      'Recents'
-                    )
-                  )
-                )
-              )
-            ),
+            _react2.default.createElement('div', { className: 'four wide column' }),
             _react2.default.createElement(
               'div',
               { className: 'twelve wide column' },
@@ -2126,6 +2108,7 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
     key: "handleSearchClub",
     value: function handleSearchClub(event) {
       if (event.keyCode == 13) {
+        store.dispatch(loadWeatherOnLocation(event.target.value));
         store.dispatch(requestSearchClub());
         return store.dispatch(searchClubs(event.target.value));
       }
@@ -2147,14 +2130,53 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
             { className: "weather-panel" },
             _react2.default.createElement(
               "div",
-              { className: "temperature" },
-              this.props.weatherTemp,
-              "\xB0C"
+              { className: "today-weather" },
+              _react2.default.createElement(
+                "div",
+                { className: "location" },
+                this.props.subLocation
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "temperature" },
+                this.props.weatherTemp,
+                "\xB0C"
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "weather-text" },
+                this.props.weatherText
+              )
             ),
             _react2.default.createElement(
               "div",
-              { className: "weather-text" },
-              this.props.weatherText
+              { className: "forecasts" },
+              _react2.default.createElement(
+                "div",
+                { className: "tomorrow" },
+                _react2.default.createElement(
+                  "div",
+                  { className: "label" },
+                  this.props.tmr.text
+                ),
+                this.props.tmr.low,
+                "\xB0 - ",
+                this.props.tmr.high,
+                "\xB0"
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "day-after" },
+                _react2.default.createElement(
+                  "div",
+                  { className: "label" },
+                  this.props.otherDay.text
+                ),
+                this.props.otherDay.low,
+                "\xB0 - ",
+                this.props.otherDay.high,
+                "\xB0"
+              )
             )
           ),
           _react2.default.createElement(
@@ -2196,7 +2218,10 @@ MarkerTable.propTypes = {
   filteredClubs: _react.PropTypes.any,
   weatherClass: _react.PropTypes.any,
   weatherTemp: _react.PropTypes.any,
-  weatherText: _react.PropTypes.any
+  weatherText: _react.PropTypes.any,
+  subLocation: _react.PropTypes.any,
+  tmr: _react.PropTypes.any,
+  otherDay: _react.PropTypes.any
 };
 
 'use strict';
@@ -2221,7 +2246,10 @@ var mapMarkerTableState = function mapMarkerTableState(state) {
     filteredClubs: state.ClubsReducer.get('filteredClubs'),
     weatherClass: state.WeatherReducer.weatherClass,
     weatherTemp: state.WeatherReducer.temp,
-    weatherText: state.WeatherReducer.text
+    weatherText: state.WeatherReducer.text,
+    subLocation: state.WeatherReducer.subLocation,
+    tmr: state.WeatherReducer.tmr,
+    otherDay: state.WeatherReducer.otherDay
   };
 };
 
@@ -2283,14 +2311,53 @@ var ClubDetails = exports.ClubDetails = function (_React$Component) {
               { className: 'weather-panel' },
               _react2.default.createElement(
                 'div',
-                { className: 'temperature' },
-                this.props.weatherTemp,
-                '\xB0C'
+                { className: 'today-weather' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'location' },
+                  this.props.selectedClub.suburb
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'temperature' },
+                  this.props.weatherTemp,
+                  '\xB0C'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'weather-text' },
+                  this.props.weatherText
+                )
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'weather-text' },
-                this.props.weatherText
+                { className: 'forecasts' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'tomorrow' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'label' },
+                    this.props.tmr.text
+                  ),
+                  this.props.tmr.low,
+                  '\xB0 - ',
+                  this.props.tmr.high,
+                  '\xB0'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'day-after' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'label' },
+                    this.props.otherDay.text
+                  ),
+                  this.props.otherDay.low,
+                  '\xB0 - ',
+                  this.props.otherDay.high,
+                  '\xB0'
+                )
               )
             ),
             _react2.default.createElement(
@@ -2400,7 +2467,9 @@ ClubDetails.propTypes = {
   selectedClub: _react.PropTypes.any,
   weatherClass: _react.PropTypes.any,
   weatherTemp: _react.PropTypes.any,
-  weatherText: _react.PropTypes.any
+  weatherText: _react.PropTypes.any,
+  tmr: _react.PropTypes.any,
+  otherDay: _react.PropTypes.any
 };
 
 'use strict';
@@ -2425,7 +2494,9 @@ var mapClubDetailsState = function mapClubDetailsState(state) {
     selectedClub: state.ClubsReducer.get('selectedMarker'),
     weatherClass: state.WeatherReducer.weatherClass,
     weatherTemp: state.WeatherReducer.temp,
-    weatherText: state.WeatherReducer.text
+    weatherText: state.WeatherReducer.text,
+    tmr: state.WeatherReducer.tmr,
+    otherDay: state.WeatherReducer.otherDay
   };
 };
 
@@ -2702,8 +2773,26 @@ exports.default = CourseDetailsReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+function defaultWeatherState() {
+  return {
+    weatherClass: "sunny",
+    text: "Sunny Day",
+    temp: 16,
+    tmr: {
+      text: 'Tomorrow',
+      high: 15,
+      low: 10
+    },
+    otherDay: {
+      text: '24/4',
+      high: 15,
+      low: 10
+    }
+  };
+}
+
 var WeatherReducer = function WeatherReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { weatherClass: "sunny", text: "Sunny Day", temp: 16 };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultWeatherState();
   var action = arguments[1];
 
   switch (action.type) {
@@ -2711,7 +2800,10 @@ var WeatherReducer = function WeatherReducer() {
       return Object.assign({}, state, {
         weatherClass: action.weather.class_name,
         text: action.weather.text,
-        temp: action.weather.temp
+        temp: action.weather.temp,
+        subLocation: action.weather.sub_location,
+        tmr: action.weather.tomorrow,
+        otherDay: action.weather.other_day
       });
     default:
       return state;
