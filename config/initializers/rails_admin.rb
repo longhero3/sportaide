@@ -39,6 +39,11 @@ RailsAdmin.config do |config|
     # history_show
   end
 
+  config.authenticate_with do
+    warden.authenticate! scope: :user
+  end
+  config.current_user_method(&:current_user)
+
   config.configure_with(:import) do |config|
     config.logging = true
   end

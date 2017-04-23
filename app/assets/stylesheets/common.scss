@@ -76,6 +76,13 @@ body {
   .wrapper-inner-pages {
     padding-top: 95px;
 
+    &.session-background {
+      background: asset_url("bg.jpg");
+      background-size: cover;
+      padding: 0;
+      margin: 0;
+    }
+
     &.small-padding {
       padding-top: 51px;
     }
