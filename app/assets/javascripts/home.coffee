@@ -19,4 +19,8 @@ $ ->
     if event.keyCode == 13
       window.location.pathname = "/dashboard/lessons/search/#{event.target.value}"
 
+  $('.postcode-search input').on 'keyup', (event) =>
+    if event.keyCode == 13
+      window.location.pathname = "/dashboard/clubs/club_map/search/#{event.target.value}"
+
   $('.ui.checkbox').checkbox()

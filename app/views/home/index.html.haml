@@ -23,3 +23,43 @@
                   .ui.icon.input.fluid
                     %input.prompt{:autocomplete => "off", :placeholder => "Search for sport...", :type => "text"}/
                     %i.search.icon
+.available-features
+  .ui.container
+    .ui.stackable.grid
+      .one.wide.column
+      .four.wide.column.feature
+        .feature-header
+          Online Courses
+        .feature-image
+          %i.search.icon
+        .feature-description
+          Extend your knowledge about your kid's favorite sports to have a fun time playing with them.
+        %a.show-details-btn{:href => "/dashboard/lessons"} Show Details
+      .one.wide.column
+      .four.wide.column.feature
+        .feature-header
+          Club Map
+        .feature-image
+          %i.map.icon
+        .feature-description
+          Search nearby clubs suitable for your kids today. Make sure your kids safe to find the right clubs.
+        %a.show-details-btn{:href => "/dashboard/clubs/club_map"} Show Details
+      .one.wide.column
+      .four.wide.column.feature
+        .feature-header
+          Online Quiz
+        .feature-image
+          %i.star.icon
+        .feature-description
+          Check your understanding about what you have learnt about the sport rules and integrity.
+        %a.show-details-btn{:href => "/dashboard/lessons"} Show Details
+      .one.wide.column
+
+.search-clubs-intro
+  .ui.one.column.center.aligned.grid
+    .ten.wide.column
+      .search-club-title.form-head
+        Find sports near you
+      .ui.icon.input.postcode-search
+        %input.prompt{:autocomplete => "off", :placeholder => "Enter postcode", :type => "number"}/
+        %i.search.icon

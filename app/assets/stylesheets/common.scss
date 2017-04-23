@@ -319,3 +319,51 @@ img {
 .red {
   color: red;
 }
+
+.available-features {
+  padding-bottom: 50px;
+  margin-top: 25px;
+  .feature {
+    text-align: center;
+    transition: all .2s ease-in-out;
+
+    &:hover{
+      transform: scale(1.2);
+    }
+
+    .feature-header {
+      font-weight: bold;
+      font-size: 20px;
+      margin: 20px 0 0 0;
+    }
+
+    .feature-image {
+      font-size: 40px;
+    }
+
+    .feature-description {
+      margin: 0 10px;
+      margin-bottom: 10px;
+    }
+
+    .show-details-btn {
+      color: black;
+      text-decoration: none;
+      border: 1px solid black;
+      padding: 5px 10px;
+      margin-top: 10px;
+      transition: all 0.2s ease;
+      font-weight: 200;
+
+      &:hover {
+        background-color: rgba(43, 27, 18, 0.75);
+        color: white;
+        border-color: rgba(43, 27, 18, 0.75);
+      }
+    }
+  }
+}
+
+.search-clubs-intro {
+  background: darkseagreen;
+}

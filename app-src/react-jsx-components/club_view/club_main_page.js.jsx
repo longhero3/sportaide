@@ -1,6 +1,7 @@
 import React from 'react'
 
 export class ClubMainPage extends React.Component {
+
   render(){
     return (
       <div>

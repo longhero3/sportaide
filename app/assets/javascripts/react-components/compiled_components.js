@@ -3288,6 +3288,7 @@ var Root = function Root(_ref) {
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMainPage }),
         _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map/:club_id', component: ClubDetailsPage }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map/search/:postcode', component: ClubMainPage }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons', component: VisibleLessonsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/:course_id', component: VisibleCourseView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'lessons/search/:keywords', component: VisibleLessonsView })
