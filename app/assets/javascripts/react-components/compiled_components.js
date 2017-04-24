@@ -2811,6 +2811,13 @@ var ClubMainPage = exports.ClubMainPage = function (_React$Component) {
   }
 
   _createClass(ClubMainPage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.params.postcode) {
+        store.dispatch(searchClubs(this.props.params.postcode));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
