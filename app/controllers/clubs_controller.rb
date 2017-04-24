@@ -1,7 +1,7 @@
 class ClubsController < ApplicationController
 
   def index
-    @clubs = Club.all.take(100)
+    @clubs = Club.all.take(50)
   end
 
   def show
