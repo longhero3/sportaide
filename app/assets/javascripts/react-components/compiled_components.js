@@ -2251,6 +2251,7 @@ var ClubRow = exports.ClubRow = function (_React$Component) {
   _createClass(ClubRow, [{
     key: 'handleSelectClub',
     value: function handleSelectClub() {
+      store.dispatch(requestFetcher());
       _reactRouter.browserHistory.push('/dashboard/clubs/club_map/' + this.props.club.id);
     }
   }, {

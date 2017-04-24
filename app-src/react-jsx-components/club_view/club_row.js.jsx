@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 export class ClubRow extends React.Component {
 
   handleSelectClub(){
+    store.dispatch(requestFetcher())
     browserHistory.push('/dashboard/clubs/club_map/' + this.props.club.id)
   }
 
