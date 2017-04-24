@@ -19,8 +19,9 @@
                     %a{ class: 'ui primary button dashboard-btn mobile only', href: '/dashboard/lessons'} Dashboard
                 .column.computer.tablet.only
                   %p.help Play safe. Play smart.
-                .column.computer.tablet.only
+                .column.computer.only
                   %a{ class: 'ui primary button dashboard-btn', href: '/dashboard/lessons'} Dashboard
+                  =link_to "Admin Login", new_user_session_path, class: 'ui primary button dashboard-btn'
                 -#%ul
                 -#  %li.has-subnav
                 -#    .nav-dropdown.nav-dropdown-lang
