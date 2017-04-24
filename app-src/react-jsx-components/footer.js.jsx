@@ -12,6 +12,9 @@ let Footer = ({dispatch}) => (
               <i className="icon align justify"></i>
               Menu
             </button>
+            <button className="ui button" href='/dashboard/clubs/club_map'>
+              Map
+            </button>
           </div>
         </div>
         <div className="eight wide column">
