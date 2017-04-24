@@ -12,7 +12,7 @@ let Footer = ({dispatch}) => (
               Home
             </a>
             <Link className="ui button" to='/dashboard/lessons'>
-              Lessons
+              Courses
             </Link>
             <Link className="ui button" to='/dashboard/clubs/club_map'>
               Map

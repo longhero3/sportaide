@@ -3405,7 +3405,7 @@ var Footer = function Footer(_ref) {
             _react2.default.createElement(
               _reactRouter.Link,
               { className: 'ui button', to: '/dashboard/lessons' },
-              'Lessons'
+              'Courses'
             ),
             _react2.default.createElement(
               _reactRouter.Link,
