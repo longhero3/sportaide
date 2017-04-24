@@ -8,6 +8,7 @@ const SELECT_CLUB = 'SELECT_CLUB'
 const SELECT_CLUB_BY_ID = 'SELECT_CLUB_BY_ID'
 const SET_MAP = 'SET_MAP'
 const REQUEST_FETCHER = "REQUEST_FETCHER"
+const GET_LOCATION = "GET_LOCATION"
 
 
 export function loadClubsSuccess(clubs) {
@@ -41,6 +42,10 @@ export function setMap(map) {
 
 export function requestFetcher(){
   return {type: REQUEST_FETCHER}
+}
+
+export function getLocation(){
+  return {type: GET_LOCATION}
 }
 
 export function loadClubs() {

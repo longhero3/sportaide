@@ -32,6 +32,10 @@ export class ClubDetailsMap extends PureComponent {
     store.dispatch(setMap(this.refs.google_map))
   }
 
+  componentDidMount() {
+    store.dispatch(setMap(this.refs.google_map))
+  }
+
   onBoundsChange(center, zoom, bounds, marginBounds) {
     if (this.props.onBoundsChange) {
       this.props.onBoundsChange({center, zoom, bounds, marginBounds});

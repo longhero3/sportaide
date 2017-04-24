@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 let Footer = ({dispatch}) => (
   <nav className='footer'>
@@ -8,16 +8,15 @@ let Footer = ({dispatch}) => (
       <div className="ui two column grid">
         <div className="eight wide column">
           <div className='menu-section'>
-            
             <a className="ui button" href='/'>
               Home
             </a>
-            <a className="ui button" href='/dashboard/lessons'>
+            <Link className="ui button" to='/dashboard/lessons'>
               Lessons
-            </a>
-            <a className="ui button" href='/dashboard/clubs/club_map'>
+            </Link>
+            <Link className="ui button" to='/dashboard/clubs/club_map'>
               Map
-            </a>
+            </Link>
           </div>
         </div>
         <div className="eight wide column">

@@ -11,6 +11,10 @@ export class MarkerTable extends React.Component {
       return store.dispatch(searchClubs(event.target.value));
     }
   }
+
+  getLocation() {
+    store.dispatch(getLocation())
+  }
   render(){
     return (
       <div className="six wide column no-padding">
@@ -30,6 +34,9 @@ export class MarkerTable extends React.Component {
               <div className="day-after"><div className="label">{this.props.otherDay.text}</div>
                   {this.props.otherDay.low}&deg; - {this.props.otherDay.high}&deg;</div>
             </div>
+          </div>
+          <div className="target-current-location" onClick={this.getLocation.bind(this)}>
+            <i className="ui icon target"/>
           </div>
           <div className="input-effect-wrapper">
             <input className="input-effect search-club" onKeyUp={this.handleSearchClub.bind(this)} placeholder="Search for club ..."/>

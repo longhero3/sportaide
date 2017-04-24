@@ -692,7 +692,17 @@ body {
     .tomorrow {
       border-bottom: 1px solid white;
     }
+  }
+}
 
-
+.target-current-location {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  i {
+    transition: all .2s ease-in-out;
+    &:hover {
+      transform: scale(1.5);
+    }
   }
 }

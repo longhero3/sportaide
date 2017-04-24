@@ -255,6 +255,7 @@ exports.selectClub = selectClub;
 exports.selectClubByID = selectClubByID;
 exports.setMap = setMap;
 exports.requestFetcher = requestFetcher;
+exports.getLocation = getLocation;
 exports.loadClubs = loadClubs;
 exports.searchClubs = searchClubs;
 exports.getClub = getClub;
@@ -273,6 +274,7 @@ var SELECT_CLUB = 'SELECT_CLUB';
 var SELECT_CLUB_BY_ID = 'SELECT_CLUB_BY_ID';
 var SET_MAP = 'SET_MAP';
 var REQUEST_FETCHER = "REQUEST_FETCHER";
+var GET_LOCATION = "GET_LOCATION";
 
 function loadClubsSuccess(clubs) {
   return { type: LOAD_CLUB_SUCCESS, clubs: clubs };
@@ -304,6 +306,10 @@ function setMap(map) {
 
 function requestFetcher() {
   return { type: REQUEST_FETCHER };
+}
+
+function getLocation() {
+  return { type: GET_LOCATION };
 }
 
 function loadClubs() {
@@ -2072,6 +2078,11 @@ var ClubDetailsMap = exports.ClubDetailsMap = function (_PureComponent) {
       store.dispatch(setMap(this.refs.google_map));
     }
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      store.dispatch(setMap(this.refs.google_map));
+    }
+  }, {
     key: 'onBoundsChange',
     value: function onBoundsChange(center, zoom, bounds, marginBounds) {
       if (this.props.onBoundsChange) {
@@ -2332,6 +2343,21 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
       }
     }
   }, {
+    key: "getLocation",
+    value: function (_getLocation) {
+      function getLocation() {
+        return _getLocation.apply(this, arguments);
+      }
+
+      getLocation.toString = function () {
+        return _getLocation.toString();
+      };
+
+      return getLocation;
+    }(function () {
+      store.dispatch(getLocation());
+    })
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -2396,6 +2422,11 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
                 "\xB0"
               )
             )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "target-current-location", onClick: this.getLocation.bind(this) },
+            _react2.default.createElement("i", { className: "ui icon target" })
           ),
           _react2.default.createElement(
             "div",
@@ -3097,6 +3128,36 @@ function defaultMapState() {
   });
 }
 
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+}
+
+function getActualLocation(map) {
+  var infoWindow = new google.maps.InfoWindow();
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      infoWindow.open(map);
+      map.setCenter(pos);
+      return pos;
+    }, function () {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+}
+
 var ClubsReducer = function ClubsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultMapState();
   var action = arguments[1];
@@ -3125,6 +3186,10 @@ var ClubsReducer = function ClubsReducer() {
 
     case REQUEST_FETCHER:
       return state.set('isFetching', true);
+
+    case GET_LOCATION:
+      var location = getActualLocation(state.get('map').map_);
+      return state.set("currentLocation", location);
 
     default:
       return state;
@@ -3333,12 +3398,19 @@ var Footer = function Footer(_ref) {
             'div',
             { className: 'menu-section' },
             _react2.default.createElement(
-              'button',
-              { className: 'ui button', href: '', onClick: function onClick() {
-                  return dispatch(ToggleMenu());
-                } },
-              _react2.default.createElement('i', { className: 'icon align justify' }),
-              'Menu'
+              'a',
+              { className: 'ui button', href: '/' },
+              'Home'
+            ),
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'ui button', to: '/dashboard/lessons' },
+              'Lessons'
+            ),
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'ui button', to: '/dashboard/clubs/club_map' },
+              'Map'
             )
           )
         ),
