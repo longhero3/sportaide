@@ -45,7 +45,6 @@ export class ClubDetails extends React.Component {
                   <div className="club-details-content">
                     <b className="title">Address:</b>{this.props.selectedClub.address}<br/>
                     <b className="title">Suburb:</b>{this.props.selectedClub.suburb} {this.props.selectedClub.postcode}<br/>
-                    <b className="title">State:</b>{this.props.selectedClub.state}<br/>
                     <b className="title">Description:</b>{this.props.selectedClub.description}<br/>
                     <b className="title">Available sports:</b>{this.props.selectedClub.business_category}<br/>
                     <b className="title">Ok to go today:</b>{validClub}

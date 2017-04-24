@@ -254,6 +254,7 @@ exports.searchClubSuccess = searchClubSuccess;
 exports.selectClub = selectClub;
 exports.selectClubByID = selectClubByID;
 exports.setMap = setMap;
+exports.requestFetcher = requestFetcher;
 exports.loadClubs = loadClubs;
 exports.searchClubs = searchClubs;
 exports.getClub = getClub;
@@ -271,6 +272,7 @@ var SEARCH_CLUB_SUCCESS = 'SEARCH_CLUB_SUCCESS';
 var SELECT_CLUB = 'SELECT_CLUB';
 var SELECT_CLUB_BY_ID = 'SELECT_CLUB_BY_ID';
 var SET_MAP = 'SET_MAP';
+var REQUEST_FETCHER = "REQUEST_FETCHER";
 
 function loadClubsSuccess(clubs) {
   return { type: LOAD_CLUB_SUCCESS, clubs: clubs };
@@ -298,6 +300,10 @@ function selectClubByID(club) {
 
 function setMap(map) {
   return { type: SET_MAP, map: map };
+}
+
+function requestFetcher() {
+  return { type: REQUEST_FETCHER };
 }
 
 function loadClubs() {
@@ -1687,6 +1693,7 @@ var MapMarker = function (_PureComponent) {
   }, {
     key: 'selectMarker',
     value: function selectMarker() {
+      store.dispatch(requestFetcher());
       _reactRouter.browserHistory.push('/dashboard/clubs/club_map/' + this.props.marker.id);
     }
 
@@ -1996,6 +2003,216 @@ var clubMapState = function clubMapState(state) {
 
 var ClubMapMain = (0, _reactRedux.connect)(clubMapState)(MainMapBlock);
 exports.default = ClubMapMain;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ClubDetailsMap = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactControllables = require('react-controllables');
+
+var _reactControllables2 = _interopRequireDefault(_reactControllables);
+
+var _component = require('react-pure-render/component');
+
+var _component2 = _interopRequireDefault(_component);
+
+var _googleMapReact = require('google-map-react');
+
+var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
+
+var _immutable = require('immutable');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var K_MARGIN_TOP = 30;
+var K_MARGIN_RIGHT = 30;
+var K_MARGIN_BOTTOM = 30;
+var K_MARGIN_LEFT = 30;
+
+var K_HOVER_DISTANCE = 30;
+
+var ClubDetailsMap = exports.ClubDetailsMap = function (_PureComponent) {
+  _inherits(ClubDetailsMap, _PureComponent);
+
+  function ClubDetailsMap(props) {
+    _classCallCheck(this, ClubDetailsMap);
+
+    var _this = _possibleConstructorReturn(this, (ClubDetailsMap.__proto__ || Object.getPrototypeOf(ClubDetailsMap)).call(this, props));
+
+    _this.state = {
+      center: { lat: -37.33, lng: 144.96 },
+      zoom: 11,
+      mapStyle: {
+        height: (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 20 + "px"
+      }
+    };
+    return _this;
+  }
+
+  _createClass(ClubDetailsMap, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prev, next) {
+      store.dispatch(setMap(this.refs.google_map));
+    }
+  }, {
+    key: 'onBoundsChange',
+    value: function onBoundsChange(center, zoom, bounds, marginBounds) {
+      if (this.props.onBoundsChange) {
+        this.props.onBoundsChange({ center: center, zoom: zoom, bounds: bounds, marginBounds: marginBounds });
+      } else {
+        this.props.onCenterChange(center);
+        this.props.onZoomChange(zoom);
+      }
+    }
+  }, {
+    key: 'onChildClick',
+    value: function onChildClick(key, childProps) {
+      var markerId = childProps.marker.id;
+      var index = this.props.markers.findIndex(function (m) {
+        return m.id === markerId;
+      });
+      if (this.props.onChildClick) {
+        this.props.onChildClick(index);
+      }
+    }
+  }, {
+    key: 'onChildMouseEnter',
+    value: function onChildMouseEnter(key, childProps) {
+      var markerId = childProps.marker.id;
+      var index = this.props.markers.findIndex(function (m) {
+        return m.id === markerId;
+      });
+      if (this.props.onMarkerHover) {
+        this.props.onMarkerHover(index);
+      }
+    }
+  }, {
+    key: 'onChildMouseLeave',
+    value: function onChildMouseLeave() {
+      if (this.props.onMarkerHover) {
+        this.props.onMarkerHover(-1);
+      }
+    }
+  }, {
+    key: 'onBalloonCloseClick',
+    value: function onBalloonCloseClick() {
+      if (this.props.onChildClick) {
+        this.props.onChildClick(-1);
+      }
+    }
+  }, {
+    key: 'distanceToMouse',
+    value: function distanceToMouse() {
+      return customDistanceToMouse();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.props.isFetching == true) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'ui container' },
+          _react2.default.createElement('div', { className: 'ui active centered inline loader' })
+        );
+      } else {
+        //      const {rowFrom, rowTo} = getRealFromTo(this.props.visibleRowFirst, this.props.visibleRowLast, this.props.maxVisibleRows, this.props.markers.size);
+        var newCenter = { lat: parseFloat(this.props.selectedMarker.lat), lng: parseFloat(this.props.selectedMarker.lng) };
+        return _react2.default.createElement(
+          'div',
+          { className: 'google-map ten wide column no-padding', id: 'actual-map', style: this.state.mapStyle },
+          _react2.default.createElement(
+            _googleMapReact2.default,
+            { ref: 'google_map',
+              bootstrapURLKeys: { key: "AIzaSyAB6t6xXm61ML-tLF8f_5PBIYQtrFIEVQs" },
+              center: newCenter,
+              zoom: this.props.zoom,
+              onChange: this.onBoundsChange.bind(this),
+              onChildClick: this.onChildClick.bind(this),
+              onChildMouseEnter: this.onChildMouseEnter.bind(this),
+              onChildMouseLeave: this.onChildMouseLeave.bind(this),
+              margin: [K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT],
+              hoverDistance: K_HOVER_DISTANCE
+            },
+            _react2.default.createElement(MapMarker, _extends({
+              key: this.props.selectedMarker.id,
+              lat: this.props.selectedMarker.lat,
+              lng: this.props.selectedMarker.lng,
+              scale: getScale(0, this.props.visibleRowFirst, this.props.visibleRowLast, K_SCALE_NORMAL)
+            }, markerDescriptions[this.props.selectedMarker.type], {
+              marker: this.props.selectedMarker,
+              isSelected: true
+            }))
+          )
+        );
+      }
+    }
+  }]);
+
+  return ClubDetailsMap;
+}(_component2.default);
+
+exports.ClubDetailsMap = ClubDetailsMap = (0, _reactControllables2.default)(ClubDetailsMap, ['center', 'zoom', 'markers']);
+
+ClubDetailsMap.propTypes = {
+  onCenterChange: _react.PropTypes.func, // @controllable generated fn
+  onZoomChange: _react.PropTypes.func, // @controllable generated fn
+  onBoundsChange: _react.PropTypes.func,
+  onMarkerHover: _react.PropTypes.func,
+  onChildClick: _react.PropTypes.func,
+  center: _react.PropTypes.any,
+  zoom: _react.PropTypes.number,
+  markers: _react.PropTypes.any,
+  visibleRowFirst: _react.PropTypes.number,
+  visibleRowLast: _react.PropTypes.number,
+  maxVisibleRows: _react.PropTypes.number,
+  hoveredRowIndex: _react.PropTypes.number,
+  openBalloonIndex: _react.PropTypes.number,
+  isFetching: _react.PropTypes.bool,
+  selectedMarker: _react.PropTypes.any
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var clubDetailsMapState = function clubDetailsMapState(state) {
+  return {
+    isFetching: state.ClubsReducer.get('isFetching'),
+    center: state.ClubsReducer.get('mapInfo').get('center'),
+    zoom: state.ClubsReducer.get('mapInfo').get('zoom'),
+    markers: state.ClubsReducer.get('dataFiltered'),
+    visibleRowFirst: state.ClubsReducer.get('tableRowsInfo').get('visibleRowFirst'),
+    visibleRowLast: state.ClubsReducer.get('tableRowsInfo').get('visibleRowLast'),
+    maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
+    hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
+    openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
+    selectedMarker: state.ClubsReducer.get('selectedMarker')
+  };
+};
+
+var VisibleClubDetailsMap = (0, _reactRedux.connect)(clubDetailsMapState)(ClubDetailsMap);
+exports.default = VisibleClubDetailsMap;
 
 'use strict';
 
@@ -2406,13 +2623,6 @@ var ClubDetails = exports.ClubDetails = function (_React$Component) {
                     _react2.default.createElement(
                       'b',
                       { className: 'title' },
-                      'State:'
-                    ),
-                    this.props.selectedClub.state,
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement(
-                      'b',
-                      { className: 'title' },
                       'Description:'
                     ),
                     this.props.selectedClub.description,
@@ -2558,7 +2768,7 @@ var ClubDetailsPage = exports.ClubDetailsPage = function (_React$Component) {
         _react2.default.createElement(
           "div",
           { className: "map-overlay ui stackable grid" },
-          _react2.default.createElement(ClubMapMain, null),
+          _react2.default.createElement(VisibleClubDetailsMap, null),
           _react2.default.createElement(VisibleClubDetails, null)
         ),
         _react2.default.createElement(Footer, null)
@@ -2891,12 +3101,10 @@ var ClubsReducer = function ClubsReducer() {
       return state.set('isFetching', true);
 
     case SELECT_CLUB:
-      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng));
       return state.set('selectedMarker', action.club);
 
     case SELECT_CLUB_BY_ID:
-      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng));
-      return state.set('selectedMarker', action.club);
+      return state.set('selectedMarker', action.club).set('isFetching', false);
 
     case REQUEST_SEARCH_CLUB:
       return state.set('isSearchingClub', true);
@@ -2906,6 +3114,9 @@ var ClubsReducer = function ClubsReducer() {
 
     case SET_MAP:
       return state.set('map', action.map);
+
+    case REQUEST_FETCHER:
+      return state.set('isFetching', true);
 
     default:
       return state;

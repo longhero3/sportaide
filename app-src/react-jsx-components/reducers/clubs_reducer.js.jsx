@@ -64,12 +64,10 @@ const ClubsReducer = (state = defaultMapState(), action) => {
       return state.set('isFetching', true)
 
     case SELECT_CLUB:
-      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng))
       return state.set('selectedMarker', action.club)
 
     case SELECT_CLUB_BY_ID:
-      state.get('map').map_.setCenter(new google.maps.LatLng(action.club.lat, action.club.lng))
-      return state.set('selectedMarker', action.club);
+      return state.set('selectedMarker', action.club).set('isFetching', false);
 
     case REQUEST_SEARCH_CLUB:
       return state.set('isSearchingClub', true)
@@ -79,6 +77,9 @@ const ClubsReducer = (state = defaultMapState(), action) => {
 
     case SET_MAP:
       return state.set('map', action.map)
+
+    case REQUEST_FETCHER:
+      return state.set('isFetching', true)
 
     default:
       return state;

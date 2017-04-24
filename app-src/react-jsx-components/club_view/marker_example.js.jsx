@@ -85,6 +85,7 @@ export default class MapMarker extends PureComponent {
   }
 
   selectMarker(){
+    store.dispatch(requestFetcher())
     browserHistory.push('/dashboard/clubs/club_map/' + this.props.marker.id)
   }
 

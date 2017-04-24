@@ -14,7 +14,7 @@ export class ClubDetailsPage extends React.Component {
       <div>
         <NavBar />
         <div className="map-overlay ui stackable grid">
-          <ClubMapMain/>
+          <VisibleClubDetailsMap/>
           <VisibleClubDetails/>
         </div>
         <Footer/>

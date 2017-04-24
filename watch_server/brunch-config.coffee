@@ -39,6 +39,8 @@ exports.config =
           '../app-src/react-jsx-components/club_view/marker_example.js.jsx',
           '../app-src/react-jsx-components/club_view/main_map_block.js.jsx',
           '../app-src/react-jsx-components/club_view/club_map_main.js.jsx',
+          '../app-src/react-jsx-components/club_view/club_details_map.js.jsx',
+          '../app-src/react-jsx-components/club_view/visible_club_details_map.js.jsx',
           '../app-src/react-jsx-components/club_view/club_row.js.jsx',
           '../app-src/react-jsx-components/club_view/marker_table.js.jsx',
           '../app-src/react-jsx-components/club_view/visible_marker_table.js.jsx',
