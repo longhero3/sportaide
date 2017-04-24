@@ -8,13 +8,16 @@ let Footer = ({dispatch}) => (
       <div className="ui two column grid">
         <div className="eight wide column">
           <div className='menu-section'>
-            <button className="ui button" href='' onClick={() => dispatch(ToggleMenu())}>
-              <i className="icon align justify"></i>
-              Menu
-            </button>
-            <button className="ui button" href='/dashboard/clubs/club_map'>
+            
+            <a className="ui button" href='/'>
+              Home
+            </a>
+            <a className="ui button" href='/dashboard/lessons'>
+              Lessons
+            </a>
+            <a className="ui button" href='/dashboard/clubs/club_map'>
               Map
-            </button>
+            </a>
           </div>
         </div>
         <div className="eight wide column">
