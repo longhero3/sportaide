@@ -3423,7 +3423,7 @@ var Footer = function Footer(_ref) {
             _react2.default.createElement(
               'div',
               { className: 'ui icon input fluid' },
-              _react2.default.createElement('input', { type: 'text', placeholder: 'Search...', onKeyUp: function onKeyUp(event) {
+              _react2.default.createElement('input', { type: 'text', placeholder: 'Search for courses...', onKeyUp: function onKeyUp(event) {
                   if (event.keyCode == 13) {
                     _reactRouter.browserHistory.push('/dashboard/lessons');
                     dispatch(requestSearchCourses());

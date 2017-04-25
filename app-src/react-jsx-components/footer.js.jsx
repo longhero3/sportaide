@@ -22,7 +22,7 @@ let Footer = ({dispatch}) => (
         <div className="eight wide column">
           <div className="general-search-bar">
             <div className="ui icon input fluid">
-              <input type="text" placeholder="Search..." onKeyUp={(event) => {
+              <input type="text" placeholder="Search for courses..." onKeyUp={(event) => {
                 if(event.keyCode == 13) {
                   browserHistory.push('/dashboard/lessons')
                   dispatch(requestSearchCourses())
