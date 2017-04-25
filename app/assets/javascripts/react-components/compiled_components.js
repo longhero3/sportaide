@@ -2669,7 +2669,7 @@ var ClubDetails = exports.ClubDetails = function (_React$Component) {
                     _react2.default.createElement(
                       'b',
                       { className: 'title' },
-                      'Ok to go today:'
+                      'Weather condition:'
                     ),
                     validClub
                   )
