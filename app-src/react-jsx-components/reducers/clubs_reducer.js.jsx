@@ -127,6 +127,7 @@ const ClubsReducer = (state = defaultMapState(), action) => {
 
     case HOVERED_CLUB_SELECTED:
       return state.set('hoveredClub', action.club)
+             .mergeDeep({mapInfo: {center: [parseFloat(action.club.lat), parseFloat(action.club.lng)]}})
 
     case HOVER_OUT:
       return state.set('hoveredClub', null)
