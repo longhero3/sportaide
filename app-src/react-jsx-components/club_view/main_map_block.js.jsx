@@ -29,7 +29,7 @@ export class MainMapBlock extends PureComponent {
   }
 
   componentDidMount(){
-    store.dispatch(loadClubs())
+    store.dispatch(cancelFetching())
   }
 
   componentDidUpdate(prev, next) {

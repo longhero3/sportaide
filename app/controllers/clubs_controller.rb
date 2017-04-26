@@ -13,7 +13,7 @@ class ClubsController < ApplicationController
     if @keywords && !@keywords.blank?
       @clubs = Club.search_by_keywords(params[:text])
     else
-      @clubs = Club.all
+      @clubs = Club.all.take(50)
     end
   end
 end

@@ -32,7 +32,7 @@ function defaultMapState() {
       // set for server rendering for popular screen res
       bounds: [60.325132160343145, 29.13415407031249, 59.546382183279206, 31.54015992968749],
       marginBounds: [-36.2843135300829, 143.21655153124999, -38.58811868963835, 145.45776246874999],
-      zoom: 13
+      zoom: 10
     },
 
     openBalloonIndex: -1,
@@ -100,19 +100,25 @@ const ClubsReducer = (state = defaultMapState(), action) => {
       return state.set('selectedMarker', action.club)
 
     case SELECT_CLUB_BY_ID:
-      return state.set('selectedMarker', action.club).set('isFetching', false);
+      return state.set('selectedMarker', action.club).set('isFetching', false).mergeDeep({mapInfo: {zoom: 13}});
 
     case REQUEST_SEARCH_CLUB:
       return state.set('isSearchingClub', true)
 
     case SEARCH_CLUB_SUCCESS:
-      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs)
+      return state.set('isSearchingClubs', false)
+            .set('filteredClubs', action.clubs.clubs)
+            .set('dataFiltered', action.clubs.clubs)
+            .mergeDeep({mapInfo: {center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)]}, zoom: 11})
 
     case SET_MAP:
       return state.set('map', action.map)
 
     case REQUEST_FETCHER:
       return state.set('isFetching', true)
+
+    case CANCEL_FETCHING:
+      return state.set('isFetching', false)
 
     case GET_LOCATION:
       var location = getActualLocation(state.get('map').map_)

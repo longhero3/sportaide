@@ -9,6 +9,7 @@ const SELECT_CLUB_BY_ID = 'SELECT_CLUB_BY_ID'
 const SET_MAP = 'SET_MAP'
 const REQUEST_FETCHER = "REQUEST_FETCHER"
 const GET_LOCATION = "GET_LOCATION"
+const CANCEL_FETCHING= "CANCEL_FETCHING"
 
 
 export function loadClubsSuccess(clubs) {
@@ -18,6 +19,10 @@ export function loadClubsSuccess(clubs) {
 
 export function requestLoadClub() {
   return {type: REQUEST_LOAD_CLUB}
+}
+
+export function cancelFetching(){
+  return {type: CANCEL_FETCHING}
 }
 
 export function requestSearchClub() {
