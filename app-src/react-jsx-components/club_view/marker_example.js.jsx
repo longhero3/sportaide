@@ -11,6 +11,8 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import PureComponent from 'react-pure-render/component';
 import { browserHistory } from 'react-router';
 
+import {connect} from 'react-redux';
+
 const K_HINT_HTML_DEFAULT_Z_INDEX = 1000000;
 const K_SCALE_HOVER = 1;
 const K_SCALE_TABLE_HOVER = 1;
@@ -95,8 +97,15 @@ export default class MapMarker extends PureComponent {
     if(this.props.isSelected == true) {
       selectedClass = "selected"
     }
+
+    if(this.props.hoveredClub) {
+      if(this.props.hoveredClub.id == this.props.marker.id) {
+        selectedClass = "selected"
+      }
+    }
+
     return (
-      <div className="marker-content" data-hint={this.props.marker.name} onClick={this.selectMarker.bind(this)}>
+      <div className={"marker-content " + selectedClass} data-hint={this.props.marker.name} onClick={this.selectMarker.bind(this)}>
         <i className={"soccer icon club-icon " + selectedClass}></i>
       </div>
     );
@@ -140,7 +149,8 @@ MapMarker.propTypes = {
   withText: PropTypes.bool,
   hintType: PropTypes.string,
   lng: PropTypes.any,
-  lat: PropTypes.any
+  lat: PropTypes.any,
+  hoveredClub: PropTypes.any
 };
 
 MapMarker.defaultProps = {
@@ -153,3 +163,10 @@ MapMarker.defaultProps = {
   imageClass: 'map-marker__marker--big',
   hintType: 'hint--info'
 };
+
+
+const mapMarkerState = (state) => ({
+  hoveredClub: state.ClubsReducer.get('hoveredClub')
+})
+
+MapMarker = connect(mapMarkerState)(MapMarker)

@@ -50,7 +50,8 @@ function defaultMapState() {
     selectedMarker: null,
     filteredClubs: [],
     isSearchingClubs: false,
-    map: null
+    map: null,
+    hoveredClub: null
   });
 }
 
@@ -109,7 +110,7 @@ const ClubsReducer = (state = defaultMapState(), action) => {
       return state.set('isSearchingClubs', false)
             .set('filteredClubs', action.clubs.clubs)
             .set('dataFiltered', action.clubs.clubs)
-            .mergeDeep({mapInfo: {center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)]}, zoom: 11})
+            .mergeDeep({mapInfo: {center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)]}, zoom: 10})
 
     case SET_MAP:
       return state.set('map', action.map)
@@ -118,12 +119,17 @@ const ClubsReducer = (state = defaultMapState(), action) => {
       return state.set('isFetching', true)
 
     case CANCEL_FETCHING:
-      return state.set('isFetching', false)
+      return state.set('isFetching', false).set('selectedMarker', null)
 
     case GET_LOCATION:
       var location = getActualLocation(state.get('map').map_)
       return state.set("currentLocation", location)
 
+    case HOVERED_CLUB_SELECTED:
+      return state.set('hoveredClub', action.club)
+
+    case HOVER_OUT:
+      return state.set('hoveredClub', null)
     default:
       return state;
   }

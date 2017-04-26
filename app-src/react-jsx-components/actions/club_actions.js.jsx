@@ -10,7 +10,8 @@ const SET_MAP = 'SET_MAP'
 const REQUEST_FETCHER = "REQUEST_FETCHER"
 const GET_LOCATION = "GET_LOCATION"
 const CANCEL_FETCHING= "CANCEL_FETCHING"
-
+const HOVERED_CLUB_SELECTED = "HOVERED_CLUB_SELECTED"
+const HOVER_OUT = "HOVER_OUT"
 
 export function loadClubsSuccess(clubs) {
   return {type: LOAD_CLUB_SUCCESS, clubs};
@@ -19,6 +20,14 @@ export function loadClubsSuccess(clubs) {
 
 export function requestLoadClub() {
   return {type: REQUEST_LOAD_CLUB}
+}
+
+export function setHoveredClub(club){
+  return {type: HOVERED_CLUB_SELECTED, club}
+}
+
+export function setHoverOut(){
+  return {type: HOVER_OUT}
 }
 
 export function cancelFetching(){

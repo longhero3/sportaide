@@ -249,6 +249,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.loadClubsSuccess = loadClubsSuccess;
 exports.requestLoadClub = requestLoadClub;
+exports.setHoveredClub = setHoveredClub;
+exports.setHoverOut = setHoverOut;
 exports.cancelFetching = cancelFetching;
 exports.requestSearchClub = requestSearchClub;
 exports.searchClubSuccess = searchClubSuccess;
@@ -277,6 +279,8 @@ var SET_MAP = 'SET_MAP';
 var REQUEST_FETCHER = "REQUEST_FETCHER";
 var GET_LOCATION = "GET_LOCATION";
 var CANCEL_FETCHING = "CANCEL_FETCHING";
+var HOVERED_CLUB_SELECTED = "HOVERED_CLUB_SELECTED";
+var HOVER_OUT = "HOVER_OUT";
 
 function loadClubsSuccess(clubs) {
   return { type: LOAD_CLUB_SUCCESS, clubs: clubs };
@@ -284,6 +288,14 @@ function loadClubsSuccess(clubs) {
 
 function requestLoadClub() {
   return { type: REQUEST_LOAD_CLUB };
+}
+
+function setHoveredClub(club) {
+  return { type: HOVERED_CLUB_SELECTED, club: club };
+}
+
+function setHoverOut() {
+  return { type: HOVER_OUT };
 }
 
 function cancelFetching() {
@@ -1606,6 +1618,8 @@ var _component2 = _interopRequireDefault(_component);
 
 var _reactRouter = require('react-router');
 
+var _reactRedux = require('react-redux');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1718,9 +1732,16 @@ var MapMarker = function (_PureComponent) {
       if (this.props.isSelected == true) {
         selectedClass = "selected";
       }
+
+      if (this.props.hoveredClub) {
+        if (this.props.hoveredClub.id == this.props.marker.id) {
+          selectedClass = "selected";
+        }
+      }
+
       return _react2.default.createElement(
         'div',
-        { className: 'marker-content', 'data-hint': this.props.marker.name, onClick: this.selectMarker.bind(this) },
+        { className: "marker-content " + selectedClass, 'data-hint': this.props.marker.name, onClick: this.selectMarker.bind(this) },
         _react2.default.createElement('i', { className: "soccer icon club-icon " + selectedClass })
       );
     }
@@ -1776,7 +1797,8 @@ MapMarker.propTypes = {
   withText: _react.PropTypes.bool,
   hintType: _react.PropTypes.string,
   lng: _react.PropTypes.any,
-  lat: _react.PropTypes.any
+  lat: _react.PropTypes.any,
+  hoveredClub: _react.PropTypes.any
 };
 
 MapMarker.defaultProps = {
@@ -1789,6 +1811,14 @@ MapMarker.defaultProps = {
   imageClass: 'map-marker__marker--big',
   hintType: 'hint--info'
 };
+
+var mapMarkerState = function mapMarkerState(state) {
+  return {
+    hoveredClub: state.ClubsReducer.get('hoveredClub')
+  };
+};
+
+MapMarker = (0, _reactRedux.connect)(mapMarkerState)(MapMarker);
 
 'use strict';
 
@@ -2272,6 +2302,16 @@ var ClubRow = exports.ClubRow = function (_React$Component) {
       _reactRouter.browserHistory.push('/dashboard/clubs/club_map/' + this.props.club.id);
     }
   }, {
+    key: 'handleHover',
+    value: function handleHover() {
+      store.dispatch(setHoveredClub(this.props.club));
+    }
+  }, {
+    key: 'handleHoverOut',
+    value: function handleHoverOut() {
+      store.dispatch(setHoverOut());
+    }
+  }, {
     key: 'render',
     value: function render() {
       var validClub = _react2.default.createElement('div', null);
@@ -2280,7 +2320,7 @@ var ClubRow = exports.ClubRow = function (_React$Component) {
       }
       return _react2.default.createElement(
         'div',
-        { className: 'club-row', onClick: this.handleSelectClub.bind(this) },
+        { className: 'club-row', onClick: this.handleSelectClub.bind(this), onMouseOver: this.handleHover.bind(this), onMouseOut: this.handleHoverOut.bind(this) },
         _react2.default.createElement(
           'div',
           { className: 'fourteen wide column no-padding' },
@@ -2437,7 +2477,7 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
           _react2.default.createElement(
             "div",
             { className: "input-effect-wrapper" },
-            _react2.default.createElement("input", { className: "input-effect search-club", onKeyUp: this.handleSearchClub.bind(this), placeholder: "Search for club ..." }),
+            _react2.default.createElement("input", { className: "input-effect search-club", onKeyUp: this.handleSearchClub.bind(this), placeholder: "Search for clubs ..." }),
             _react2.default.createElement("span", { className: "input-focus-border" })
           ),
           _react2.default.createElement(
@@ -3130,7 +3170,8 @@ function defaultMapState() {
     selectedMarker: null,
     filteredClubs: [],
     isSearchingClubs: false,
-    map: null
+    map: null,
+    hoveredClub: null
   });
 }
 
@@ -3185,7 +3226,7 @@ var ClubsReducer = function ClubsReducer() {
       return state.set('isSearchingClub', true);
 
     case SEARCH_CLUB_SUCCESS:
-      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).mergeDeep({ mapInfo: { center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)] }, zoom: 11 });
+      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).mergeDeep({ mapInfo: { center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)] }, zoom: 10 });
 
     case SET_MAP:
       return state.set('map', action.map);
@@ -3194,12 +3235,17 @@ var ClubsReducer = function ClubsReducer() {
       return state.set('isFetching', true);
 
     case CANCEL_FETCHING:
-      return state.set('isFetching', false);
+      return state.set('isFetching', false).set('selectedMarker', null);
 
     case GET_LOCATION:
       var location = getActualLocation(state.get('map').map_);
       return state.set("currentLocation", location);
 
+    case HOVERED_CLUB_SELECTED:
+      return state.set('hoveredClub', action.club);
+
+    case HOVER_OUT:
+      return state.set('hoveredClub', null);
     default:
       return state;
   }
