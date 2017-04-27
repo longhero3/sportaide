@@ -185,7 +185,7 @@ $(document).on 'rails_admin.dom_ready', (e, content) ->
     if $editors.length
       if not window.CKEDITOR
         options = $editors.first().data('options')
-        window.CKEDITOR_BASEPATH = options['base_location']
+        window.CKEDITOR_BASEPATH = '/ckeditor/'
         $.getScript options['jspath'], (script, textStatus, jqXHR) =>
           goCkeditors()
       else
