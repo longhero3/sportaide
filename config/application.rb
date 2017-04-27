@@ -12,5 +12,6 @@ module Sportaide
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'Melbourne'
+    config.assets.precompile += %w( ckeditor/* )
   end
 end
