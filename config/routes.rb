@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount Ckeditor::Engine => '/admin/ckeditor'
+  mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: { sessions: 'users/sessions' }
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'home#index'
