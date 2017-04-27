@@ -35,6 +35,25 @@ body {
         .header-inner {
           padding: 10px 0 7px;
           position: relative;
+
+          .menu-item {
+            color: black;
+            font-weight: bold;
+            height: 35px;
+            display: inline-block;
+            line-height: 35px;
+            box-sizing: border-box;
+            border-right: 1px solid black;
+            padding: 0 14px;
+
+            &:first-child {
+              border-left: 1px solid black;
+            }
+
+            &:hover {
+              color: #2185D0;
+            }
+          }
         }
       }
 
