@@ -1,1 +1,1 @@
-//= require froala_editor.min
+//= require ckeditor/init

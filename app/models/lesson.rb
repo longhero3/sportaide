@@ -8,13 +8,13 @@ class Lesson < ApplicationRecord
     create do
       field :title
       field :preferred_url
-      field :transcript, :froala
+      field :transcript, :ck_editor
     end
 
     edit do
       field :title
       field :preferred_url
-      field :transcript, :froala
+      field :transcript, :ck_editor
     end
   end
 end
