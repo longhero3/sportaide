@@ -43,12 +43,7 @@ body {
             display: inline-block;
             line-height: 35px;
             box-sizing: border-box;
-            border-right: 1px solid black;
             padding: 0 14px;
-
-            &:first-child {
-              border-left: 1px solid black;
-            }
 
             &:hover {
               color: #2185D0;
