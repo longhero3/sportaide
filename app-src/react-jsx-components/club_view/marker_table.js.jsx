@@ -39,7 +39,7 @@ export class MarkerTable extends React.Component {
             <i className="ui icon target"/>
           </div>
           <div className="input-effect-wrapper">
-            <input className="input-effect search-club" onKeyUp={this.handleSearchClub.bind(this)} placeholder="Search for clubs ..."/>
+            <input className="input-effect search-club" onKeyUp={this.handleSearchClub.bind(this)} placeholder="Search by postcodes, sports, club names ..."/>
             <span className="input-focus-border" />
           </div>
 
