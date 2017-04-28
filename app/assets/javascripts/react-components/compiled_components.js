@@ -898,6 +898,15 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
       return { __html: content };
     }
   }, {
+    key: 'createQuizMarkup',
+    value: function createQuizMarkup() {
+      if (this.props.lesson.quiz) {
+        return { __html: '' + this.props.lesson.quiz.content };
+      } else {
+        return { __html: '<p>There is no quiz for this lesson.</p>' };
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       if (this.props.isFetching == true) {
@@ -907,6 +916,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
           _react2.default.createElement('div', { className: 'ui active centered inline loader' })
         );
       } else {
+
         return _react2.default.createElement(
           'div',
           { className: 'ui segment' },
@@ -927,6 +937,11 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
               'a',
               { className: 'item', 'data-tab': 'third' },
               'Overview'
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'item', 'data-tab': 'fourth' },
+              'Quiz'
             )
           ),
           _react2.default.createElement(
@@ -1032,6 +1047,11 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
                 )
               )
             )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ui tab', 'data-tab': 'fourth' },
+            _react2.default.createElement('div', { dangerouslySetInnerHTML: this.createQuizMarkup() })
           )
         );
       }

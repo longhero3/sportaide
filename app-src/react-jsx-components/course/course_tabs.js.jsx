@@ -13,6 +13,14 @@ export class CourseTabs extends React.Component{
     return {__html: content};
   }
 
+  createQuizMarkup() {
+    if(this.props.lesson.quiz){
+      return ({__html: `${this.props.lesson.quiz.content}`})
+    } else {
+      return ({__html: `<p>There is no quiz for this lesson.</p>`})
+    }
+  }
+
   render(){
     if (this.props.isFetching == true) {
       return (
@@ -21,12 +29,14 @@ export class CourseTabs extends React.Component{
         </div>
       )
     } else {
+
       return (
         <div className="ui segment">
           <div className="ui pointing secondary menu tab-menu">
             <a className="item active" data-tab="first">Transcript</a>
             <a className="item" data-tab="second">Video</a>
             <a className="item" data-tab="third">Overview</a>
+            <a className="item" data-tab="fourth">Quiz</a>
           </div>
           <div className="ui tab active" data-tab="first">
             <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
@@ -69,6 +79,10 @@ export class CourseTabs extends React.Component{
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="ui tab" data-tab="fourth">
+            <div dangerouslySetInnerHTML={this.createQuizMarkup()}>
             </div>
           </div>
         </div>
