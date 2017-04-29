@@ -26,6 +26,7 @@ let Footer = ({dispatch}) => (
             <i className="search link icon"></i>
           </div>
         </div>
+        <div className="item"></div>
       </div>
     </div>
   </nav>

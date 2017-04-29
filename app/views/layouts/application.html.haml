@@ -7,7 +7,7 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
   %body.new-sprortaide
-    .ui.fixed.menu
+    .ui.fixed.stackable.menu
       .ui.container
         %a.header.item.logo-item{href: "/"}
           =image_tag('main_logo.png')
@@ -18,7 +18,8 @@
             %a.item.header{href: '/dashboard/lessons'} Dashboard
           - else
             = link_to "Login/Sign Up", new_user_session_path, class: 'item header'
-          =link_to "Admin", new_admin_session_path, class: 'item header'
+          = link_to "Admin", new_admin_session_path, class: 'item header'
+          .item
     .wrapper.wrapper-inner-pages.small-padding
       %header.header
         -#.header-top

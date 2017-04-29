@@ -23,6 +23,54 @@
                   .ui.icon.input.fluid
                     %input.prompt{:autocomplete => "off", :placeholder => "Search for sport...", :type => "text"}/
                     %i.search.icon
+.news-feed.ui.container
+  .grid-row
+    .grid-6
+      .news-hero
+        .news-article
+          .news-article-cover
+            %img{:alt => "news", :src => @articles[0]["urlToImage"]}/
+          .news-article-content
+            %h3
+              %a{href: @articles[0]["url"]}
+                = @articles[0]["title"]
+            %p
+              = @articles[0]["description"]
+    .grid-6
+      .grid-row
+        .grid-4
+          .news-thumbnail
+            .news-article
+              .news-article-cover
+                %img{:alt => "news", :src => @articles[1]["urlToImage"]}/
+              .news-article-content
+                %h3
+                  %a{href: @articles[1]["url"]}
+                    = @articles[1]["title"]
+                %p
+                  = @articles[1]["description"]
+        .grid-4
+          .news-thumbnail
+            .news-article
+              .news-article-cover
+                %img{:alt => "news", :src => @articles[2]["urlToImage"]}/
+              .news-article-content
+                %h3
+                  %a{href: @articles[2]["url"]}
+                    = @articles[2]["title"]
+                %p
+                  = @articles[2]["description"]
+        .grid-4
+          .news-thumbnail
+            .news-article
+              .news-article-cover
+                %img{:alt => "news", :src => @articles[3]["urlToImage"]}/
+              .news-article-content
+                %h3
+                  %a{href: @articles[3]["url"]}
+                    = @articles[3]["title"]
+                %p
+                  = @articles[3]["description"]
 .available-features
   .ui.container
     .ui.stackable.grid
@@ -63,3 +111,21 @@
       .ui.icon.input.postcode-search
         %input.prompt{:autocomplete => "off", :placeholder => "Enter postcode", :type => "number"}/
         %i.search.icon
+
+%footer
+  .footer-main
+    .ui.container
+      .grid-row
+        .grid-4
+          .subscribe-block
+            %h3 Subscribe With Us
+            %form{:action => ""}
+              %input{:placeholder => "Your Email", :type => "text"}/
+              %button{:type => "button"} Subscribe
+        .grid-4.grid-offset-4
+          .footer-nav
+            %ul
+              %li
+                %a{:href => "#"} About Us
+  .footer-copyright
+    %p Copyright © 2017 | All rights are reserved.

@@ -43,6 +43,7 @@ gem 'rails-erd'
 gem "rails_admin_import", "~> 2.0"
 gem "non-stupid-digest-assets"
 gem 'ckeditor', '4.2.2'
+gem 'httparty'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

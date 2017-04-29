@@ -3496,7 +3496,8 @@ var Footer = function Footer(_ref) {
               } }),
             _react2.default.createElement('i', { className: 'search link icon' })
           )
-        )
+        ),
+        _react2.default.createElement('div', { className: 'item' })
       )
     )
   );
