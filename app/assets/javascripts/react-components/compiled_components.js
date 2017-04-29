@@ -3459,54 +3459,42 @@ var Footer = function Footer(_ref) {
   var dispatch = _ref.dispatch;
   return _react2.default.createElement(
     'nav',
-    { className: 'footer' },
+    { className: 'ui fixed menu' },
     _react2.default.createElement(
       'div',
       { className: 'ui container' },
       _react2.default.createElement(
+        'a',
+        { className: 'item dashboard-logo', href: '/' },
+        _react2.default.createElement('div', { className: 'dashboard-logo-image' })
+      ),
+      _react2.default.createElement(
+        _reactRouter.Link,
+        { className: 'item bold', to: '/dashboard/lessons' },
+        'Courses'
+      ),
+      _react2.default.createElement(
+        _reactRouter.Link,
+        { className: 'item bold', to: '/dashboard/clubs/club_map' },
+        'Club Map'
+      ),
+      _react2.default.createElement(
         'div',
-        { className: 'ui two column grid' },
+        { className: 'right menu' },
         _react2.default.createElement(
           'div',
-          { className: 'eight wide column' },
+          { className: 'item' },
           _react2.default.createElement(
             'div',
-            { className: 'menu-section' },
-            _react2.default.createElement(
-              'a',
-              { className: 'ui button', href: '/' },
-              'Home'
-            ),
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'ui button', to: '/dashboard/lessons' },
-              'Courses'
-            ),
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'ui button', to: '/dashboard/clubs/club_map' },
-              'Map'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'eight wide column' },
-          _react2.default.createElement(
-            'div',
-            { className: 'general-search-bar' },
-            _react2.default.createElement(
-              'div',
-              { className: 'ui icon input fluid' },
-              _react2.default.createElement('input', { type: 'text', placeholder: 'Search for courses...', onKeyUp: function onKeyUp(event) {
-                  if (event.keyCode == 13) {
-                    _reactRouter.browserHistory.push('/dashboard/lessons');
-                    dispatch(requestSearchCourses());
-                    return dispatch(searchCourses(event.target.value));
-                  }
-                } }),
-              _react2.default.createElement('i', { className: 'search icon' })
-            )
+            { className: 'ui icon transparent input' },
+            _react2.default.createElement('input', { type: 'text', placeholder: 'Search for courses...', onKeyUp: function onKeyUp(event) {
+                if (event.keyCode == 13) {
+                  _reactRouter.browserHistory.push('/dashboard/lessons');
+                  dispatch(requestSearchCourses());
+                  return dispatch(searchCourses(event.target.value));
+                }
+              } }),
+            _react2.default.createElement('i', { className: 'search link icon' })
           )
         )
       )

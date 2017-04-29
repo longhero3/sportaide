@@ -7,29 +7,41 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
   %body.new-sprortaide
+    .ui.fixed.menu
+      .ui.container
+        %a.header.item.logo-item{href: "/"}
+          =image_tag('main_logo.png')
+        %a.item.computer.tablet.only.header{href: '/dashboard/lessons'} Courses
+        %a.item.computer.tablet.only.header{href: '/dashboard/clubs/club_map'} Club Map
+        .right.menu
+          - if current_user
+            %a.item.header{href: '/dashboard/lessons'} Dashboard
+          - else
+            = link_to "Login/Sign Up", new_user_session_path, class: 'item header'
+          =link_to "Admin", new_admin_session_path, class: 'item header'
     .wrapper.wrapper-inner-pages.small-padding
       %header.header
-        .header-top
-          .ui.container
-            .header-inner
-              .ui.stackable.three.column.grid.relaxed
-                .column
-                  %a.logo{ href: '/' }
-                    =image_tag('main_logo.png')
-                    %a{ class: 'ui primary button dashboard-btn mobile only', href: '/dashboard/lessons'} Dashboard
-                .column.computer.tablet.only
-                  %a{href: '/dashboard/lessons', class: 'menu-item'} Courses
-                  %a{href: '/dashboard/clubs/club_map', class: 'menu-item'} Club Map
-                .column.computer.only
-                  %a{ class: 'ui primary button dashboard-btn', href: '/dashboard/lessons'} Dashboard
-                  =link_to "Admin Login", new_user_session_path, class: 'ui primary button dashboard-btn'
-                -#%ul
-                -#  %li.has-subnav
-                -#    .nav-dropdown.nav-dropdown-lang
-                -#      %ul
-                -#        %li
-                -#          %a{ href: '/' } English
-                -#        %li.change-language
-                -#          %a{ href: '/' } Chinese
+        -#.header-top
+        -#  .ui.container
+        -#    .header-inner
+        -#      .ui.stackable.three.column.grid.relaxed
+        -#        .column
+        -#          %a.logo{ href: '/' }
+        -#            =image_tag('main_logo.png')
+        -#            %a{ class: 'ui primary button dashboard-btn mobile only', href: '/dashboard/lessons'} Dashboard
+        -#        .column.computer.tablet.only
+        -#          %a{href: '/dashboard/lessons', class: 'menu-item'} Courses
+        -#          %a{href: '/dashboard/clubs/club_map', class: 'menu-item'} Club Map
+        -#        .column.computer.only
+        -#          %a{ class: 'ui primary button dashboard-btn', href: '/dashboard/lessons'} Dashboard
+        -#          =link_to "Admin Login", new_admin_session_path, class: 'ui primary button dashboard-btn'
+        -#        -#%ul
+        -#        -#  %li.has-subnav
+        -#        -#    .nav-dropdown.nav-dropdown-lang
+        -#        -#      %ul
+        -#        -#        %li
+        -#        -#          %a{ href: '/' } English
+        -#        -#        %li.change-language
+        -#        -#          %a{ href: '/' } Chinese
       = yield
   = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

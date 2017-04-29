@@ -7,6 +7,12 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
   %body.new-sprortaide
+    .ui.fixed.menu
+      .ui.container
+        %a.header.item.logo-item{href: "/"}
+          =image_tag('main_logo.png')
+        %a.item.computer.tablet.only.header{href: '/dashboard/lessons'} Courses
+        %a.item.computer.tablet.only.header{href: '/dashboard/clubs/club_map'} Club Map
     .wrapper.wrapper-inner-pages.small-padding.session-background
       %header.header
         .header-top

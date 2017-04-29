@@ -40,9 +40,9 @@ RailsAdmin.config do |config|
   end
 
   config.authenticate_with do
-    warden.authenticate! scope: :user
+    warden.authenticate! scope: :admin
   end
-  config.current_user_method(&:current_user)
+  config.current_user_method(&:current_admin)
 
   config.configure_with(:import) do |config|
     config.logging = true

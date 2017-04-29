@@ -6,7 +6,7 @@ class Course < ApplicationRecord
   belongs_to :author
   has_many :chapters, inverse_of: :course, dependent: :destroy
 
-  accepts_nested_attributes_for :chapters
+  accepts_nested_attributes_for :chapters, allow_destroy: true
 
   scope :search_by_keywords, -> (term) { basic_search(term) }
 

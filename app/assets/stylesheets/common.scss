@@ -375,3 +375,26 @@ img {
 .search-clubs-intro {
   background: darkseagreen;
 }
+
+.ui.fixed.menu {
+  .ui.container {
+    .logo-item {
+      img {
+        width: 115px;
+      }
+    }
+  }
+}
+
+.bold {
+  font-weight: bold!important;
+}
+.dashboard-logo{
+  padding: 9px 16px !important;
+  .dashboard-logo-image {
+    background: asset_url("main_logo.png") no-repeat !important;
+    width: 253px;
+    height: 74px;
+    zoom: 0.45;
+  }
+}

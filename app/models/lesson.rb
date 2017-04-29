@@ -6,7 +6,7 @@ class Lesson < ApplicationRecord
 
   has_one :quiz, inverse_of: :lesson, dependent: :destroy
 
-  accepts_nested_attributes_for :quiz
+  accepts_nested_attributes_for :quiz, allow_destroy: true
 
   rails_admin do
     create do
