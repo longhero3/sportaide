@@ -17,7 +17,7 @@
           - if current_user
             %a.item.header{href: '/dashboard/lessons'} Dashboard
           - else
-            = link_to "Login/Sign Up", new_user_session_path, class: 'item header'
+            = link_to "Login/Sign Up", '/dashboard/lessons', class: 'item header'
           = link_to "Admin", new_admin_session_path, class: 'item header'
           .item
     .wrapper.wrapper-inner-pages.small-padding

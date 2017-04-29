@@ -28,10 +28,8 @@ export class LessonsView extends React.Component{
       <div>
         <NavBar />
         <div className="ui container courses-container">
-          <div className="ui two column stackable grid">
-            <div className="four wide column">
-            </div>
-            <div className="twelve wide column">
+          <div className="ui stackable grid">
+            <div className="sixteen wide column">
               {courseContent}
             </div>
           </div>

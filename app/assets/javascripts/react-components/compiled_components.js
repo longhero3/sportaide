@@ -577,11 +577,10 @@ var LessonsView = exports.LessonsView = function (_React$Component) {
           { className: 'ui container courses-container' },
           _react2.default.createElement(
             'div',
-            { className: 'ui two column stackable grid' },
-            _react2.default.createElement('div', { className: 'four wide column' }),
+            { className: 'ui stackable grid' },
             _react2.default.createElement(
               'div',
-              { className: 'twelve wide column' },
+              { className: 'sixteen wide column' },
               courseContent
             )
           )
@@ -3246,7 +3245,7 @@ var ClubsReducer = function ClubsReducer() {
       return state.set('isSearchingClub', true);
 
     case SEARCH_CLUB_SUCCESS:
-      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).mergeDeep({ mapInfo: { center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)] }, zoom: 10 });
+      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).mergeDeep({ mapInfo: { center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)] }, zoom: 14 });
 
     case SET_MAP:
       return state.set('map', action.map);
@@ -3459,7 +3458,7 @@ var Footer = function Footer(_ref) {
   var dispatch = _ref.dispatch;
   return _react2.default.createElement(
     'nav',
-    { className: 'ui fixed menu' },
+    { className: 'ui fixed stackable menu' },
     _react2.default.createElement(
       'div',
       { className: 'ui container' },
@@ -3480,7 +3479,7 @@ var Footer = function Footer(_ref) {
       ),
       _react2.default.createElement(
         'div',
-        { className: 'right menu' },
+        { className: 'right stackable menu' },
         _react2.default.createElement(
           'div',
           { className: 'item' },
@@ -3497,7 +3496,11 @@ var Footer = function Footer(_ref) {
             _react2.default.createElement('i', { className: 'search link icon' })
           )
         ),
-        _react2.default.createElement('div', { className: 'item' })
+        _react2.default.createElement(
+          'a',
+          { className: 'item', href: '/users/sign_out' },
+          'Logout'
+        )
       )
     )
   );

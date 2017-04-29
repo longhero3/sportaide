@@ -24,8 +24,9 @@
                     %input.prompt{:autocomplete => "off", :placeholder => "Search for sport...", :type => "text"}/
                     %i.search.icon
 .news-feed.ui.container
-  .grid-row
-    .grid-6
+  .news-heading Newsfeed
+  .ui.stackable.grid
+    .eight.wide.column
       .news-hero
         .news-article
           .news-article-cover
@@ -36,9 +37,9 @@
                 = @articles[0]["title"]
             %p
               = @articles[0]["description"]
-    .grid-6
-      .grid-row
-        .grid-4
+    .eight.wide.column
+      .ui.stackable.grid
+        .five.wide.column
           .news-thumbnail
             .news-article
               .news-article-cover
@@ -49,7 +50,7 @@
                     = @articles[1]["title"]
                 %p
                   = @articles[1]["description"]
-        .grid-4
+        .five.wide.column
           .news-thumbnail
             .news-article
               .news-article-cover
@@ -60,7 +61,7 @@
                     = @articles[2]["title"]
                 %p
                   = @articles[2]["description"]
-        .grid-4
+        .five.wide.column
           .news-thumbnail
             .news-article
               .news-article-cover
@@ -115,17 +116,13 @@
 %footer
   .footer-main
     .ui.container
-      .grid-row
-        .grid-4
+      .ui.stackable.grid
+        .five.wide.column
           .subscribe-block
             %h3 Subscribe With Us
             %form{:action => ""}
               %input{:placeholder => "Your Email", :type => "text"}/
               %button{:type => "button"} Subscribe
-        .grid-4.grid-offset-4
-          .footer-nav
-            %ul
-              %li
-                %a{:href => "#"} About Us
+        .six.wide.column
   .footer-copyright
     %p Copyright © 2017 | All rights are reserved.

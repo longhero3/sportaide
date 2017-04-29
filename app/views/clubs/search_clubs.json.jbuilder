@@ -8,6 +8,6 @@ json.center do
   json.lat @clubs.map(&:lat).sum / @clubs.size
   json.lng @clubs.map(&:lng).sum / @clubs.size
 end
-json.zoom 8
+json.zoom 12
 json.keywords @keywords
 json.results_found @clubs.length
