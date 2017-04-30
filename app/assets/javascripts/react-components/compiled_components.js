@@ -916,143 +916,168 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
         );
       } else {
 
-        return _react2.default.createElement(
-          'div',
-          { className: 'ui segment' },
-          _react2.default.createElement(
+        if (this.props.lesson.lesson_type == "normal") {
+          return _react2.default.createElement(
             'div',
-            { className: 'ui pointing secondary menu tab-menu' },
-            _react2.default.createElement(
-              'a',
-              { className: 'item active', 'data-tab': 'first' },
-              'Transcript'
-            ),
-            _react2.default.createElement(
-              'a',
-              { className: 'item', 'data-tab': 'second' },
-              'Video'
-            ),
-            _react2.default.createElement(
-              'a',
-              { className: 'item', 'data-tab': 'third' },
-              'Overview'
-            ),
-            _react2.default.createElement(
-              'a',
-              { className: 'item', 'data-tab': 'fourth' },
-              'Quiz'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui tab active', 'data-tab': 'first' },
-            _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui tab', 'data-tab': 'second' },
+            { className: 'ui segment' },
             _react2.default.createElement(
               'div',
-              { className: 'ui one column stackable grid' },
+              { className: 'ui pointing secondary menu tab-menu' },
               _react2.default.createElement(
-                'div',
-                { className: 'fluid column' },
-                _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
+                'a',
+                { className: 'item active', 'data-tab': 'first' },
+                'Content'
+              ),
+              _react2.default.createElement(
+                'a',
+                { className: 'item', 'data-tab': 'third' },
+                'Overview'
+              ),
+              _react2.default.createElement(
+                'a',
+                { className: 'item', 'data-tab': 'fourth' },
+                'Quiz'
               )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'ui tab', 'data-tab': 'third' },
+            ),
             _react2.default.createElement(
               'div',
-              { className: 'overview-content' },
+              { className: 'ui tab active', 'data-tab': 'first' },
               _react2.default.createElement(
                 'div',
-                { className: 'ui three column stackable grid' },
+                { className: 'ui one column stackable grid' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'three wide column' },
+                  { className: 'fluid column' },
+                  _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
+                )
+              ),
+              _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'ui tab', 'data-tab': 'second' },
+              _react2.default.createElement(
+                'div',
+                { className: 'ui one column stackable grid' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'fluid column' },
+                  _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'ui tab', 'data-tab': 'third' },
+              _react2.default.createElement(
+                'div',
+                { className: 'overview-content' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'ui three column stackable grid' },
                   _react2.default.createElement(
                     'div',
-                    { className: 'author-thumb' },
+                    { className: 'three wide column' },
                     _react2.default.createElement(
-                      'h5',
-                      null,
-                      'Author'
-                    ),
-                    _react2.default.createElement(
-                      'a',
-                      { href: '' },
-                      _react2.default.createElement('img', { src: this.props.course.author_image, alt: 'Image and video hosting by TinyPic' }),
+                      'div',
+                      { className: 'author-thumb' },
                       _react2.default.createElement(
-                        'cite',
-                        { className: 'author-name' },
-                        this.props.course.author
+                        'h5',
+                        null,
+                        'Author'
+                      ),
+                      _react2.default.createElement(
+                        'a',
+                        { href: '' },
+                        _react2.default.createElement('img', { src: this.props.course.author_image, alt: 'Image and video hosting by TinyPic' }),
+                        _react2.default.createElement(
+                          'cite',
+                          { className: 'author-name' },
+                          this.props.course.author
+                        )
                       )
                     )
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'ten wide column course-description' },
-                  _react2.default.createElement(
-                    'h6',
-                    null,
-                    ' Released'
-                  ),
-                  _react2.default.createElement(
-                    'span',
-                    { className: 'release-date' },
-                    this.props.course.release_date
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'overview-description' },
-                    this.props.course.overview
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'three wide column' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'course-info-stat-cont duration' },
-                    _react2.default.createElement(
-                      'span',
-                      { className: 'course-info-stat' },
-                      this.props.course.duration + "m"
-                    ),
+                    { className: 'ten wide column course-description' },
                     _react2.default.createElement(
                       'h6',
                       null,
-                      'Duration'
+                      ' Released'
+                    ),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'release-date' },
+                      this.props.course.release_date
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'overview-description' },
+                      this.props.course.overview
                     )
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'course-info-stat-cont viewers' },
+                    { className: 'three wide column' },
                     _react2.default.createElement(
-                      'span',
-                      { className: 'course-info-stat' },
-                      this.props.course.view
+                      'div',
+                      { className: 'course-info-stat-cont duration' },
+                      _react2.default.createElement(
+                        'span',
+                        { className: 'course-info-stat' },
+                        this.props.course.duration + "m"
+                      ),
+                      _react2.default.createElement(
+                        'h6',
+                        null,
+                        'Duration'
+                      )
                     ),
                     _react2.default.createElement(
-                      'h6',
-                      null,
-                      'Views'
+                      'div',
+                      { className: 'course-info-stat-cont viewers' },
+                      _react2.default.createElement(
+                        'span',
+                        { className: 'course-info-stat' },
+                        this.props.course.view
+                      ),
+                      _react2.default.createElement(
+                        'h6',
+                        null,
+                        'Views'
+                      )
                     )
                   )
                 )
               )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'ui tab', 'data-tab': 'fourth' },
+              _react2.default.createElement('div', { dangerouslySetInnerHTML: this.createQuizMarkup() })
             )
-          ),
-          _react2.default.createElement(
+          );
+        } else {
+          return _react2.default.createElement(
             'div',
-            { className: 'ui tab', 'data-tab': 'fourth' },
-            _react2.default.createElement('div', { dangerouslySetInnerHTML: this.createQuizMarkup() })
-          )
-        );
+            { className: 'ui segment' },
+            _react2.default.createElement(
+              'div',
+              { className: 'ui pointing secondary menu tab-menu' },
+              _react2.default.createElement(
+                'a',
+                { className: 'item active', 'data-tab': 'fourth' },
+                'Quiz'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'ui tab active', 'data-tab': 'fourth' },
+              _react2.default.createElement('div', { dangerouslySetInnerHTML: this.createQuizMarkup() })
+            )
+          );
+        }
       }
     }
   }]);

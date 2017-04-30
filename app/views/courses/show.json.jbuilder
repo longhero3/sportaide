@@ -7,7 +7,7 @@ json.chapters do
     json.extract! chapter, :id, :title, :overview
     json.lessons do
       json.array!(chapter.lessons.order(:created_at)) do |lesson|
-        json.extract! lesson, :title, :transcript, :preferred_url
+        json.extract! lesson, :title, :transcript, :preferred_url, :lesson_type
         json.quiz lesson.quiz
       end
     end

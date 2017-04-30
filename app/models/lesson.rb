@@ -2,7 +2,9 @@ class Lesson < ApplicationRecord
   has_attached_file :vod, styles: {
     :thumbnail => { :geometry => "192x108#", :format => 'png', :time => 5 } }, content_type: %w(video/mp4 video/flv video/avi video/wmv video/x-ms-wmv)
   validates_attachment_content_type :vod, content_type: %w(video/mp4 video/flv video/avi video/wmv video/x-ms-wmv)
+  validates :lesson_type, inclusion: { in: ["normal", "quiz"] }
   belongs_to :chapter, inverse_of: :lessons
+
 
   has_one :quiz, inverse_of: :lesson, dependent: :destroy
 
@@ -11,6 +13,12 @@ class Lesson < ApplicationRecord
   rails_admin do
     create do
       field :title
+      field :lesson_type, :enum do
+        label 'Lesson Type'
+        enum do
+          ["normal", "quiz"]
+        end
+      end
       field :preferred_url
       field :transcript, :ck_editor
       field :quiz
@@ -18,6 +26,12 @@ class Lesson < ApplicationRecord
 
     edit do
       field :title
+      field :lesson_type, :enum do
+        label 'Lesson Type'
+        enum do
+          ["normal", "quiz"]
+        end
+      end
       field :preferred_url
       field :transcript, :ck_editor
       field :quiz
