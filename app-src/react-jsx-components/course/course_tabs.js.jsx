@@ -44,6 +44,7 @@ export class CourseTabs extends React.Component{
                   <iframe className="video-iframe" src={this.props.lesson.preferred_url} frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
+              <div className="video-separator"></div>
               <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
               </div>
             </div>

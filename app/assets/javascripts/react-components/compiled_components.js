@@ -951,6 +951,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
                   _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
                 )
               ),
+              _react2.default.createElement('div', { className: 'video-separator' }),
               _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
             ),
             _react2.default.createElement(
