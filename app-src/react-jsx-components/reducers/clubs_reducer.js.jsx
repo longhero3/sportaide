@@ -110,7 +110,7 @@ const ClubsReducer = (state = defaultMapState(), action) => {
       return state.set('isSearchingClubs', false)
             .set('filteredClubs', action.clubs.clubs)
             .set('dataFiltered', action.clubs.clubs)
-            .mergeDeep({mapInfo: {center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)]}, zoom: 14})
+            .mergeDeep({mapInfo: {center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)], zoom: 13}})
 
     case SET_MAP:
       return state.set('map', action.map)

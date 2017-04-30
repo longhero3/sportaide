@@ -39,19 +39,18 @@ export class CourseTabs extends React.Component{
               <a className="item" data-tab="fourth">Quiz</a>
             </div>
             <div className="ui tab active" data-tab="first">
-              <div className="ui one column stackable grid">
+              <div className="ui one column stackable grid segment">
                 <div className="fluid column">
-                  <iframe className="video-iframe" src={this.props.lesson.preferred_url} frameborder="0" allowfullscreen></iframe>
+                  <iframe className="video-iframe" src={this.props.lesson.preferred_url} frameBorder="0" allowFullScreen="allowfullscreen"></iframe>
                 </div>
               </div>
-              <div className="video-separator"></div>
               <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
               </div>
             </div>
             <div className="ui tab" data-tab="second">
               <div className="ui one column stackable grid">
                 <div className="fluid column">
-                  <iframe className="video-iframe" src={this.props.lesson.preferred_url} frameborder="0" allowfullscreen></iframe>
+                  <iframe className="video-iframe" src={this.props.lesson.preferred_url} frameborder="0" allowfullscreen="allowfullscreen"></iframe>
                 </div>
               </div>
             </div>

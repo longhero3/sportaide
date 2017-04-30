@@ -944,14 +944,13 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
               { className: 'ui tab active', 'data-tab': 'first' },
               _react2.default.createElement(
                 'div',
-                { className: 'ui one column stackable grid' },
+                { className: 'ui one column stackable grid segment' },
                 _react2.default.createElement(
                   'div',
                   { className: 'fluid column' },
-                  _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
+                  _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameBorder: '0', allowFullScreen: 'allowfullscreen' })
                 )
               ),
-              _react2.default.createElement('div', { className: 'video-separator' }),
               _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
             ),
             _react2.default.createElement(
@@ -963,7 +962,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'fluid column' },
-                  _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: true })
+                  _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameborder: '0', allowfullscreen: 'allowfullscreen' })
                 )
               )
             ),
@@ -3271,7 +3270,7 @@ var ClubsReducer = function ClubsReducer() {
       return state.set('isSearchingClub', true);
 
     case SEARCH_CLUB_SUCCESS:
-      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).mergeDeep({ mapInfo: { center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)] }, zoom: 14 });
+      return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).mergeDeep({ mapInfo: { center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)], zoom: 13 } });
 
     case SET_MAP:
       return state.set('map', action.map);
