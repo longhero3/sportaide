@@ -14,5 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require semantic-ui
+//= require 'greensock/TimelineMax'
+//= require 'greensock/TweenMax'
+//= require 'greensock/jquery.gsap.js'
 //= require home
 //= require_tree ./react-components

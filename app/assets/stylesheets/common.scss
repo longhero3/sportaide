@@ -1,3 +1,7 @@
+$seafoam : rgb(30,205,151);
+$white : white;
+$gray : rgb(200,200,200);
+
 body {
   height: 100%;
   display: block;
@@ -406,4 +410,50 @@ img {
   border-bottom: 1px solid black;
   margin-bottom: 16px;
   width: 153px;
+}
+
+button.colins-submit {
+  background:transparent;
+  border:none;
+  padding: 0;
+  &.is-active {
+    cursor:default;
+  }
+  &:focus {
+    outline: none;
+  }
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  //RESTING STATE
+  svg {
+    text {
+      font-family: 'Montserrat', sans-serif;
+      &.textNode {
+        fill:$seafoam;
+      }
+      &.checkNode {
+        fill-opacity:0;
+      }
+    }
+    rect {
+      &.btn-shape {
+        &.btn-bg {
+          stroke:$gray;
+          fill:$white;
+        }
+        &.btn-color {
+          stroke:$seafoam;
+          fill:$white;
+          stroke-dasharray:453;//Magic number :/
+          stroke-dashoffset:0;
+        }
+      }
+    }
+  }
+}
+
+.email-subscribe {
+  padding-top: 24px;
 }
