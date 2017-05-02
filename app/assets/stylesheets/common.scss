@@ -117,7 +117,7 @@ body {
     width: 100%;
     position: absolute;
     left: 0;
-    top: calc(48% - 5rem);
+    top: calc(48% - 7rem);
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -253,7 +253,7 @@ img {
 @media (min-width:320px)  {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .intro-home {
-    height: 1700px;
+    height: 1736px;
     .intro-body{
       font-size: 10px;
       h1 {
@@ -265,7 +265,7 @@ img {
 @media (min-width:480px)  {
   /* smartphones, Android phones, landscape iPhone */
   .intro-home {
-    height: 1700px;
+    height: 2000px;
     .intro-body{
       font-size: 10px;
 
