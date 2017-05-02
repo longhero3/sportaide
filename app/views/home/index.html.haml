@@ -99,15 +99,15 @@
 .search-clubs-intro
   .ui.one.column.center.aligned.grid
     .ten.wide.column
-      .content
-        .content__container
-          %p.content__container__text
+      .clubsearch
+        .clubsearch__container
+          %p.clubsearch__container__text
             Clubs by
-          %ul.content__container__list
-            %li.content__container__list__item postcode
-            %li.content__container__list__item sport
-            %li.content__container__list__item name
-            %li.content__container__list__item address
+          %ul.clubsearch__container__list
+            %li.clubsearch__container__list__item postcode
+            %li.clubsearch__container__list__item sport
+            %li.clubsearch__container__list__item name
+            %li.clubsearch__container__list__item address
       .ui.icon.input.postcode-search
         %input.prompt{:autocomplete => "off", :placeholder => "Enter ...", :type => "text"}/
         %i.search.icon
