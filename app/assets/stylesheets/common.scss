@@ -109,7 +109,7 @@ body {
 }
 
 .intro-home {
-  height: 532px;
+  height: 600px;
   background-size: cover;
   position: relative;
 
@@ -203,6 +203,7 @@ body {
   background-image: asset_url("bg.jpg");
   background-position: center center;
   background-size: cover;
+  opacity: 0.5;
 }
 
 .pull-right {
@@ -252,6 +253,7 @@ img {
 @media (min-width:320px)  {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .intro-home {
+    height: 1700px;
     .intro-body{
       font-size: 10px;
       h1 {
@@ -263,6 +265,7 @@ img {
 @media (min-width:480px)  {
   /* smartphones, Android phones, landscape iPhone */
   .intro-home {
+    height: 1700px;
     .intro-body{
       font-size: 10px;
 
@@ -280,6 +283,7 @@ img {
     }
   }
   .intro-home {
+    height: 2340px;
     .intro-body{
       font-size: 10px;
     }
@@ -288,6 +292,7 @@ img {
 @media (min-width:801px)  {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
   .intro-home {
+    height: 600px;
     .intro-body{
       font-size: 12px;
     }
@@ -300,6 +305,9 @@ img {
 }
 @media (min-width:1025px) {
   /* big landscape tablets, laptops, and desktops */
+  .intro-home {
+    height: 600px;
+  }
   .mobile {
     &.only {
       display: none!important;
