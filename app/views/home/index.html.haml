@@ -99,10 +99,17 @@
 .search-clubs-intro
   .ui.one.column.center.aligned.grid
     .ten.wide.column
-      .search-club-title.form-head
-        Find sports near you
+      .content
+        .content__container
+          %p.content__container__text
+            Clubs by
+          %ul.content__container__list
+            %li.content__container__list__item postcode
+            %li.content__container__list__item sport
+            %li.content__container__list__item name
+            %li.content__container__list__item address
       .ui.icon.input.postcode-search
-        %input.prompt{:autocomplete => "off", :placeholder => "Enter postcode", :type => "number"}/
+        %input.prompt{:autocomplete => "off", :placeholder => "Enter ...", :type => "text"}/
         %i.search.icon
 
 %footer
