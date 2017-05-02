@@ -415,7 +415,7 @@ img {
 button.colins-submit {
   background:transparent;
   border:none;
-  padding: 0;
+  padding: 0!important;
   &.is-active {
     cursor:default;
   }
@@ -446,14 +446,10 @@ button.colins-submit {
         &.btn-color {
           stroke:$seafoam;
           fill:$white;
-          stroke-dasharray:453;//Magic number :/
+          stroke-dasharray:460;//Magic number :/
           stroke-dashoffset:0;
         }
       }
     }
   }
-}
-
-.email-subscribe {
-  padding-top: 24px;
 }
