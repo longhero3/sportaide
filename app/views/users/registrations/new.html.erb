@@ -1,0 +1,39 @@
+<div class="ui one column center aligned grid">
+  <div class="column six wide form-holder">
+    <h2 class="center aligned form-head">User Sign Up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <div class="ui form">
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="user icon"></i>
+              <%= f.text_field :email, type: 'email', autofocus: true, placeholder: "Email" %>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="lock icon"></i>
+              <%= f.password_field :password, autocomplete: "off", placeholder: "Password" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="lock icon"></i>
+              <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password Confirmation" %>
+            </div>
+          </div>
+
+          <div class="actions field">
+            <%= f.submit "Sign Up", class: "ui button large fluid green" %>
+          </div>
+        </div>
+        <% unless devise_error_messages!.blank? %>
+            <div class="ui error message">
+              <%= devise_error_messages! %>
+            </div>
+        <% end %>
+    <% end %>
+    <%= render "users/shared/links" %>
+  </div>
+</div>
