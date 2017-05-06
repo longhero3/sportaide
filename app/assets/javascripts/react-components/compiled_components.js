@@ -8,6 +8,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var requestOptions = {
+  credentials: 'same-origin'
+};
+
 var CourseApi = function () {
   function CourseApi() {
     _classCallCheck(this, CourseApi);
@@ -16,7 +20,7 @@ var CourseApi = function () {
   _createClass(CourseApi, null, [{
     key: 'getAllCourses',
     value: function getAllCourses() {
-      return fetch('/courses.json').then(function (response) {
+      return fetch('/courses.json', requestOptions).then(function (response) {
         return response.json();
       }).catch(function (error) {
         return error;
@@ -25,7 +29,7 @@ var CourseApi = function () {
   }, {
     key: 'searchCourses',
     value: function searchCourses(keywords) {
-      return fetch('/courses/search_courses.json?text=' + keywords).then(function (response) {
+      return fetch('/courses/search_courses.json?text=' + keywords, requestOptions).then(function (response) {
         return response.json();
       }).catch(function (error) {
         return error;
@@ -34,7 +38,7 @@ var CourseApi = function () {
   }, {
     key: 'getCourseById',
     value: function getCourseById(courseId) {
-      return fetch('/courses/' + courseId + '.json').then(function (response) {
+      return fetch('/courses/' + courseId + '.json', requestOptions).then(function (response) {
         return response.json();
       }).catch(function (error) {
         return error;
@@ -2964,6 +2968,444 @@ var ClubMainPage = exports.ClubMainPage = function (_React$Component) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Dashboard = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Dashboard = exports.Dashboard = function (_React$Component) {
+  _inherits(Dashboard, _React$Component);
+
+  function Dashboard() {
+    _classCallCheck(this, Dashboard);
+
+    return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).apply(this, arguments));
+  }
+
+  _createClass(Dashboard, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(NavBar, null),
+        _react2.default.createElement(
+          'div',
+          { className: 'mainWrap ui container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ui equal width left aligned padded grid stackable' },
+            _react2.default.createElement(
+              'div',
+              { className: 'stretched row' },
+              _react2.default.createElement(
+                'div',
+                { className: 'sixteen wide tablet ten wide computer column' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'ui segments' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'ui segment no-padding-bottom' },
+                    _react2.default.createElement(
+                      'h5',
+                      { className: 'ui left floated header' },
+                      'Populer Browsers'
+                    ),
+                    _react2.default.createElement(
+                      'h5',
+                      { className: 'ui right floated header' },
+                      _react2.default.createElement('i', { className: 'ion-ios-arrow-up icon link' }),
+                      _react2.default.createElement('i', { className: 'ion-ios-refresh-empty refreshing icon link' }),
+                      _react2.default.createElement('i', { className: 'ion-ios-close-empty icon link' })
+                    ),
+                    _react2.default.createElement('div', { className: 'clearfix' })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'ui segment left aligned' },
+                    _react2.default.createElement(
+                      'table',
+                      { className: 'ui very basic center aligned  celled table' },
+                      _react2.default.createElement(
+                        'thead',
+                        null,
+                        _react2.default.createElement(
+                          'tr',
+                          null,
+                          _react2.default.createElement(
+                            'th',
+                            null,
+                            '#'
+                          ),
+                          _react2.default.createElement(
+                            'th',
+                            null,
+                            'Project Name'
+                          ),
+                          _react2.default.createElement(
+                            'th',
+                            null,
+                            'Date'
+                          ),
+                          _react2.default.createElement(
+                            'th',
+                            null,
+                            'Accept'
+                          ),
+                          _react2.default.createElement(
+                            'th',
+                            null,
+                            'Status'
+                          )
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'tbody',
+                        null,
+                        _react2.default.createElement(
+                          'tr',
+                          null,
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '1'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            'Chrome'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '10 July 2014'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement('i', { className: 'green check icon' })
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement(
+                              'a',
+                              { className: 'ui blue mini basic label' },
+                              'Update'
+                            )
+                          )
+                        ),
+                        _react2.default.createElement(
+                          'tr',
+                          null,
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '2'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            'Mozilla'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '2 Feb 2010'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement('i', { className: 'red close icon' })
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement(
+                              'a',
+                              { className: 'ui green mini basic label' },
+                              'Upgrade'
+                            )
+                          )
+                        ),
+                        _react2.default.createElement(
+                          'tr',
+                          null,
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '3'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            'Yandex'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '29 Aug 2012'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement('i', { className: 'green check icon' })
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement(
+                              'a',
+                              { className: 'ui purple mini basic label' },
+                              'Coming Soon'
+                            )
+                          )
+                        ),
+                        _react2.default.createElement(
+                          'tr',
+                          null,
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '4'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            'Internet Explorer'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '5 Sep 2005'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement('i', { className: 'red close icon' })
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement(
+                              'a',
+                              { className: 'ui red mini basic label' },
+                              'Released'
+                            )
+                          )
+                        ),
+                        _react2.default.createElement(
+                          'tr',
+                          null,
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '5'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            'Safari'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            '1 Jan 2002'
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement('i', { className: 'red close icon' })
+                          ),
+                          _react2.default.createElement(
+                            'td',
+                            null,
+                            _react2.default.createElement(
+                              'a',
+                              { className: 'ui yellow mini basic label' },
+                              'Upgrade'
+                            )
+                          )
+                        )
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'ui inverted dimmer' },
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'ui text loader' },
+                        'Loading'
+                      )
+                    )
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'sixteen wide tablet six wide computer column' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'ui segment' },
+                  _react2.default.createElement(
+                    'h2',
+                    { className: 'ui   center aligned header' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'content' },
+                      'Melbourne',
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'sub header' },
+                        'Thursday, 29 November'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'h3',
+                    { className: 'ui center aligned header' },
+                    '14 \xB0'
+                  ),
+                  _react2.default.createElement('div', { className: 'ui divider' }),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'ui five column centered grid' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'column center aligned' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'Wed'
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement('i', { className: 'wi wi-day-cloudy' })
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        '12\xB0'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'column center aligned' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'Thu'
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement('i', { className: 'wi wi-day-sleet' })
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        '10\xB0'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'column center aligned' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'Fri'
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement('i', { className: 'wi wi-day-cloudy-gusts' })
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        '8\xB0'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'column center aligned' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'Sat'
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement('i', { className: 'wi wi-day-sprinkle' })
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        '-5\xB0'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'column center aligned' },
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        'Sun'
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement('i', { className: 'wi wi-day-lightning' })
+                      ),
+                      _react2.default.createElement(
+                        'p',
+                        null,
+                        '14\xB0'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { id: 'flot-weather', className: 'flotchart', style: { padding: 0, position: 'relative' } },
+                    _react2.default.createElement('canvas', { className: 'flot-base', width: 718, height: 200, style: { direction: 'ltr', position: 'absolute', left: 0, top: 0, width: 359, height: 100 } }),
+                    _react2.default.createElement('canvas', { className: 'flot-overlay', width: 718, height: 200, style: { direction: 'ltr', position: 'absolute', left: 0, top: 0, width: 359, height: 100 } })
+                  )
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(Footer, null)
+      );
+    }
+  }]);
+
+  return Dashboard;
+}(_react2.default.Component);
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -3494,6 +3936,11 @@ var Footer = function Footer(_ref) {
       ),
       _react2.default.createElement(
         _reactRouter.Link,
+        { className: 'item bold', to: '/dashboard' },
+        'Dashboard'
+      ),
+      _react2.default.createElement(
+        _reactRouter.Link,
         { className: 'item bold', to: '/dashboard/lessons' },
         'Courses'
       ),
@@ -3667,7 +4114,7 @@ var Root = function Root(_ref) {
       _react2.default.createElement(
         _reactRouter.Route,
         { path: '/dashboard', component: MainApp },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: MainView }),
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: Dashboard }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMainPage }),
         _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map/:club_id', component: ClubDetailsPage }),

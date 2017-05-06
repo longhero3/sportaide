@@ -24,6 +24,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :lessons, only: [] do
+    collection do
+      get :track_user_lesson
+    end
+  end
+
   get 'dashboard' => 'dashboard#index'
   get 'weather' => 'weather#index'
   get 'weather/search_weather' => 'weather#search_weather'

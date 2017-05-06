@@ -23,6 +23,7 @@ export class MainView extends React.Component{
     return(
       <div>
       <NavBar/>
+
       <Footer/>
       </div>
     );

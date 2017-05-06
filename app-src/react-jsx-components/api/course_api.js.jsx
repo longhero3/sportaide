@@ -1,6 +1,11 @@
+
+const requestOptions = {
+  credentials: 'same-origin'
+}
+
 class CourseApi{
   static getAllCourses(){
-    return fetch('/courses.json').then(response => {
+    return fetch('/courses.json', requestOptions).then(response => {
       return response.json();
     }).catch(error => {
       return error;
@@ -8,7 +13,7 @@ class CourseApi{
   }
 
   static searchCourses(keywords){
-    return fetch('/courses/search_courses.json?text=' + keywords).then(response => {
+    return fetch('/courses/search_courses.json?text=' + keywords, requestOptions).then(response => {
       return response.json();
     }).catch(error => {
     return error;
@@ -16,7 +21,7 @@ class CourseApi{
   }
 
   static getCourseById(courseId){
-    return fetch(`/courses/${courseId}.json`).then(response => {
+    return fetch(`/courses/${courseId}.json`, requestOptions).then(response => {
       return response.json();
   }).catch(error => {
     return error;

@@ -8,6 +8,9 @@ let Footer = ({dispatch}) => (
       <a className="item dashboard-logo" href='/'>
         <div className="dashboard-logo-image"></div>
       </a>
+      <Link className="item bold" to='/dashboard'>
+        Dashboard
+      </Link>
       <Link className="item bold" to='/dashboard/lessons'>
         Courses
       </Link>

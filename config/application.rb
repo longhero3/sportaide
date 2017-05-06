@@ -13,6 +13,7 @@ module Sportaide
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'Melbourne'
     config.assets.precompile += %w( ckeditor/* )
+    config.assets.paths << Rails.root.join("lib", "videoplayer", "flash")
     config.action_view.field_error_proc = Proc.new { |html_tag, instance|
       html_tag
     }

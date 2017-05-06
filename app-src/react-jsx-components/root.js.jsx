@@ -7,7 +7,7 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/dashboard" component={MainApp}>
-        <IndexRoute component={MainView}/>
+        <IndexRoute component={Dashboard}/>
         <Route path="newsfeeds" component={NewsfeedsView}></Route>
         <Route path="clubs/club_map" component={ClubMainPage}></Route>
         <Route path="clubs/club_map/:club_id" component={ClubDetailsPage}></Route>

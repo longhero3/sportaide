@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @courses = Course.all
@@ -6,6 +7,9 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
+    if @course
+      current_user.initialise_viewed_course @course
+    end
   end
 
   def search_courses

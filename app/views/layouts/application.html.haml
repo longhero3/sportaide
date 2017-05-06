@@ -15,7 +15,7 @@
         %a.item.computer.tablet.only.header{href: '/dashboard/clubs/club_map'} Club Map
         .right.menu
           - if current_user
-            %a.item.header{href: '/dashboard/lessons'} Dashboard
+            %a.item.header{href: '/dashboard'} Dashboard
           - else
             = link_to "Login/Sign Up", '/dashboard/lessons', class: 'item header'
           .item

@@ -4,11 +4,14 @@ class Lesson < ApplicationRecord
   validates_attachment_content_type :vod, content_type: %w(video/mp4 video/flv video/avi video/wmv video/x-ms-wmv)
   validates :lesson_type, inclusion: { in: ["normal", "quiz"] }
   belongs_to :chapter, inverse_of: :lessons
-
+  delegate :course, to: :chapter, allow_nil: :true
 
   has_one :quiz, inverse_of: :lesson, dependent: :destroy
 
   accepts_nested_attributes_for :quiz, allow_destroy: true
+
+  after_create :update_course
+
 
   rails_admin do
     create do
@@ -36,5 +39,10 @@ class Lesson < ApplicationRecord
       field :transcript, :ck_editor
       field :quiz
     end
+  end
+
+  def update_course
+    temp_course = self.course
+    temp_course.update(avg_complete_rate: 100/temp_course.lessons.count)
   end
 end

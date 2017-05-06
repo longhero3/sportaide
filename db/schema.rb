@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170430151655) do
+ActiveRecord::Schema.define(version: 20170505125139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20170430151655) do
     t.integer  "author_id"
     t.integer  "likes",                   default: 0
     t.integer  "order",                   default: 1
+    t.integer  "avg_complete_rate",       default: 0
     t.index ["author_id"], name: "index_courses_on_author_id", using: :btree
   end
 
@@ -152,8 +153,33 @@ ActiveRecord::Schema.define(version: 20170430151655) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "viewed_courses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.boolean  "completed",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "progress",   default: 0
+    t.index ["course_id"], name: "index_viewed_courses_on_course_id", using: :btree
+    t.index ["user_id"], name: "index_viewed_courses_on_user_id", using: :btree
+  end
+
+  create_table "viewed_lessons", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "lesson_id"
+    t.boolean  "completed",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["lesson_id"], name: "index_viewed_lessons_on_lesson_id", using: :btree
+    t.index ["user_id"], name: "index_viewed_lessons_on_user_id", using: :btree
+  end
+
   add_foreign_key "chapters", "courses"
   add_foreign_key "courses", "authors"
   add_foreign_key "lessons", "chapters"
   add_foreign_key "quizzes", "lessons"
+  add_foreign_key "viewed_courses", "courses"
+  add_foreign_key "viewed_courses", "users"
+  add_foreign_key "viewed_lessons", "lessons"
+  add_foreign_key "viewed_lessons", "users"
 end

@@ -49,6 +49,9 @@ exports.config =
           '../app-src/react-jsx-components/club_view/club_details_page.js.jsx',
           '../app-src/react-jsx-components/club_view/club_main_page.js.jsx',
 
+
+          '../app-src/react-jsx-components/dashboard/dashboard.js.jsx',
+
           '../app-src/react-jsx-components/reducers/todos.js.jsx',
           '../app-src/react-jsx-components/reducers/nav_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/courses_reducer.js.jsx',

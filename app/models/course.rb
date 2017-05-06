@@ -5,6 +5,7 @@ class Course < ApplicationRecord
 
   belongs_to :author
   has_many :chapters, inverse_of: :course, dependent: :destroy
+  has_many :lessons, through: :chapters
 
   accepts_nested_attributes_for :chapters, allow_destroy: true
 
@@ -12,5 +13,13 @@ class Course < ApplicationRecord
 
   def self.searchable_columns
     [:name, :overview, :id]
+  end
+
+  def self.recalculate_avg_complete_rate
+    self.all.each do |course|
+      if course.lessons.count > 0
+        course.update(avg_complete_rate: 100 / course.lessons.count)
+      end
+    end
   end
 end
