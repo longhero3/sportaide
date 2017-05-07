@@ -60,6 +60,7 @@ export class CourseTabs extends React.Component{
 
   nextLesson(){
     store.dispatch(nextLesson())
+    $('html,body').animate({ scrollTop: 0 }, 400);
   }
 
   render(){

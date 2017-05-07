@@ -1076,6 +1076,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
       return nextLesson;
     }(function () {
       store.dispatch(nextLesson());
+      $('html,body').animate({ scrollTop: 0 }, 400);
     })
   }, {
     key: 'render',
