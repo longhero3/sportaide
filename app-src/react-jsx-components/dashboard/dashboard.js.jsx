@@ -4,6 +4,10 @@ import { Link } from 'react-router'
 
 export class Dashboard extends React.Component{
 
+  componentDidMount(){
+    store.dispatch(loadProgress())
+  }
+
   render(){
     return (
       <div>
@@ -15,13 +19,8 @@ export class Dashboard extends React.Component{
       <div className="ui segments">
       <div className="ui segment no-padding-bottom">
       <h5 className="ui left floated header">
-      Populer Browsers
+      Recent Courses
     </h5>
-    <h5 className="ui right floated header">
-      <i className="ion-ios-arrow-up icon link" />
-      <i className="ion-ios-refresh-empty refreshing icon link" />
-      <i className="ion-ios-close-empty icon link" />
-      </h5>
     <div className="clearfix" />
       </div>
     <div className="ui segment left aligned">
@@ -29,48 +28,16 @@ export class Dashboard extends React.Component{
       <thead>
       <tr>
       <th>#</th>
-    <th>Project Name</th>
-    <th>Date</th>
-    <th>Accept</th>
+    <th>Course Name</th>
+    <th>Start Date</th>
+    <th>Progress</th>
     <th>Status</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-    <td>1</td>
-    <td>Chrome</td>
-    <td>10 July 2014</td>
-    <td><i className="green check icon" /></td>
-    <td><a className="ui blue mini basic label">Update</a></td>
-    </tr>
-    <tr>
-    <td>2</td>
-    <td>Mozilla</td>
-    <td>2 Feb 2010</td>
-    <td><i className="red close icon" /></td>
-    <td><a className="ui green mini basic label">Upgrade</a></td>
-    </tr>
-    <tr>
-    <td>3</td>
-    <td>Yandex</td>
-    <td>29 Aug 2012</td>
-    <td><i className="green check icon" /></td>
-    <td><a className="ui purple mini basic label">Coming Soon</a></td>
-    </tr>
-    <tr>
-    <td>4</td>
-    <td>Internet Explorer</td>
-    <td>5 Sep 2005</td>
-    <td><i className="red close icon" /></td>
-    <td><a className="ui red mini basic label">Released</a></td>
-    </tr>
-    <tr>
-    <td>5</td>
-    <td>Safari</td>
-    <td>1 Jan 2002</td>
-    <td><i className="red close icon" /></td>
-    <td><a className="ui yellow mini basic label">Upgrade</a></td>
-    </tr>
+    {this.props.courses.map(function(course){
+      return (<ProgressCourseRow course={course} key={"viewed_course" + course.id}/>);
+    })}
     </tbody>
     </table>
     <div className="ui inverted dimmer">
@@ -116,7 +83,6 @@ export class Dashboard extends React.Component{
     <p>14°</p>
     </div>
     </div>
-    <div id="flot-weather" className="flotchart" style={{padding: 0, position: 'relative'}}><canvas className="flot-base" width={718} height={200} style={{direction: 'ltr', position: 'absolute', left: 0, top: 0, width: 359, height: 100}} /><canvas className="flot-overlay" width={718} height={200} style={{direction: 'ltr', position: 'absolute', left: 0, top: 0, width: 359, height: 100}} /></div>
 </div>
 </div>
 </div>
@@ -127,3 +93,13 @@ export class Dashboard extends React.Component{
     );
   }
 }
+
+Dashboard.propTypes = {
+  courses: PropTypes.any
+}
+
+const mapTopCourseToDashboard = (state) => ({
+  courses: state.ProgressReducer.courses
+})
+
+Dashboard = connect(mapTopCourseToDashboard)(Dashboard)

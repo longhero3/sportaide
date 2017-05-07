@@ -14,6 +14,7 @@ export function receiveCourse(course) {
 }
 
 export function selectLesson(lesson) {
+  CourseApi.trackProgress(lesson.id)
   return {type: SELECT_LESSON, lesson};
 }
 

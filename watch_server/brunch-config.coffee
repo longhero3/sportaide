@@ -14,6 +14,7 @@ exports.config =
           '../app-src/react-jsx-components/actions/course_actions.js.jsx',
           '../app-src/react-jsx-components/actions/club_actions.js.jsx',
           '../app-src/react-jsx-components/actions/weather_actions.js.jsx',
+          '../app-src/react-jsx-components/actions/progress_actions.js.jsx',
 
           '../app-src/react-jsx-components/lessons/course_block.js.jsx',
           '../app-src/react-jsx-components/lessons/lessons_view.js.jsx',
@@ -50,6 +51,7 @@ exports.config =
           '../app-src/react-jsx-components/club_view/club_main_page.js.jsx',
 
 
+          '../app-src/react-jsx-components/dashboard/progress_course_row.js.jsx',
           '../app-src/react-jsx-components/dashboard/dashboard.js.jsx',
 
           '../app-src/react-jsx-components/reducers/todos.js.jsx',
@@ -58,6 +60,7 @@ exports.config =
           '../app-src/react-jsx-components/reducers/course_details_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/weather_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/clubs_reducer.js.jsx',
+          '../app-src/react-jsx-components/reducers/progress_reducer.js.jsx',
           '../app-src/react-jsx-components/reducers/todo_app.js.jsx',
 
           '../app-src/react-jsx-components/navbar.js.jsx',

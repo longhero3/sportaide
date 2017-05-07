@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     collection do
       get :search_courses
       get :search_courses_main
+      get :top_viewed_courses
     end
   end
 

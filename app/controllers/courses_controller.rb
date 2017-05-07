@@ -12,6 +12,10 @@ class CoursesController < ApplicationController
     end
   end
 
+  def top_viewed_courses
+    @top_courses = current_user.viewed_courses.order(updated_at: :desc)
+  end
+
   def search_courses
     @keywords = params[:text]
     if @keywords && !@keywords.blank?

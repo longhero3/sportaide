@@ -17,6 +17,10 @@ body {
   text-size-adjust: none;
   background-color: #ebebeb;
 
+  .menu .item {
+    font-size: 14px;
+  }
+
   .wrapper {
     min-height: 100%;
     position: relative;
@@ -24,7 +28,7 @@ body {
     transition: padding .4s ease;
     -webkit-transition: padding .4s ease;
 
-    .header {
+    .header-header {
       width: 100%;
       position: absolute;
       left: 0;

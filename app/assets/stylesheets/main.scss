@@ -20,25 +20,7 @@ Author URL: http://www.themeforest.net/user/telatkaya_
 ================================================================================*/
 
 @import "extra_colors";
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: geometricPrecision;
-}
-html,
-body {
-    min-height: 100%;
-    height: 100%;
-    background: #f1f4f5;
-}
-html.ios {
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-}
-html.ios,
-html.ios body {
-    height: initial !important;
-}
+
 .pusher {
     min-height: 100%;
     height: 100%;
@@ -64,9 +46,7 @@ html.ios body {
 .clearfix {
     display: block;
 }
-* html .clearfix {
-    height: 1%;
-}
+
 /* =============Clearfix============= */
 
 .ui.menu .dropdown.item .menu {

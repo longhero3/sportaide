@@ -44,6 +44,24 @@ var CourseApi = function () {
         return error;
       });
     }
+  }, {
+    key: 'getTopViewedCourses',
+    value: function getTopViewedCourses(keywords) {
+      return fetch('/courses/top_viewed_courses.json', requestOptions).then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
+  }, {
+    key: 'trackProgress',
+    value: function trackProgress(lessonId) {
+      return fetch('/lessons/track_user_lesson.json?lesson_id=' + lessonId, requestOptions).then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
   }]);
 
   return CourseApi;
@@ -180,6 +198,7 @@ function receiveCourse(course) {
 }
 
 function selectLesson(lesson) {
+  CourseApi.trackProgress(lesson.id);
   return { type: SELECT_LESSON, lesson: lesson };
 }
 
@@ -399,6 +418,36 @@ function loadWeatherOnLocation(location) {
   return function (dispatch) {
     return WeatherApi.searchWeather(location).then(function (weather) {
       dispatch(loadWeatherSuccess(weather));
+    }).catch(function (error) {
+      throw error;
+    });
+  };
+}
+
+;'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadProgressSuccess = loadProgressSuccess;
+exports.loadProgress = loadProgress;
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOAD_PROGRESS_SUCCESS = 'LOAD_PROGRESS_SUCCESS';
+
+function loadProgressSuccess(courses) {
+  return { type: LOAD_PROGRESS_SUCCESS, courses: courses };
+}
+
+function loadProgress() {
+  return function (dispatch) {
+    return CourseApi.getTopViewedCourses().then(function (courses) {
+      dispatch(loadProgressSuccess(courses));
     }).catch(function (error) {
       throw error;
     });
@@ -1790,7 +1839,7 @@ var MapMarker = function (_PureComponent) {
       return _react2.default.createElement(
         'div',
         { className: "marker-content " + selectedClass, 'data-hint': this.props.marker.name, onClick: this.selectMarker.bind(this) },
-        _react2.default.createElement('i', { className: "soccer icon club-icon " + selectedClass })
+        _react2.default.createElement('i', { className: "pointing down icon club-icon " + selectedClass })
       );
     }
   }, {
@@ -2968,6 +3017,99 @@ var ClubMainPage = exports.ClubMainPage = function (_React$Component) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ProgressCourseRow = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ProgressCourseRow = exports.ProgressCourseRow = function (_React$Component) {
+  _inherits(ProgressCourseRow, _React$Component);
+
+  function ProgressCourseRow() {
+    _classCallCheck(this, ProgressCourseRow);
+
+    return _possibleConstructorReturn(this, (ProgressCourseRow.__proto__ || Object.getPrototypeOf(ProgressCourseRow)).apply(this, arguments));
+  }
+
+  _createClass(ProgressCourseRow, [{
+    key: 'render',
+    value: function render() {
+      var completedDiv = _react2.default.createElement(
+        'td',
+        null,
+        _react2.default.createElement(
+          'a',
+          { className: 'ui green mini basic label' },
+          'Completed'
+        )
+      );
+      if (this.props.course.completed == false) {
+        completedDiv = _react2.default.createElement(
+          'td',
+          null,
+          _react2.default.createElement(
+            'a',
+            { className: 'ui blue mini basic label' },
+            'In Progress'
+          )
+        );
+      }
+      return _react2.default.createElement(
+        'tr',
+        null,
+        _react2.default.createElement(
+          'td',
+          null,
+          this.props.course.id
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: "/dashboard/lessons/" + this.props.course.id },
+            this.props.course.course_name
+          )
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          this.props.course.start_date
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          this.props.course.progress,
+          '%'
+        ),
+        completedDiv
+      );
+    }
+  }]);
+
+  return ProgressCourseRow;
+}(_react2.default.Component);
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.Dashboard = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2998,6 +3140,11 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
   }
 
   _createClass(Dashboard, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      store.dispatch(loadProgress());
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -3025,14 +3172,7 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
                     _react2.default.createElement(
                       'h5',
                       { className: 'ui left floated header' },
-                      'Populer Browsers'
-                    ),
-                    _react2.default.createElement(
-                      'h5',
-                      { className: 'ui right floated header' },
-                      _react2.default.createElement('i', { className: 'ion-ios-arrow-up icon link' }),
-                      _react2.default.createElement('i', { className: 'ion-ios-refresh-empty refreshing icon link' }),
-                      _react2.default.createElement('i', { className: 'ion-ios-close-empty icon link' })
+                      'Recent Courses'
                     ),
                     _react2.default.createElement('div', { className: 'clearfix' })
                   ),
@@ -3056,17 +3196,17 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
                           _react2.default.createElement(
                             'th',
                             null,
-                            'Project Name'
+                            'Course Name'
                           ),
                           _react2.default.createElement(
                             'th',
                             null,
-                            'Date'
+                            'Start Date'
                           ),
                           _react2.default.createElement(
                             'th',
                             null,
-                            'Accept'
+                            'Progress'
                           ),
                           _react2.default.createElement(
                             'th',
@@ -3078,171 +3218,9 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
                       _react2.default.createElement(
                         'tbody',
                         null,
-                        _react2.default.createElement(
-                          'tr',
-                          null,
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '1'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            'Chrome'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '10 July 2014'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement('i', { className: 'green check icon' })
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement(
-                              'a',
-                              { className: 'ui blue mini basic label' },
-                              'Update'
-                            )
-                          )
-                        ),
-                        _react2.default.createElement(
-                          'tr',
-                          null,
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '2'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            'Mozilla'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '2 Feb 2010'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement('i', { className: 'red close icon' })
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement(
-                              'a',
-                              { className: 'ui green mini basic label' },
-                              'Upgrade'
-                            )
-                          )
-                        ),
-                        _react2.default.createElement(
-                          'tr',
-                          null,
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '3'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            'Yandex'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '29 Aug 2012'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement('i', { className: 'green check icon' })
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement(
-                              'a',
-                              { className: 'ui purple mini basic label' },
-                              'Coming Soon'
-                            )
-                          )
-                        ),
-                        _react2.default.createElement(
-                          'tr',
-                          null,
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '4'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            'Internet Explorer'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '5 Sep 2005'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement('i', { className: 'red close icon' })
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement(
-                              'a',
-                              { className: 'ui red mini basic label' },
-                              'Released'
-                            )
-                          )
-                        ),
-                        _react2.default.createElement(
-                          'tr',
-                          null,
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '5'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            'Safari'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            '1 Jan 2002'
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement('i', { className: 'red close icon' })
-                          ),
-                          _react2.default.createElement(
-                            'td',
-                            null,
-                            _react2.default.createElement(
-                              'a',
-                              { className: 'ui yellow mini basic label' },
-                              'Upgrade'
-                            )
-                          )
-                        )
+                        this.props.courses.map(function (course) {
+                          return _react2.default.createElement(ProgressCourseRow, { course: course, key: "viewed_course" + course.id });
+                        })
                       )
                     ),
                     _react2.default.createElement(
@@ -3381,12 +3359,6 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
                         '14\xB0'
                       )
                     )
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { id: 'flot-weather', className: 'flotchart', style: { padding: 0, position: 'relative' } },
-                    _react2.default.createElement('canvas', { className: 'flot-base', width: 718, height: 200, style: { direction: 'ltr', position: 'absolute', left: 0, top: 0, width: 359, height: 100 } }),
-                    _react2.default.createElement('canvas', { className: 'flot-overlay', width: 718, height: 200, style: { direction: 'ltr', position: 'absolute', left: 0, top: 0, width: 359, height: 100 } })
                   )
                 )
               )
@@ -3400,6 +3372,18 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
 
   return Dashboard;
 }(_react2.default.Component);
+
+Dashboard.propTypes = {
+  courses: _react.PropTypes.any
+};
+
+var mapTopCourseToDashboard = function mapTopCourseToDashboard(state) {
+  return {
+    courses: state.ProgressReducer.courses
+  };
+};
+
+exports.Dashboard = Dashboard = (0, _reactRedux.connect)(mapTopCourseToDashboard)(Dashboard);
 
 'use strict';
 
@@ -3739,6 +3723,28 @@ var ClubsReducer = function ClubsReducer() {
 
 exports.default = ClubsReducer;
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ProgressReducer = function ProgressReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { courses: [] };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case LOAD_PROGRESS_SUCCESS:
+      return Object.assign({}, state, {
+        courses: action.courses.courses
+      });
+
+    default:
+      return state;
+  }
+};
+
+exports.default = ProgressReducer;
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3748,7 +3754,7 @@ Object.defineProperty(exports, "__esModule", {
 var _redux = require('redux');
 
 var TodoApp = (0, _redux.combineReducers)({
-  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer, ClubsReducer: ClubsReducer, WeatherReducer: WeatherReducer
+  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer, ClubsReducer: ClubsReducer, WeatherReducer: WeatherReducer, ProgressReducer: ProgressReducer
 });
 
 exports.default = TodoApp;

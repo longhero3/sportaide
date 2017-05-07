@@ -130,9 +130,13 @@ Licensed under the MIT license.
 	// @param {number} width New height of the canvas, in pixels.
 
 	Canvas.prototype.resize = function(width, height) {
+    if(width == null || height==null) {
+      width = this.element.width
+      height = this.element.height
+    }
 
 		if (width <= 0 || height <= 0) {
-			throw new Error("Invalid dimensions for plot, width = " + width + ", height = " + height);
+			throw new Error("Invalid dimensions for plot, width");
 		}
 
 		var element = this.element,

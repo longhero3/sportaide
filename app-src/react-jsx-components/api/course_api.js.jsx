@@ -27,6 +27,22 @@ class CourseApi{
     return error;
   });
   }
+
+  static getTopViewedCourses(keywords){
+    return fetch('/courses/top_viewed_courses.json', requestOptions).then(response => {
+      return response.json();
+  }).catch(error => {
+    return error;
+  });
+  }
+
+  static trackProgress(lessonId){
+    return fetch(`/lessons/track_user_lesson.json?lesson_id=${lessonId}`, requestOptions).then(response => {
+      return response.json();
+  }).catch(error => {
+    return error;
+  });
+  }
 }
 
 export default CourseApi;
