@@ -12,7 +12,44 @@ function defaultWeatherState(){
       text: '24/4',
       high: 15,
       low: 10
-    }
+    },
+
+    details: [
+    {
+      text: '7/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    },
+    {
+      text: '8/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    },
+    {
+      text: '9/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    },
+    {
+      text: '10/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    },
+    {
+      text: '11/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    }]
   });
 }
 
@@ -25,7 +62,8 @@ const WeatherReducer = (state = defaultWeatherState(), action) => {
         temp: action.weather.temp,
         subLocation: action.weather.sub_location,
         tmr: action.weather.tomorrow,
-        otherDay: action.weather.other_day
+        otherDay: action.weather.other_day,
+        details: action.weather.details
       })
     default:
       return state

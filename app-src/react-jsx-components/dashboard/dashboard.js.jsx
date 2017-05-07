@@ -51,37 +51,20 @@ export class Dashboard extends React.Component{
       <h2 className="ui   center aligned header">
       <div className="content">
       Melbourne
-      <div className="sub header">Thursday, 29 November</div>
+      <div className="sub header">{this.props.forecasts[0].fulltext}</div>
     </div>
     </h2>
-    <h3 className="ui center aligned header">14 °</h3>
+    <h3 className="ui center aligned header">{this.props.forecasts[0].low} ° - {this.props.forecasts[0].high} °</h3>
     <div className="ui divider" />
       <div className="ui five column centered grid">
-      <div className="column center aligned">
-      <p>Wed</p>
-    <p><i className="wi wi-day-cloudy" /></p>
-    <p>12°</p>
-    </div>
-    <div className="column center aligned">
-      <p>Thu</p>
-    <p><i className="wi wi-day-sleet" /></p>
-    <p>10°</p>
-    </div>
-    <div className="column center aligned">
-      <p>Fri</p>
-    <p><i className="wi wi-day-cloudy-gusts" /></p>
-    <p>8°</p>
-    </div>
-    <div className="column center aligned">
-      <p>Sat</p>
-    <p><i className="wi wi-day-sprinkle" /></p>
-    <p>-5°</p>
-    </div>
-    <div className="column center aligned">
-      <p>Sun</p>
-    <p><i className="wi wi-day-lightning" /></p>
-    <p>14°</p>
-    </div>
+      {this.props.forecasts.map(function(forecast){
+        return (<div className="column center aligned">
+                  <p>{forecast.text}</p>
+                  <p><i className={"wi wi-" + forecast.classname}/></p>
+                  <p>{forecast.low}°-{forecast.high}°</p>
+                </div>);
+      })}
+
     </div>
 </div>
 </div>
@@ -95,11 +78,13 @@ export class Dashboard extends React.Component{
 }
 
 Dashboard.propTypes = {
-  courses: PropTypes.any
+  courses: PropTypes.any,
+  forecasts: PropTypes.any
 }
 
 const mapTopCourseToDashboard = (state) => ({
-  courses: state.ProgressReducer.courses
+  courses: state.ProgressReducer.courses,
+  forecasts: state.WeatherReducer.details,
 })
 
 Dashboard = connect(mapTopCourseToDashboard)(Dashboard)

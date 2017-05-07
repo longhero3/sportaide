@@ -3251,114 +3251,46 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
                       _react2.default.createElement(
                         'div',
                         { className: 'sub header' },
-                        'Thursday, 29 November'
+                        this.props.forecasts[0].fulltext
                       )
                     )
                   ),
                   _react2.default.createElement(
                     'h3',
                     { className: 'ui center aligned header' },
-                    '14 \xB0'
+                    this.props.forecasts[0].low,
+                    ' \xB0 - ',
+                    this.props.forecasts[0].high,
+                    ' \xB0'
                   ),
                   _react2.default.createElement('div', { className: 'ui divider' }),
                   _react2.default.createElement(
                     'div',
                     { className: 'ui five column centered grid' },
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'column center aligned' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Wed'
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        _react2.default.createElement('i', { className: 'wi wi-day-cloudy' })
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        '12\xB0'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'column center aligned' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Thu'
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        _react2.default.createElement('i', { className: 'wi wi-day-sleet' })
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        '10\xB0'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'column center aligned' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Fri'
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        _react2.default.createElement('i', { className: 'wi wi-day-cloudy-gusts' })
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        '8\xB0'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'column center aligned' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Sat'
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        _react2.default.createElement('i', { className: 'wi wi-day-sprinkle' })
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        '-5\xB0'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'column center aligned' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Sun'
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        _react2.default.createElement('i', { className: 'wi wi-day-lightning' })
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        '14\xB0'
-                      )
-                    )
+                    this.props.forecasts.map(function (forecast) {
+                      return _react2.default.createElement(
+                        'div',
+                        { className: 'column center aligned' },
+                        _react2.default.createElement(
+                          'p',
+                          null,
+                          forecast.text
+                        ),
+                        _react2.default.createElement(
+                          'p',
+                          null,
+                          _react2.default.createElement('i', { className: "wi wi-" + forecast.classname })
+                        ),
+                        _react2.default.createElement(
+                          'p',
+                          null,
+                          forecast.low,
+                          '\xB0-',
+                          forecast.high,
+                          '\xB0'
+                        )
+                      );
+                    })
                   )
                 )
               )
@@ -3374,12 +3306,14 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
 }(_react2.default.Component);
 
 Dashboard.propTypes = {
-  courses: _react.PropTypes.any
+  courses: _react.PropTypes.any,
+  forecasts: _react.PropTypes.any
 };
 
 var mapTopCourseToDashboard = function mapTopCourseToDashboard(state) {
   return {
-    courses: state.ProgressReducer.courses
+    courses: state.ProgressReducer.courses,
+    forecasts: state.WeatherReducer.details
   };
 };
 
@@ -3552,7 +3486,39 @@ function defaultWeatherState() {
       text: '24/4',
       high: 15,
       low: 10
-    }
+    },
+
+    details: [{
+      text: '7/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    }, {
+      text: '8/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    }, {
+      text: '9/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    }, {
+      text: '10/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    }, {
+      text: '11/5',
+      fulltext: 'Today',
+      high: 15,
+      low: 10,
+      classname: 'day-sunny'
+    }]
   };
 }
 
@@ -3568,7 +3534,8 @@ var WeatherReducer = function WeatherReducer() {
         temp: action.weather.temp,
         subLocation: action.weather.sub_location,
         tmr: action.weather.tomorrow,
-        otherDay: action.weather.other_day
+        otherDay: action.weather.other_day,
+        details: action.weather.details
       });
     default:
       return state;
