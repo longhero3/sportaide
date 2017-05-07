@@ -6,6 +6,7 @@ export class Dashboard extends React.Component{
 
   componentDidMount(){
     store.dispatch(loadProgress())
+    store.dispatch(loadWeatherDetails())
   }
 
   render(){
@@ -57,8 +58,8 @@ export class Dashboard extends React.Component{
     <h3 className="ui center aligned header">{this.props.forecasts[0].low} ° - {this.props.forecasts[0].high} °</h3>
     <div className="ui divider" />
       <div className="ui five column centered grid">
-      {this.props.forecasts.map(function(forecast){
-        return (<div className="column center aligned">
+      {this.props.forecasts.map(function(forecast, index){
+        return (<div className="column center aligned" key={"forecast_" + index}>
                   <p>{forecast.text}</p>
                   <p><i className={"wi wi-" + forecast.classname}/></p>
                   <p>{forecast.low}°-{forecast.high}°</p>
@@ -82,9 +83,6 @@ Dashboard.propTypes = {
   forecasts: PropTypes.any
 }
 
-const mapTopCourseToDashboard = (state) => ({
-  courses: state.ProgressReducer.courses,
-  forecasts: state.WeatherReducer.details,
-})
-
-Dashboard = connect(mapTopCourseToDashboard)(Dashboard)
+Dashboard.defaultProps = {
+  forecasts: defaultWeatherDetailsState().details
+}

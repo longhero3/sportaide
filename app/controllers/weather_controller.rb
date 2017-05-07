@@ -5,6 +5,12 @@ class WeatherController < ApplicationController
     @location = "Melbourne"
   end
 
+  def details_weather
+    @weather = Weather.lookup_by_location('Melbourne, Australia', Weather::Units::CELSIUS)
+    @weatherClass = weather_class @weather.condition.code
+    @location = "Melbourne"
+  end
+
   def search_weather
     if params[:location]
       begin

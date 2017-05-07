@@ -2,6 +2,7 @@ import React from 'react'
 
 export class ClubDetailsPage extends React.Component {
   componentDidMount(){
+    store.dispatch(loadWeatherInfo())
     setTimeout(function(){ store.dispatch(getClub(this.props.params.club_id))}.bind(this), 10);
   }
 

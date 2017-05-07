@@ -146,3 +146,5 @@ MainMapBlock.propTypes = {
   isFetching: PropTypes.bool,
   selectedMarker: PropTypes.any
 }
+
+

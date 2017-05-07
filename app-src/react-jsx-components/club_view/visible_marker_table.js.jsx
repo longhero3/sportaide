@@ -13,8 +13,8 @@ const mapMarkerTableState = (state) => (
     openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
     filteredClubs: state.ClubsReducer.get('filteredClubs'),
     weatherClass: state.WeatherReducer.weatherClass,
-    weatherTemp: state.WeatherReducer.temp,
-    weatherText: state.WeatherReducer.text,
+    weatherTemp: state.WeatherReducer.weatherTemp,
+    weatherText: state.WeatherReducer.weatherText,
     subLocation: state.WeatherReducer.subLocation,
     tmr: state.WeatherReducer.tmr,
     otherDay: state.WeatherReducer.otherDay

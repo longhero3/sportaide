@@ -143,6 +143,15 @@ var WeatherApi = function () {
       });
     }
   }, {
+    key: 'getWeatherDetailsInfo',
+    value: function getWeatherDetailsInfo() {
+      return fetch('/weather/details_weather.json').then(function (response) {
+        return response.json();
+      }).catch(function (error) {
+        return error;
+      });
+    }
+  }, {
     key: 'searchWeather',
     value: function searchWeather(location) {
       return fetch('/weather/search_weather.json?location=' + location).then(function (response) {
@@ -389,6 +398,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.loadWeatherSuccess = loadWeatherSuccess;
+exports.loadWeatherFailure = loadWeatherFailure;
 exports.loadWeatherInfo = loadWeatherInfo;
 exports.loadWeatherOnLocation = loadWeatherOnLocation;
 
@@ -399,9 +409,14 @@ var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LOAD_WEATHER_DATA_SUCCESS = 'LOAD_WEATHER_DATA_SUCCESS';
+var LOAD_WEATHER_DATA_FAILURE = 'LOAD_WEATHER_DATA_FAILURE';
 
 function loadWeatherSuccess(weather) {
   return { type: LOAD_WEATHER_DATA_SUCCESS, weather: weather };
+}
+
+function loadWeatherFailure() {
+  return { type: LOAD_WEATHER_DATA_FAILURE };
 }
 
 function loadWeatherInfo() {
@@ -409,7 +424,7 @@ function loadWeatherInfo() {
     return WeatherApi.getWeatherInfo().then(function (weather) {
       dispatch(loadWeatherSuccess(weather));
     }).catch(function (error) {
-      throw error;
+      dispatch(loadWeatherFailure());
     });
   };
 }
@@ -419,7 +434,43 @@ function loadWeatherOnLocation(location) {
     return WeatherApi.searchWeather(location).then(function (weather) {
       dispatch(loadWeatherSuccess(weather));
     }).catch(function (error) {
-      throw error;
+      dispatch(loadWeatherFailure());
+    });
+  };
+}
+
+;'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadWeatherDetailsSuccess = loadWeatherDetailsSuccess;
+exports.loadWeatherDetailsFailure = loadWeatherDetailsFailure;
+exports.loadWeatherDetails = loadWeatherDetails;
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOAD_WEATHER_DETAILS_SUCCESS = 'LOAD_WEATHER_DATA_SUCCESS';
+var LOAD_WEATHER_DETAILS_FAILURE = 'LOAD_WEATHER_DATA_FAILURE';
+
+function loadWeatherDetailsSuccess(weather) {
+  return { type: LOAD_WEATHER_DETAILS_SUCCESS, weather: weather };
+}
+
+function loadWeatherDetailsFailure() {
+  return { type: LOAD_WEATHER_DETAILS_FAILURE };
+}
+
+function loadWeatherDetails() {
+  return function (dispatch) {
+    return WeatherApi.getWeatherDetailsInfo().then(function (weather) {
+      dispatch(loadWeatherDetailsSuccess(weather));
+    }).catch(function (error) {
+      dispatch(loadWeatherDetailsFailure());
     });
   };
 }
@@ -2616,6 +2667,8 @@ MarkerTable.propTypes = {
   otherDay: _react.PropTypes.any
 };
 
+MarkerTable.defaultProps = defaultWeatherState();
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2637,8 +2690,8 @@ var mapMarkerTableState = function mapMarkerTableState(state) {
     openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
     filteredClubs: state.ClubsReducer.get('filteredClubs'),
     weatherClass: state.WeatherReducer.weatherClass,
-    weatherTemp: state.WeatherReducer.temp,
-    weatherText: state.WeatherReducer.text,
+    weatherTemp: state.WeatherReducer.weatherTemp,
+    weatherText: state.WeatherReducer.weatherText,
     subLocation: state.WeatherReducer.subLocation,
     tmr: state.WeatherReducer.tmr,
     otherDay: state.WeatherReducer.otherDay
@@ -2878,8 +2931,8 @@ var mapClubDetailsState = function mapClubDetailsState(state) {
     openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
     selectedClub: state.ClubsReducer.get('selectedMarker'),
     weatherClass: state.WeatherReducer.weatherClass,
-    weatherTemp: state.WeatherReducer.temp,
-    weatherText: state.WeatherReducer.text,
+    weatherTemp: state.WeatherReducer.weatherTemp,
+    weatherText: state.WeatherReducer.weatherText,
     tmr: state.WeatherReducer.tmr,
     otherDay: state.WeatherReducer.otherDay
   };
@@ -2922,6 +2975,7 @@ var ClubDetailsPage = exports.ClubDetailsPage = function (_React$Component) {
   _createClass(ClubDetailsPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      store.dispatch(loadWeatherInfo());
       setTimeout(function () {
         store.dispatch(getClub(this.props.params.club_id));
       }.bind(this), 10);
@@ -2989,6 +3043,8 @@ var ClubMainPage = exports.ClubMainPage = function (_React$Component) {
     value: function componentDidMount() {
       if (this.props.params.postcode) {
         store.dispatch(searchClubs(this.props.params.postcode));
+      } else {
+        store.dispatch(loadWeatherInfo());
       }
     }
   }, {
@@ -3143,6 +3199,7 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       store.dispatch(loadProgress());
+      store.dispatch(loadWeatherDetails());
     }
   }, {
     key: 'render',
@@ -3267,10 +3324,10 @@ var Dashboard = exports.Dashboard = function (_React$Component) {
                   _react2.default.createElement(
                     'div',
                     { className: 'ui five column centered grid' },
-                    this.props.forecasts.map(function (forecast) {
+                    this.props.forecasts.map(function (forecast, index) {
                       return _react2.default.createElement(
                         'div',
-                        { className: 'column center aligned' },
+                        { className: 'column center aligned', key: "forecast_" + index },
                         _react2.default.createElement(
                           'p',
                           null,
@@ -3310,14 +3367,28 @@ Dashboard.propTypes = {
   forecasts: _react.PropTypes.any
 };
 
+Dashboard.defaultProps = {
+  forecasts: defaultWeatherDetailsState().details
+};
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
 var mapTopCourseToDashboard = function mapTopCourseToDashboard(state) {
   return {
     courses: state.ProgressReducer.courses,
-    forecasts: state.WeatherReducer.details
+    forecasts: state.WeatherDetailsReducer.details
   };
 };
 
-exports.Dashboard = Dashboard = (0, _reactRedux.connect)(mapTopCourseToDashboard)(Dashboard);
+var VisibleDashboard = (0, _reactRedux.connect)(mapTopCourseToDashboard)(Dashboard);
+
+exports.default = VisibleDashboard;
 
 'use strict';
 
@@ -3475,8 +3546,8 @@ Object.defineProperty(exports, "__esModule", {
 function defaultWeatherState() {
   return {
     weatherClass: "sunny",
-    text: "Sunny Day",
-    temp: 16,
+    weatherText: "Sunny Day",
+    weatherTemp: 16,
     tmr: {
       text: 'Tomorrow',
       high: 15,
@@ -3486,8 +3557,41 @@ function defaultWeatherState() {
       text: '24/4',
       high: 15,
       low: 10
-    },
+    }
+  };
+}
 
+var WeatherReducer = function WeatherReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultWeatherState();
+  var action = arguments[1];
+
+  switch (action.type) {
+    case LOAD_WEATHER_DATA_SUCCESS:
+      return Object.assign({}, state, {
+        weatherClass: action.weather.class_name,
+        weatherText: action.weather.text,
+        weatherTemp: action.weather.temp,
+        subLocation: action.weather.sub_location,
+        tmr: action.weather.tomorrow,
+        otherDay: action.weather.other_day
+      });
+
+    case LOAD_WEATHER_DATA_FAILURE:
+      return Object.assign({}, state, defaultWeatherState());
+    default:
+      return state;
+  }
+};
+
+exports.default = WeatherReducer;
+
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function defaultWeatherDetailsState() {
+  return {
     details: [{
       text: '7/5',
       fulltext: 'Today',
@@ -3522,27 +3626,24 @@ function defaultWeatherState() {
   };
 }
 
-var WeatherReducer = function WeatherReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultWeatherState();
+var WeatherDetailsReducer = function WeatherDetailsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultWeatherDetailsState();
   var action = arguments[1];
 
   switch (action.type) {
-    case LOAD_WEATHER_DATA_SUCCESS:
+    case LOAD_WEATHER_DETAILS_SUCCESS:
       return Object.assign({}, state, {
-        weatherClass: action.weather.class_name,
-        text: action.weather.text,
-        temp: action.weather.temp,
-        subLocation: action.weather.sub_location,
-        tmr: action.weather.tomorrow,
-        otherDay: action.weather.other_day,
         details: action.weather.details
       });
+
+    case LOAD_WEATHER_DETAILS_FAILURE:
+      return Object.assign({}, state, defaultWeatherDetailsState());
     default:
       return state;
   }
 };
 
-exports.default = WeatherReducer;
+exports.default = WeatherDetailsReducer;
 
 'use strict';
 
@@ -3721,7 +3822,7 @@ Object.defineProperty(exports, "__esModule", {
 var _redux = require('redux');
 
 var TodoApp = (0, _redux.combineReducers)({
-  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer, ClubsReducer: ClubsReducer, WeatherReducer: WeatherReducer, ProgressReducer: ProgressReducer
+  NavReducer: NavReducer, CoursesReducer: CoursesReducer, CourseDetailsReducer: CourseDetailsReducer, ClubsReducer: ClubsReducer, WeatherReducer: WeatherReducer, ProgressReducer: ProgressReducer, WeatherDetailsReducer: WeatherDetailsReducer
 });
 
 exports.default = TodoApp;
@@ -4087,7 +4188,7 @@ var Root = function Root(_ref) {
       _react2.default.createElement(
         _reactRouter.Route,
         { path: '/dashboard', component: MainApp },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: Dashboard }),
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: VisibleDashboard }),
         _react2.default.createElement(_reactRouter.Route, { path: 'newsfeeds', component: NewsfeedsView }),
         _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map', component: ClubMainPage }),
         _react2.default.createElement(_reactRouter.Route, { path: 'clubs/club_map/:club_id', component: ClubDetailsPage }),
@@ -4126,7 +4227,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var store = (0, _redux.createStore)(TodoApp, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
-store.dispatch(loadWeatherInfo());
+//store.dispatch(loadWeatherInfo())
 
 (0, _reactDom.render)(_react2.default.createElement(Root, { store: store }), document.getElementById('dashboard'));
 

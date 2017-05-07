@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   get 'dashboard' => 'dashboard#index'
   get 'weather' => 'weather#index'
+  get 'weather/details_weather' => 'weather#details_weather'
   get 'weather/search_weather' => 'weather#search_weather'
   get 'dashboard/*path' => 'dashboard#index'
 end

@@ -13,8 +13,8 @@ const mapClubDetailsState = (state) => (
   openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
   selectedClub: state.ClubsReducer.get('selectedMarker'),
   weatherClass: state.WeatherReducer.weatherClass,
-  weatherTemp: state.WeatherReducer.temp,
-  weatherText: state.WeatherReducer.text,
+  weatherTemp: state.WeatherReducer.weatherTemp,
+  weatherText: state.WeatherReducer.weatherText,
   tmr: state.WeatherReducer.tmr,
   otherDay: state.WeatherReducer.otherDay
 }

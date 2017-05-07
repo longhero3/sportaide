@@ -77,3 +77,5 @@ MarkerTable.propTypes = {
   tmr: PropTypes.any,
   otherDay: PropTypes.any
 }
+
+MarkerTable.defaultProps = defaultWeatherState()
