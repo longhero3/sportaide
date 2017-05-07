@@ -14,7 +14,7 @@ export class ProgressCourseRow extends React.Component{
         <td>{this.props.course.id}</td>
         <td><Link to={"/dashboard/lessons/" + this.props.course.id}>{this.props.course.course_name}</Link></td>
         <td>{this.props.course.start_date}</td>
-        <td>{this.props.course.progress}%</td>
+        <td><span className="counter">{this.props.course.progress}</span>%</td>
         {completedDiv}
       </tr>
     );

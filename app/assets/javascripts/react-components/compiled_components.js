@@ -186,6 +186,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.requestCourse = requestCourse;
 exports.receiveCourse = receiveCourse;
 exports.selectLesson = selectLesson;
+exports.nextLesson = nextLesson;
 exports.loadCourse = loadCourse;
 
 var _isomorphicFetch = require('isomorphic-fetch');
@@ -197,6 +198,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var RECEIVE_COURSE_SUCCESS = 'RECEIVE_COURSE_SUCCESS';
 var REQUEST_COURSE = 'REQUEST_COURSE';
 var SELECT_LESSON = 'SELECT_LESSON';
+var NEXT_LESSON = 'NEXT_LESSON';
 
 function requestCourse(course) {
   return { type: LOAD_COURSES_SUCCESS, course: course };
@@ -206,9 +208,13 @@ function receiveCourse(course) {
   return { type: RECEIVE_COURSE_SUCCESS, course: course };
 }
 
-function selectLesson(lesson) {
+function selectLesson(lesson, chapterIndex, lessonIndex) {
   CourseApi.trackProgress(lesson.id);
-  return { type: SELECT_LESSON, lesson: lesson };
+  return { type: SELECT_LESSON, lesson: lesson, chapterIndex: chapterIndex, lessonIndex: lessonIndex };
+}
+
+function nextLesson() {
+  return { type: NEXT_LESSON };
 }
 
 function loadCourse(courseID) {
@@ -825,33 +831,42 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
       $('.accordion').accordion();
     }
   }, {
+    key: 'activeClassName',
+    value: function activeClassName(chapterIndex, lessonIndex) {
+      var tempClass = "";
+      if (chapterIndex == this.props.chapterIndex && lessonIndex == this.props.lessonIndex) {
+        tempClass = " active";
+      }
+      return tempClass;
+    }
+  }, {
     key: 'chapterAccordion',
     value: function chapterAccordion(chapter) {
       return _react2.default.createElement(
         'div',
-        { className: 'title', key: "chapter_" + chapter.id },
+        { className: 'title active', key: "chapter_" + chapter.id },
         _react2.default.createElement('i', { className: 'dropdown icon' }),
         chapter.title
       );
     }
   }, {
     key: 'lessonsAccordion',
-    value: function lessonsAccordion(chapter) {
+    value: function lessonsAccordion(chapter, chapterIndex) {
       return _react2.default.createElement(
         'div',
-        { className: 'content' },
+        { className: 'content active' },
         _react2.default.createElement(
           'div',
           { className: 'accordion' },
           chapter.lessons.map(function (lesson, index) {
             return _react2.default.createElement(
               'div',
-              { className: 'title', key: "lesson_" + index, onClick: function onClick() {
-                  return store.dispatch(selectLesson(lesson));
+              { className: "title" + this.activeClassName(chapterIndex, index), key: "lesson_" + index, onClick: function onClick() {
+                  return store.dispatch(selectLesson(lesson, chapterIndex, index));
                 } },
               lesson.title
             );
-          })
+          }.bind(this))
         )
       );
     }
@@ -867,7 +882,7 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
     }
   }, {
     key: 'activeLessonsAccordion',
-    value: function activeLessonsAccordion(chapter) {
+    value: function activeLessonsAccordion(chapter, chapterIndex) {
       return _react2.default.createElement(
         'div',
         { className: 'content active' },
@@ -877,12 +892,12 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
           chapter.lessons.map(function (lesson, index) {
             return _react2.default.createElement(
               'div',
-              { className: 'title', key: "lesson_" + index, onClick: function onClick() {
-                  return store.dispatch(selectLesson(lesson));
+              { className: "title" + this.activeClassName(chapterIndex, index), key: "lesson_" + index, onClick: function onClick() {
+                  return store.dispatch(selectLesson(lesson, chapterIndex, index));
                 } },
               lesson.title
             );
-          })
+          }.bind(this))
         )
       );
     }
@@ -913,10 +928,10 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
                   var tempLesson = null;
                   if (index == 0) {
                     tempChapter = this.activeChapterAccordion(chapter);
-                    tempLesson = this.activeLessonsAccordion(chapter);
+                    tempLesson = this.activeLessonsAccordion(chapter, index);
                   } else {
                     tempChapter = this.chapterAccordion(chapter);
-                    tempLesson = this.lessonsAccordion(chapter);
+                    tempLesson = this.lessonsAccordion(chapter, index);
                   }
                   return [tempChapter, tempLesson];
                 }.bind(this))
@@ -933,7 +948,9 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
 
 CourseNav.propsTypes = {
   course: _react.PropTypes.object.isRequired,
-  isFetching: _react.PropTypes.bool.isRequired
+  isFetching: _react.PropTypes.bool.isRequired,
+  chapterIndex: _react.PropTypes.any,
+  lessonIndex: _react.PropTypes.any
 };
 
 'use strict';
@@ -947,7 +964,9 @@ var _reactRedux = require('react-redux');
 var mapCourseNavState = function mapCourseNavState(state) {
   return {
     course: state.CourseDetailsReducer.course,
-    isFetching: state.CourseDetailsReducer.isFetching
+    isFetching: state.CourseDetailsReducer.isFetching,
+    chapterIndex: state.CourseDetailsReducer.chapterIndex,
+    lessonIndex: state.CourseDetailsReducer.lessonIndex
   };
 };
 
@@ -979,21 +998,55 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var CourseTabs = exports.CourseTabs = function (_React$Component) {
   _inherits(CourseTabs, _React$Component);
 
-  function CourseTabs() {
+  //  componentDidMount(){
+  //    $('.tab-menu .item').tab()
+  //  }
+
+  function CourseTabs(props) {
     _classCallCheck(this, CourseTabs);
 
-    return _possibleConstructorReturn(this, (CourseTabs.__proto__ || Object.getPrototypeOf(CourseTabs)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (CourseTabs.__proto__ || Object.getPrototypeOf(CourseTabs)).call(this, props));
+
+    _this.state = {
+      binded: false
+    };
+    return _this;
   }
 
   _createClass(CourseTabs, [{
     key: 'componentDidUpdate',
-
-    //  componentDidMount(){
-    //    $('.tab-menu .item').tab()
-    //  }
-
     value: function componentDidUpdate(prev, next) {
       $('.tab-menu .item').tab();
+      if (this.state.binded == false) {
+        this.state.binded = true;
+        $(".not").on("click", function () {
+          var a, b, c, d, e, f, g, h, i, j, k;
+          d = $(this).attr("data-size");
+          e = $(this).attr("data-message");
+          c = $(this).attr("data-type");
+          f = $(this).attr("data-icon");
+          g = $(this).attr("data-title");
+          h = $(this).attr("data-image");
+          i = $(this).attr("data-sound");
+          a = $(this).attr("data-show-animation");
+          b = $(this).attr("data-hide-animation");
+          j = $(this).attr("data-position");
+          k = $(this).attr("data-delay");
+          Lobibox.notify(c, {
+            size: d,
+            rounded: false,
+            delayIndicator: true,
+            msg: e,
+            icon: f,
+            title: g,
+            showClass: a,
+            hideClass: b,
+            sound: i,
+            img: h,
+            delay: 1500
+          });
+        });
+      }
     }
   }, {
     key: 'createMarkup',
@@ -1009,6 +1062,21 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
         return { __html: '<p>There is no quiz for this lesson.</p>' };
       }
     }
+  }, {
+    key: 'nextLesson',
+    value: function (_nextLesson) {
+      function nextLesson() {
+        return _nextLesson.apply(this, arguments);
+      }
+
+      nextLesson.toString = function () {
+        return _nextLesson.toString();
+      };
+
+      return nextLesson;
+    }(function () {
+      store.dispatch(nextLesson());
+    })
   }, {
     key: 'render',
     value: function render() {
@@ -1055,7 +1123,13 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
                   _react2.default.createElement('iframe', { className: 'video-iframe', src: this.props.lesson.preferred_url, frameBorder: '0', allowFullScreen: 'allowfullscreen' })
                 )
               ),
-              _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) })
+              _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) }),
+              _react2.default.createElement(
+                'button',
+                { className: 'ui right labeled icon green button not next-lesson-btn', 'data-animation': true, 'data-type': 'success', 'data-size': 'normal', 'data-message': 'Moving to the next lesson', onClick: this.nextLesson.bind(this) },
+                'Next Lesson',
+                _react2.default.createElement('i', { className: 'right chevron icon' })
+              )
             ),
             _react2.default.createElement(
               'div',
@@ -3150,7 +3224,11 @@ var ProgressCourseRow = exports.ProgressCourseRow = function (_React$Component) 
         _react2.default.createElement(
           'td',
           null,
-          this.props.course.progress,
+          _react2.default.createElement(
+            'span',
+            { className: 'counter' },
+            this.props.course.progress
+          ),
           '%'
         ),
         completedDiv
@@ -3510,7 +3588,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var CourseDetailsReducer = function CourseDetailsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { course: {}, isFetching: true, currentLesson: {} };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { course: {}, isFetching: true, currentLesson: {}, chapterIndex: 0, lessonIndex: 0 };
   var action = arguments[1];
 
   switch (action.type) {
@@ -3528,8 +3606,33 @@ var CourseDetailsReducer = function CourseDetailsReducer() {
 
     case SELECT_LESSON:
       return Object.assign({}, state, {
-        currentLesson: action.lesson
+        currentLesson: action.lesson,
+        lessonIndex: action.lessonIndex,
+        chapterIndex: action.chapterIndex
       });
+
+    case NEXT_LESSON:
+      CourseApi.trackProgress(state.currentLesson.id);
+      if (state.course.chapters[state.chapterIndex].lessons[state.lessonIndex + 1]) {
+        return Object.assign({}, state, {
+          currentLesson: state.course.chapters[state.chapterIndex].lessons[state.lessonIndex + 1],
+          lessonIndex: state.lessonIndex + 1
+        });
+      } else {
+        if (state.course.chapters[state.chapterIndex + 1]) {
+          return Object.assign({}, state, {
+            currentLesson: state.course.chapters[state.chapterIndex + 1].lessons[0],
+            lessonIndex: 0,
+            chapterIndex: state.chapterIndex + 1
+          });
+        } else {
+          return Object.assign({}, state, {
+            currentLesson: state.course.chapters[0].lessons[0],
+            lessonIndex: 0,
+            chapterIndex: 0
+          });
+        }
+      }
 
     default:
       return state;

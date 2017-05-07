@@ -7,22 +7,30 @@ export class CourseNav extends React.Component {
     $('.accordion').accordion()
   }
 
+  activeClassName(chapterIndex, lessonIndex) {
+    var tempClass = ""
+    if(chapterIndex == this.props.chapterIndex && lessonIndex == this.props.lessonIndex) {
+      tempClass = " active"
+    }
+    return tempClass;
+  }
+
   chapterAccordion(chapter){
     return(
-      <div className="title" key={"chapter_" + chapter.id}>
+      <div className="title active" key={"chapter_" + chapter.id}>
         <i className="dropdown icon"></i>
         {chapter.title}
       </div>
     )
   }
 
-  lessonsAccordion(chapter){
+  lessonsAccordion(chapter, chapterIndex){
     return (
-      <div className="content">
+      <div className="content active">
         <div className="accordion">
           {chapter.lessons.map(function(lesson,index) {
-            return <div className="title" key={"lesson_" + index} onClick={ () => store.dispatch(selectLesson(lesson)) }>{lesson.title}</div>
-          })}
+            return <div className={"title" + this.activeClassName(chapterIndex, index)} key={"lesson_" + index} onClick={ () => store.dispatch(selectLesson(lesson, chapterIndex, index)) }>{lesson.title}</div>
+          }.bind(this))}
         </div>
       </div>
     )
@@ -37,13 +45,13 @@ export class CourseNav extends React.Component {
     )
   }
 
-  activeLessonsAccordion(chapter) {
+  activeLessonsAccordion(chapter, chapterIndex) {
     return (
       <div className="content active">
         <div className="accordion transition visible" style={{display: "block !important"}}>
           {chapter.lessons.map(function(lesson,index) {
-            return <div className="title" key={"lesson_" + index} onClick={() => store.dispatch(selectLesson(lesson))}>{lesson.title}</div>
-          })}
+            return <div className={"title" + this.activeClassName(chapterIndex, index)} key={"lesson_" + index} onClick={() => store.dispatch(selectLesson(lesson, chapterIndex, index))}>{lesson.title}</div>
+          }.bind(this))}
         </div>
       </div>
     )
@@ -71,10 +79,10 @@ export class CourseNav extends React.Component {
                   var tempLesson = null
                   if(index == 0){
                     tempChapter = this.activeChapterAccordion(chapter)
-                    tempLesson = this.activeLessonsAccordion(chapter)
+                    tempLesson = this.activeLessonsAccordion(chapter,index)
                   } else {
                     tempChapter = this.chapterAccordion(chapter)
-                    tempLesson = this.lessonsAccordion(chapter)
+                    tempLesson = this.lessonsAccordion(chapter,index)
                   }
                   return [tempChapter, tempLesson]
                 }.bind(this))}
@@ -89,5 +97,7 @@ export class CourseNav extends React.Component {
 
 CourseNav.propsTypes = {
   course: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  chapterIndex: PropTypes.any,
+  lessonIndex: PropTypes.any
 }

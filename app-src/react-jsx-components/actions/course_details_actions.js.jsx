@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch'
 const RECEIVE_COURSE_SUCCESS = 'RECEIVE_COURSE_SUCCESS'
 const REQUEST_COURSE = 'REQUEST_COURSE'
 const SELECT_LESSON = 'SELECT_LESSON'
+const NEXT_LESSON = 'NEXT_LESSON'
 
 
 export function requestCourse(course) {
@@ -13,9 +14,13 @@ export function receiveCourse(course) {
   return {type: RECEIVE_COURSE_SUCCESS, course};
 }
 
-export function selectLesson(lesson) {
+export function selectLesson(lesson, chapterIndex, lessonIndex) {
   CourseApi.trackProgress(lesson.id)
-  return {type: SELECT_LESSON, lesson};
+  return {type: SELECT_LESSON, lesson, chapterIndex, lessonIndex};
+}
+
+export function nextLesson(){
+  return {type: NEXT_LESSON}
 }
 
 export function loadCourse(courseID) {

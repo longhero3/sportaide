@@ -5,8 +5,45 @@ export class CourseTabs extends React.Component{
 //    $('.tab-menu .item').tab()
 //  }
 
+  constructor(props){
+    super(props)
+    this.state = {
+      binded: false
+    }
+  }
+
   componentDidUpdate(prev, next) {
     $('.tab-menu .item').tab()
+    if(this.state.binded == false){
+      this.state.binded = true;
+      $(".not").on("click", function () {
+        var a, b, c, d, e, f, g, h, i, j, k;
+        d = $(this).attr("data-size");
+        e = $(this).attr("data-message");
+        c = $(this).attr("data-type");
+        f = $(this).attr("data-icon");
+        g = $(this).attr("data-title");
+        h = $(this).attr("data-image");
+        i = $(this).attr("data-sound");
+        a = $(this).attr("data-show-animation");
+        b = $(this).attr("data-hide-animation");
+        j = $(this).attr("data-position");
+        k = $(this).attr("data-delay");
+        Lobibox.notify(c, {
+          size: d,
+          rounded: false,
+          delayIndicator: true,
+          msg: e,
+          icon: f,
+          title: g,
+          showClass: a,
+          hideClass: b,
+          sound: i,
+          img: h,
+          delay: 1500
+        });
+      });
+    }
   }
 
   createMarkup(content) {
@@ -19,6 +56,10 @@ export class CourseTabs extends React.Component{
     } else {
       return ({__html: `<p>There is no quiz for this lesson.</p>`})
     }
+  }
+
+  nextLesson(){
+    store.dispatch(nextLesson())
   }
 
   render(){
@@ -46,6 +87,10 @@ export class CourseTabs extends React.Component{
               </div>
               <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
               </div>
+              <button className="ui right labeled icon green button not next-lesson-btn" data-animation data-type="success" data-size="normal" data-message="Moving to the next lesson" onClick={this.nextLesson.bind(this)}>
+                Next Lesson
+                <i className="right chevron icon"/>
+              </button>
             </div>
             <div className="ui tab" data-tab="second">
               <div className="ui one column stackable grid">
