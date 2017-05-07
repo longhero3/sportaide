@@ -14,26 +14,6 @@
         %a.item.computer.tablet.only.header{href: '/dashboard/lessons'} Courses
         %a.item.computer.tablet.only.header{href: '/dashboard/clubs/club_map'} Club Map
     .wrapper.wrapper-inner-pages.small-padding.session-background
-      %header.header
-        .header-top
-          .ui.container
-            .header-inner
-              .ui.stackable.three.column.grid.relaxed
-                .column
-                  %a.logo{ href: '/' }
-                    =image_tag('main_logo.png')
-                    %a{ class: 'ui primary button dashboard-btn mobile only', href: '/dashboard/lessons'} Dashboard
-                .column.computer.tablet.only
-                  %p.help Play safe. Play smart.
-                .column.computer.tablet.only
-                  %a{ class: 'ui primary button dashboard-btn', href: '/dashboard/lessons'} Dashboard
-                -#%ul
-                -#  %li.has-subnav
-                -#    .nav-dropdown.nav-dropdown-lang
-                -#      %ul
-                -#        %li
-                -#          %a{ href: '/' } English
-                -#        %li.change-language
-                -#          %a{ href: '/' } Chinese
+      %header.header-header
       = yield
   = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
