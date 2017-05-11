@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 
 let store = createStore(TodoApp,applyMiddleware(thunk))
 
-//store.dispatch(loadWeatherInfo())
+store.dispatch(loadWeatherInfo())
 
 render(
   <Root store={store} />,

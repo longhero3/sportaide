@@ -1,55 +1,15 @@
 .intro.intro-home
   .intro-bg
   .intro-body
-    .news-feed.ui.container
-      .news-heading Newsfeed
-      .ui.stackable.grid
-        .eight.wide.column
-          .news-hero
-            .news-article
-              .news-article-cover
-                %img{:alt => "news", :src => @articles[0]["urlToImage"]}/
-              .news-article-content
-                %h3
-                  %a{href: @articles[0]["url"], class: "news-link"}
-                    = @articles[0]["title"]
-                %p
-                  = @articles[0]["description"]
-        .eight.wide.column
-          .ui.stackable.grid
-            .five.wide.column
-              .news-thumbnail
-                .news-article
-                  .news-article-cover
-                    %img{:alt => "news", :src => @articles[1]["urlToImage"]}/
-                  .news-article-content
-                    %h3
-                      %a{href: @articles[1]["url"], class: "news-link"}
-                        = @articles[1]["title"]
-                    %p
-                      = @articles[1]["description"]
-            .five.wide.column
-              .news-thumbnail
-                .news-article
-                  .news-article-cover
-                    %img{:alt => "news", :src => @articles[2]["urlToImage"]}/
-                  .news-article-content
-                    %h3
-                      %a{href: @articles[2]["url"], class: "news-link"}
-                        = @articles[2]["title"]
-                    %p
-                      = @articles[2]["description"]
-            .five.wide.column
-              .news-thumbnail
-                .news-article
-                  .news-article-cover
-                    %img{:alt => "news", :src => @articles[3]["urlToImage"]}/
-                  .news-article-content
-                    %h3
-                      %a{href: @articles[3]["url"], class: "news-link"}
-                        = @articles[3]["title"]
-                    %p
-                      = @articles[3]["description"]
+    .ui.container
+      %h1 A better way to teach kid about sport integrity
+      %ol
+        %li
+          Teach your kids how to play their sport correctly
+        %li
+          Become their sport partners
+        %li
+          Being engaged in their activities
   .intro-actions
     .ui.container
       %section#search-form.section-search
@@ -64,6 +24,55 @@
                     %input.prompt{:autocomplete => "off", :placeholder => "You can type integrity, child protection...", :type => "text"}/
                     %i.search.icon
 
+.news-feed.ui.container
+  .news-heading Newsfeed
+  .ui.stackable.grid
+    .eight.wide.column
+      .news-hero
+        .news-article
+          .news-article-cover
+            %img{:alt => "news", :src => @articles[0]["urlToImage"]}/
+          .news-article-content
+            %h3
+              %a{href: @articles[0]["url"], class: "news-link"}
+                = @articles[0]["title"]
+            %p
+              = @articles[0]["description"]
+    .eight.wide.column
+      .ui.stackable.grid
+        .five.wide.column
+          .news-thumbnail
+            .news-article
+              .news-article-cover
+                %img{:alt => "news", :src => @articles[1]["urlToImage"]}/
+              .news-article-content
+                %h3
+                  %a{href: @articles[1]["url"], class: "news-link"}
+                    = @articles[1]["title"]
+                %p
+                  = @articles[1]["description"]
+        .five.wide.column
+          .news-thumbnail
+            .news-article
+              .news-article-cover
+                %img{:alt => "news", :src => @articles[2]["urlToImage"]}/
+              .news-article-content
+                %h3
+                  %a{href: @articles[2]["url"], class: "news-link"}
+                    = @articles[2]["title"]
+                %p
+                  = @articles[2]["description"]
+        .five.wide.column
+          .news-thumbnail
+            .news-article
+              .news-article-cover
+                %img{:alt => "news", :src => @articles[3]["urlToImage"]}/
+              .news-article-content
+                %h3
+                  %a{href: @articles[3]["url"], class: "news-link"}
+                    = @articles[3]["title"]
+                %p
+                  = @articles[3]["description"]
 .available-features
   .ui.container
     .ui.stackable.grid

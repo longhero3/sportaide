@@ -257,8 +257,8 @@ img {
 @media (min-width:320px)  {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .intro-home {
-    height: 1736px;
     .intro-body{
+      padding-top: 160px;
       font-size: 10px;
       h1 {
         width: 100%;
@@ -269,7 +269,6 @@ img {
 @media (min-width:480px)  {
   /* smartphones, Android phones, landscape iPhone */
   .intro-home {
-    height: 2000px;
     .intro-body{
       font-size: 10px;
 
@@ -287,7 +286,6 @@ img {
     }
   }
   .intro-home {
-    height: 2340px;
     .intro-body{
       font-size: 10px;
     }
@@ -296,7 +294,6 @@ img {
 @media (min-width:801px)  {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
   .intro-home {
-    height: 600px;
     .intro-body{
       font-size: 12px;
     }
@@ -310,7 +307,6 @@ img {
 @media (min-width:1025px) {
   /* big landscape tablets, laptops, and desktops */
   .intro-home {
-    height: 600px;
   }
   .mobile {
     &.only {

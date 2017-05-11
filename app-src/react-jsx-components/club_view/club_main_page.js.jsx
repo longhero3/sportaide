@@ -5,7 +5,6 @@ export class ClubMainPage extends React.Component {
     if(this.props.params.postcode) {
       store.dispatch(searchClubs(this.props.params.postcode))
     } else {
-      store.dispatch(loadWeatherInfo())
     }
   }
 
