@@ -2694,12 +2694,8 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
           ),
           _react2.default.createElement(
             "div",
-            { className: "target-current-location", onClick: this.getLocation.bind(this) },
-            _react2.default.createElement("i", { className: "ui icon target" })
-          ),
-          _react2.default.createElement(
-            "div",
-            { className: "input-effect-wrapper" },
+            { className: "input-effect-wrapper ui icon input" },
+            _react2.default.createElement("i", { className: "search icon" }),
             _react2.default.createElement("input", { className: "input-effect search-club", onKeyUp: this.handleSearchClub.bind(this), placeholder: "Search by postcodes, sports, club names ..." }),
             _react2.default.createElement("span", { className: "input-focus-border" })
           ),

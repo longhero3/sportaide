@@ -35,10 +35,8 @@ export class MarkerTable extends React.Component {
                   {this.props.otherDay.low}&deg; - {this.props.otherDay.high}&deg;</div>
             </div>
           </div>
-          <div className="target-current-location" onClick={this.getLocation.bind(this)}>
-            <i className="ui icon target"/>
-          </div>
-          <div className="input-effect-wrapper">
+          <div className="input-effect-wrapper ui icon input">
+            <i className="search icon"></i>
             <input className="input-effect search-club" onKeyUp={this.handleSearchClub.bind(this)} placeholder="Search by postcodes, sports, club names ..."/>
             <span className="input-focus-border" />
           </div>

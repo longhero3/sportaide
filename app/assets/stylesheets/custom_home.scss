@@ -80,6 +80,7 @@
     position: relative;
     border-radius: 3px;
     overflow: hidden;
+    cursor: pointer;
 }
 .news-hero .news-article img{
     width:100%;
@@ -107,6 +108,7 @@
 .news-thumbnail .news-article-content{
     display: inline-block;
     vertical-align: top;
+    cursor: pointer;
 }
 .news-thumbnail .news-article-content{
     margin-left:3px;
@@ -259,4 +261,10 @@
 .search-clubs-intro{
     padding-bottom: 50px;
     padding-top: 95px;
+}
+
+.news-link {
+  &:hover {
+    text-decoration: underline;
+  }
 }

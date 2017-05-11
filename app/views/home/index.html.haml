@@ -11,7 +11,7 @@
                 %img{:alt => "news", :src => @articles[0]["urlToImage"]}/
               .news-article-content
                 %h3
-                  %a{href: @articles[0]["url"]}
+                  %a{href: @articles[0]["url"], class: "news-link"}
                     = @articles[0]["title"]
                 %p
                   = @articles[0]["description"]
@@ -24,7 +24,7 @@
                     %img{:alt => "news", :src => @articles[1]["urlToImage"]}/
                   .news-article-content
                     %h3
-                      %a{href: @articles[1]["url"]}
+                      %a{href: @articles[1]["url"], class: "news-link"}
                         = @articles[1]["title"]
                     %p
                       = @articles[1]["description"]
@@ -35,7 +35,7 @@
                     %img{:alt => "news", :src => @articles[2]["urlToImage"]}/
                   .news-article-content
                     %h3
-                      %a{href: @articles[2]["url"]}
+                      %a{href: @articles[2]["url"], class: "news-link"}
                         = @articles[2]["title"]
                     %p
                       = @articles[2]["description"]
@@ -46,7 +46,7 @@
                     %img{:alt => "news", :src => @articles[3]["urlToImage"]}/
                   .news-article-content
                     %h3
-                      %a{href: @articles[3]["url"]}
+                      %a{href: @articles[3]["url"], class: "news-link"}
                         = @articles[3]["title"]
                     %p
                       = @articles[3]["description"]
@@ -121,8 +121,9 @@
             %h3 Subscribe With Us
             .ui.stackable.grid.center.aligned
               .ten.wide.column
-                .ui.large.input.email-subscribe
-                  %input{type: 'text', placeholder:"Enter your email"}
+                %form.ui.form.subscribe-form
+                  .ui.huge.input.email-subscribe
+                    %input{type: 'email', placeholder:"Enter your email", id: "email"}
               .six.wide.column
                 %button.colins-submit
                   %svg{:height => "45", :version => "1.1", :viewport => "0 0 196 70", :width => "196", :xmlns => "http://www.w3.org/2000/svg"}
