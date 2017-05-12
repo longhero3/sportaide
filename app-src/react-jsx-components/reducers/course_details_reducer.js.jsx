@@ -4,7 +4,7 @@ const CourseDetailsReducer = (state = {course: {}, isFetching: true, currentLess
       return Object.assign({}, state, {
         course: action.course,
         isFetching: false,
-        currentLesson: action.course.chapters[0].lessons[0]
+        currentLesson: action.course.chapters[state.chapterIndex].lessons[state.lessonIndex]
       })
 
     case REQUEST_COURSE:
@@ -21,23 +21,28 @@ const CourseDetailsReducer = (state = {course: {}, isFetching: true, currentLess
 
     case NEXT_LESSON:
       CourseApi.trackProgress(state.currentLesson.id)
+      var currentCourse = state.course
+      currentCourse.chapters[state.chapterIndex].lessons[state.lessonIndex].completed = true
       if (state.course.chapters[state.chapterIndex].lessons[state.lessonIndex + 1]) {
         return Object.assign({}, state, {
           currentLesson: state.course.chapters[state.chapterIndex].lessons[state.lessonIndex + 1],
-          lessonIndex: state.lessonIndex + 1
+          lessonIndex: state.lessonIndex + 1,
+          course: currentCourse
         })
       } else {
         if(state.course.chapters[state.chapterIndex + 1]) {
           return Object.assign({}, state, {
             currentLesson: state.course.chapters[state.chapterIndex + 1].lessons[0],
             lessonIndex: 0,
-            chapterIndex: state.chapterIndex + 1
+            chapterIndex: state.chapterIndex + 1,
+            course: currentCourse
           })
         } else {
           return Object.assign({}, state, {
             currentLesson: state.course.chapters[0].lessons[0],
             lessonIndex: 0,
-            chapterIndex: 0
+            chapterIndex: 0,
+            course: currentCourse
           })
         }
       }

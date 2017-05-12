@@ -7,8 +7,10 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
+    @lesson_ids = []
     if @course
       current_user.initialise_viewed_course @course
+      @lesson_ids = current_user.viewed_lessons.where(completed: true, lesson: @course.lessons.pluck(:id)).pluck(:lesson_id)
     end
   end
 

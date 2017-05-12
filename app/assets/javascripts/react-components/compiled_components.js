@@ -209,7 +209,6 @@ function receiveCourse(course) {
 }
 
 function selectLesson(lesson, chapterIndex, lessonIndex) {
-  CourseApi.trackProgress(lesson.id);
   return { type: SELECT_LESSON, lesson: lesson, chapterIndex: chapterIndex, lessonIndex: lessonIndex };
 }
 
@@ -840,6 +839,15 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
       return tempClass;
     }
   }, {
+    key: 'markedLesson',
+    value: function markedLesson(lesson) {
+      if (lesson.completed == true) {
+        return _react2.default.createElement('i', { className: 'checkmark icon green float-right' });
+      } else {
+        return _react2.default.createElement('div', null);
+      }
+    }
+  }, {
     key: 'chapterAccordion',
     value: function chapterAccordion(chapter) {
       return _react2.default.createElement(
@@ -864,7 +872,8 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
               { className: "title" + this.activeClassName(chapterIndex, index), key: "lesson_" + index, onClick: function onClick() {
                   return store.dispatch(selectLesson(lesson, chapterIndex, index));
                 } },
-              lesson.title
+              lesson.title,
+              this.markedLesson(lesson)
             );
           }.bind(this))
         )
@@ -895,7 +904,8 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
               { className: "title" + this.activeClassName(chapterIndex, index), key: "lesson_" + index, onClick: function onClick() {
                   return store.dispatch(selectLesson(lesson, chapterIndex, index));
                 } },
-              lesson.title
+              lesson.title,
+              this.markedLesson(lesson)
             );
           }.bind(this))
         )
@@ -1127,7 +1137,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
               _react2.default.createElement('div', { className: 'transcript-content', dangerouslySetInnerHTML: this.createMarkup(this.props.lesson.transcript) }),
               _react2.default.createElement(
                 'button',
-                { className: 'ui right labeled icon green button not next-lesson-btn', 'data-animation': true, 'data-type': 'success', 'data-size': 'normal', 'data-message': 'Moving to the next lesson', onClick: this.nextLesson.bind(this) },
+                { className: 'ui right labeled icon green button not next-lesson-btn', 'data-animation': true, 'data-type': 'success', 'data-title': 'Hoorays!', 'data-size': 'normal', 'data-message': 'Moving to the next lesson', onClick: this.nextLesson.bind(this) },
                 'Next Lesson',
                 _react2.default.createElement('i', { className: 'right chevron icon' })
               )
@@ -1253,6 +1263,13 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'ui tab active', 'data-tab': 'fourth' },
+              _react2.default.createElement(
+                'button',
+                { className: 'ui right labeled icon green button not next-lesson-btn', 'data-animation': true, 'data-type': 'success', 'data-title': 'Hoorays!', 'data-size': 'normal', 'data-message': 'Moving to the next lesson', onClick: this.nextLesson.bind(this) },
+                'Next Lesson',
+                _react2.default.createElement('i', { className: 'right chevron icon' })
+              ),
+              _react2.default.createElement('br', null),
               _react2.default.createElement('div', { dangerouslySetInnerHTML: this.createQuizMarkup() })
             )
           );
@@ -3593,7 +3610,7 @@ var CourseDetailsReducer = function CourseDetailsReducer() {
       return Object.assign({}, state, {
         course: action.course,
         isFetching: false,
-        currentLesson: action.course.chapters[0].lessons[0]
+        currentLesson: action.course.chapters[state.chapterIndex].lessons[state.lessonIndex]
       });
 
     case REQUEST_COURSE:
@@ -3610,23 +3627,28 @@ var CourseDetailsReducer = function CourseDetailsReducer() {
 
     case NEXT_LESSON:
       CourseApi.trackProgress(state.currentLesson.id);
+      var currentCourse = state.course;
+      currentCourse.chapters[state.chapterIndex].lessons[state.lessonIndex].completed = true;
       if (state.course.chapters[state.chapterIndex].lessons[state.lessonIndex + 1]) {
         return Object.assign({}, state, {
           currentLesson: state.course.chapters[state.chapterIndex].lessons[state.lessonIndex + 1],
-          lessonIndex: state.lessonIndex + 1
+          lessonIndex: state.lessonIndex + 1,
+          course: currentCourse
         });
       } else {
         if (state.course.chapters[state.chapterIndex + 1]) {
           return Object.assign({}, state, {
             currentLesson: state.course.chapters[state.chapterIndex + 1].lessons[0],
             lessonIndex: 0,
-            chapterIndex: state.chapterIndex + 1
+            chapterIndex: state.chapterIndex + 1,
+            course: currentCourse
           });
         } else {
           return Object.assign({}, state, {
             currentLesson: state.course.chapters[0].lessons[0],
             lessonIndex: 0,
-            chapterIndex: 0
+            chapterIndex: 0,
+            course: currentCourse
           });
         }
       }

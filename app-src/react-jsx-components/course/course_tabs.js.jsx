@@ -88,7 +88,7 @@ export class CourseTabs extends React.Component{
               </div>
               <div className="transcript-content" dangerouslySetInnerHTML={this.createMarkup(this.props.lesson.transcript)}>
               </div>
-              <button className="ui right labeled icon green button not next-lesson-btn" data-animation data-type="success" data-size="normal" data-message="Moving to the next lesson" onClick={this.nextLesson.bind(this)}>
+              <button className="ui right labeled icon green button not next-lesson-btn" data-animation data-type="success" data-title="Hoorays!" data-size="normal" data-message="Moving to the next lesson" onClick={this.nextLesson.bind(this)}>
                 Next Lesson
                 <i className="right chevron icon"/>
               </button>
@@ -145,6 +145,11 @@ export class CourseTabs extends React.Component{
               <a className="item active" data-tab="fourth">Quiz</a>
             </div>
             <div className="ui tab active" data-tab="fourth">
+              <button className="ui right labeled icon green button not next-lesson-btn" data-animation data-type="success" data-title="Hoorays!" data-size="normal" data-message="Moving to the next lesson" onClick={this.nextLesson.bind(this)}>
+                Next Lesson
+                <i className="right chevron icon"/>
+              </button>
+              <br/>
               <div dangerouslySetInnerHTML={this.createQuizMarkup()}></div>
             </div>
           </div>

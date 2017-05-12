@@ -15,6 +15,15 @@ export class CourseNav extends React.Component {
     return tempClass;
   }
 
+  markedLesson(lesson){
+    if(lesson.completed == true){
+      return (<i className="checkmark icon green float-right"/>);
+    } else {
+      return (<div></div>);
+    }
+
+  }
+
   chapterAccordion(chapter){
     return(
       <div className="title active" key={"chapter_" + chapter.id}>
@@ -29,7 +38,9 @@ export class CourseNav extends React.Component {
       <div className="content active">
         <div className="accordion">
           {chapter.lessons.map(function(lesson,index) {
-            return <div className={"title" + this.activeClassName(chapterIndex, index)} key={"lesson_" + index} onClick={ () => store.dispatch(selectLesson(lesson, chapterIndex, index)) }>{lesson.title}</div>
+            return <div className={"title" + this.activeClassName(chapterIndex, index)} key={"lesson_" + index} onClick={ () => store.dispatch(selectLesson(lesson, chapterIndex, index)) }>{lesson.title}
+                    {this.markedLesson(lesson)}
+                   </div>
           }.bind(this))}
         </div>
       </div>
@@ -50,7 +61,9 @@ export class CourseNav extends React.Component {
       <div className="content active">
         <div className="accordion transition visible" style={{display: "block !important"}}>
           {chapter.lessons.map(function(lesson,index) {
-            return <div className={"title" + this.activeClassName(chapterIndex, index)} key={"lesson_" + index} onClick={() => store.dispatch(selectLesson(lesson, chapterIndex, index))}>{lesson.title}</div>
+            return <div className={"title" + this.activeClassName(chapterIndex, index)} key={"lesson_" + index} onClick={() => store.dispatch(selectLesson(lesson, chapterIndex, index))}>{lesson.title}
+                    {this.markedLesson(lesson)}
+                   </div>
           }.bind(this))}
         </div>
       </div>
