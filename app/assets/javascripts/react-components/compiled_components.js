@@ -827,7 +827,10 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
   _createClass(CourseNav, [{
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prev, next) {
-      $('.accordion').accordion();
+      $('.accordion').accordion({
+        animateChildren: false,
+        closeNested: false
+      });
     }
   }, {
     key: 'activeClassName',

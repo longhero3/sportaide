@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 export class CourseNav extends React.Component {
 
   componentDidUpdate(prev, next) {
-    $('.accordion').accordion()
+    $('.accordion').accordion({
+      animateChildren: false,
+      closeNested: false
+    })
   }
 
   activeClassName(chapterIndex, lessonIndex) {
