@@ -24,6 +24,20 @@
                     %input.prompt{:autocomplete => "off", :placeholder => "You can type integrity, child protection...", :type => "text"}/
                     %i.search.icon
 
+.online-course-wrapper
+  .online-courses.ui.container
+    .courses-heading Online Courses
+    .filtr-container.ui.stackable.grid
+      - @courses.each do |course|
+        .filtr-item.course-item.four.wide.column{data_category: "1"}
+          = image_tag asset_path(course.course_img.url), class: "img-responsive"
+          %span.course-name
+            = course.name
+          .course-caption
+            %h2
+              =link_to course.name, "/dashboard/lessons/#{course.id}"
+            %p= course.overview
+
 .news-feed.ui.container
   .news-heading Newsfeed
   .ui.stackable.grid
