@@ -106,7 +106,7 @@ export default class MapMarker extends PureComponent {
 
     return (
       <div className={"marker-content " + selectedClass} data-hint={this.props.marker.name} onClick={this.selectMarker.bind(this)}>
-        <i className={"pointing down icon club-icon " + selectedClass}></i>
+        <i className={"map pin icon club-icon " + selectedClass}></i>
       </div>
     );
   }

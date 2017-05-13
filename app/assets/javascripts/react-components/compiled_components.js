@@ -1985,7 +1985,7 @@ var MapMarker = function (_PureComponent) {
       return _react2.default.createElement(
         'div',
         { className: "marker-content " + selectedClass, 'data-hint': this.props.marker.name, onClick: this.selectMarker.bind(this) },
-        _react2.default.createElement('i', { className: "pointing down icon club-icon " + selectedClass })
+        _react2.default.createElement('i', { className: "map pin icon club-icon " + selectedClass })
       );
     }
   }, {
