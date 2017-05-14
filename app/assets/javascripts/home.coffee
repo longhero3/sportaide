@@ -136,20 +136,24 @@ $ ->
   )
   tl.stop()
   #-- On Click, we launch into the cool transition
-  $('.colins-submit').on 'click', (e) ->
-    #-- Add this class to indicate state
-    $(e.currentTarget).addClass 'is-active'
+
+  $(".subscribe-form").submit(() ->
+    $('.colins-submit').addClass 'is-active'
     tl.restart()
     $('.colins-submit').off 'mouseenter'
     $('.colins-submit').off 'mouseleave'
-
-    return
+    return false
+  )
+    #-- Add this class to indicate state
   bind_mouseenter()
 
   $('.email-subscribe input').on 'keyup', (event) ->
     if event.keyCode == 13
-      $(".subscribe-form").submit(() ->
-        $('.colins-submit').trigger 'click'
+      $(".subscribe-form").submit(()->
+        $('.colins-submit').addClass 'is-active'
+        tl.restart()
+        $('.colins-submit').off 'mouseenter'
+        $('.colins-submit').off 'mouseleave'
         return false
       )
   # ---

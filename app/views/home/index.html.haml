@@ -50,7 +50,6 @@
             %p= course.overview
 
 .news-feed.ui.container
-  .news-heading Newsfeed
   .ui.stackable.grid
     .eight.wide.column
       .news-hero
@@ -153,13 +152,13 @@
         .five.wide.column
           .subscribe-block
             %h3 Subscribe With Us
-            .ui.stackable.grid.center.aligned
+            %form.ui.stackable.grid.center.aligned.subscribe-form
               .ten.wide.column
-                %form.ui.form.subscribe-form
+                .ui.form
                   .ui.huge.input.email-subscribe
                     %input{type: 'email', placeholder:"Enter your email", id: "email", required: "true"}
               .six.wide.column
-                %button.colins-submit
+                %button.colins-submit{type: 'submit'}
                   %svg{:height => "45", :version => "1.1", :viewport => "0 0 196 70", :width => "196", :xmlns => "http://www.w3.org/2000/svg"}
                     %rect.btn-shape.btn-bg{:fill => "#ffffff", "fill-opacity" => "1", :height => "40", :rx => "0", :ry => "0", :stroke => "#ccc", "stroke-width" => "4", :width => "190", :x => "3", :y => "3"}
                     %rect.btn-shape.btn-color{:fill => "#ffffff", "fill-opacity" => "0", :height => "40", :rx => "0", :ry => "0", :stroke => "rgb(30,205,151)", "stroke-width" => "4", :width => "190", :x => "3", :y => "3"}
