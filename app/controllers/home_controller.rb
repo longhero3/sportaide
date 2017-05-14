@@ -7,4 +7,7 @@ class HomeController < ApplicationController
       @articles = responses["articles"]
     end
   end
+
+  def privacy_policy
+  end
 end

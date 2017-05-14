@@ -36,4 +36,5 @@ Rails.application.routes.draw do
   get 'weather/details_weather' => 'weather#details_weather'
   get 'weather/search_weather' => 'weather#search_weather'
   get 'dashboard/*path' => 'dashboard#index'
+  get 'privacy_policy' => 'home#privacy_policy'
 end
