@@ -30,7 +30,7 @@
 //= require "plugins/pacejs/pace"
 //= require "plugins/chartist/chartist"
 //= require "plugins/lobibox/js/notifications.js"
-//= require "plugins/Filterizr/dist/jquery.filterizr.min"
+//= require jquery.filterizr
 //= require dashboard2
 //= require main
 

@@ -163,30 +163,48 @@ body {
     left: 0;
     bottom: 0;
     z-index: 10;
+  }
+}
 
-    .section-search {
-      padding: 0;
+.section-search {
+  padding: 0;
+  margin-bottom: 20px;
 
-      .section-inner {
-        background: none !important;
+  .section-inner {
 
-        .search-content {
-          position: relative;
-          text-align: center;
+    .search-content {
+      position: relative;
+      text-align: center;
 
-          .search-label {
-            display: block;
-            font-size: 30px;
-            color: #fff;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
+      .search-label {
+        display: block;
+        font-size: 34px;
+        color: #fff;
+        margin-bottom: 10px;
+        letter-spacing: -0.02em;
+      }
+
+      .search-box{
+        input.prompt {
+          border-radius: 0!important;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid white;
+          color: white;
+          font-size: 18px;
+
+          &::-webkit-input-placeholder { /* Chrome */
+            color: white;
+            transition: opacity ease-in-out;
           }
 
-          .search-box{
-            input.prompt {
-              border-radius: 0!important;
-            }
+          &:focus::-webkit-input-placeholder {
+            opacity: 0.5;
           }
+        }
+
+        .search.icon {
+          color: white;
         }
       }
     }
@@ -606,7 +624,7 @@ button.colins-submit {
   display: block;
   background: #3498db;
   padding-bottom: 50px;
-  padding-top: 20px;
+  padding-top: 50px;
 }
 
 .online-courses {

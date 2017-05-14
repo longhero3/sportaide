@@ -1,35 +1,46 @@
-.intro.intro-home
-  .intro-bg
-  .intro-body
-    .ui.container
-      %h1 A better way to teach kid about sport integrity
-      %ol
-        %li
-          Teach your kids how to play their sport correctly
-        %li
-          Become their sport partners
-        %li
-          Being engaged in their activities
-  .intro-actions
-    .ui.container
-      %section#search-form.section-search
+-#.intro.intro-home
+-#  .intro-bg
+-#  .intro-body
+-#    .ui.container
+-#      %h1 A better way to teach kid about sport integrity
+-#      %ol
+-#        %li
+-#          Teach your kids how to play their sport correctly
+-#        %li
+-#          Become their sport partners
+-#        %li
+-#          Being engaged in their activities
+-#  .intro-actions
+-#    .ui.container
+-#      %section#search-form.section-search
+-#        .shell
+-#          .section-inner
+-#            .search-content
+-#              .search-label
+-#                Find your course
+-#              .search-box
+-#                .ui.category.search.focus.sportaide_search.fluid
+-#                  .ui.icon.input.fluid
+-#                    %input.prompt{:autocomplete => "off", :placeholder => "You can type integrity, child protection...", :type => "text"}/
+-#                    %i.search.icon
+
+.online-course-wrapper
+  .online-courses.ui.container
+    .ui.centered.grid.search-course-container
+      %section#search-form.section-search.eight.wide.computer.sixteen.wide.mobile.column
         .shell
           .section-inner
             .search-content
               .search-label
                 Find your course
-              .search-box
+              %form.search-box
                 .ui.category.search.focus.sportaide_search.fluid
                   .ui.icon.input.fluid
-                    %input.prompt{:autocomplete => "off", :placeholder => "You can type integrity, child protection...", :type => "text"}/
+                    %input.prompt.filtr-search{:autocomplete => "off", :placeholder => "You can type integrity, child protection...", :type => "text", :name => "search", "data-search" => true, :required => true}/
                     %i.search.icon
-
-.online-course-wrapper
-  .online-courses.ui.container
-    .courses-heading Online Courses
     .filtr-container.ui.stackable.grid
       - @courses.each do |course|
-        .filtr-item.course-item.four.wide.column{data_category: "1"}
+        .filtr-item.course-item.four.wide.column{"data-category" => "1", "data-filter" => course.name}
           = image_tag asset_path(course.course_img.url), class: "img-responsive"
           %span.course-name
             = course.name
@@ -146,7 +157,7 @@
               .ten.wide.column
                 %form.ui.form.subscribe-form
                   .ui.huge.input.email-subscribe
-                    %input{type: 'email', placeholder:"Enter your email", id: "email"}
+                    %input{type: 'email', placeholder:"Enter your email", id: "email", required: "true"}
               .six.wide.column
                 %button.colins-submit
                   %svg{:height => "45", :version => "1.1", :viewport => "0 0 196 70", :width => "196", :xmlns => "http://www.w3.org/2000/svg"}
