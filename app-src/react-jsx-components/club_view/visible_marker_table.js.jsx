@@ -11,6 +11,7 @@ const mapMarkerTableState = (state) => (
     maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
     hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
     openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
+    isSearchingClubs: state.ClubsReducer.get('isSearchingClubs'),
     filteredClubs: state.ClubsReducer.get('filteredClubs'),
     weatherClass: state.WeatherReducer.weatherClass,
     weatherTemp: state.WeatherReducer.weatherTemp,

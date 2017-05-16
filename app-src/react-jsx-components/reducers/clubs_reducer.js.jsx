@@ -104,7 +104,7 @@ const ClubsReducer = (state = defaultMapState(), action) => {
       return state.set('selectedMarker', action.club).set('isFetching', false).mergeDeep({mapInfo: {zoom: 13}});
 
     case REQUEST_SEARCH_CLUB:
-      return state.set('isSearchingClub', true)
+      return state.set('isSearchingClubs', true)
 
     case SEARCH_CLUB_SUCCESS:
       return state.set('isSearchingClubs', false)

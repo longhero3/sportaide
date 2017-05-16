@@ -2557,7 +2557,7 @@ var ClubRow = exports.ClubRow = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var validClub = _react2.default.createElement('div', null);
+      var validClub = _react2.default.createElement('i', { className: 'remove icon red' });
       if (this.props.club.indoor_outdoor == "indoor" || this.props.weatherClass == "sunny" || this.props.weatherClass == "cloudy") {
         validClub = _react2.default.createElement('i', { className: 'checkmark icon green able-club-tick' });
       }
@@ -2583,6 +2583,7 @@ var ClubRow = exports.ClubRow = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'two wide column no-padding' },
+          'Weather condition: ',
           validClub
         )
       );
@@ -2647,10 +2648,34 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
       store.dispatch(getLocation());
     })
   }, {
-    key: "render",
-    value: function render() {
+    key: "clubList",
+    value: function clubList() {
       var _this2 = this;
 
+      if (this.props.isSearchingClubs == true) {
+        return _react2.default.createElement("div", { className: "ui active centered inline loader" });
+      } else {
+        if (this.props.filteredClubs.length == 0) {
+          return _react2.default.createElement(
+            "div",
+            { className: "ui centered grid no-clubs-message" },
+            _react2.default.createElement("br", null),
+            "No Clubs Found Yet."
+          );
+        } else {
+          return _react2.default.createElement(
+            "div",
+            { className: "club-list" },
+            this.props.filteredClubs.map(function (club) {
+              return _react2.default.createElement(ClubRow, { club: club, weatherClass: _this2.props.weatherClass, key: "club_" + club.id });
+            })
+          );
+        }
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
       return _react2.default.createElement(
         "div",
         { className: "six wide column no-padding" },
@@ -2719,13 +2744,7 @@ var MarkerTable = exports.MarkerTable = function (_React$Component) {
             _react2.default.createElement("input", { className: "input-effect search-club", onKeyUp: this.handleSearchClub.bind(this), placeholder: "Search by postcodes, sports, club names ..." }),
             _react2.default.createElement("span", { className: "input-focus-border" })
           ),
-          _react2.default.createElement(
-            "div",
-            { className: "club-list" },
-            this.props.filteredClubs.map(function (club) {
-              return _react2.default.createElement(ClubRow, { club: club, weatherClass: _this2.props.weatherClass, key: "club_" + club.id });
-            })
-          )
+          this.clubList()
         )
       );
     }
@@ -2749,6 +2768,7 @@ MarkerTable.propTypes = {
   hoveredRowIndex: _react.PropTypes.number,
   openBalloonIndex: _react.PropTypes.number,
   isFetching: _react.PropTypes.bool,
+  isSearchingClubs: _react.PropTypes.bool,
   filteredClubs: _react.PropTypes.any,
   weatherClass: _react.PropTypes.any,
   weatherTemp: _react.PropTypes.any,
@@ -2779,6 +2799,7 @@ var mapMarkerTableState = function mapMarkerTableState(state) {
     maxVisibleRows: state.ClubsReducer.get('tableRowsInfo').get('maxVisibleRows'),
     hoveredRowIndex: state.ClubsReducer.get('tableRowsInfo').get('hoveredRowIndex'),
     openBalloonIndex: state.ClubsReducer.get('openBalloonIndex'),
+    isSearchingClubs: state.ClubsReducer.get('isSearchingClubs'),
     filteredClubs: state.ClubsReducer.get('filteredClubs'),
     weatherClass: state.WeatherReducer.weatherClass,
     weatherTemp: state.WeatherReducer.weatherTemp,
@@ -3001,6 +3022,8 @@ ClubDetails.propTypes = {
   otherDay: _react.PropTypes.any
 };
 
+ClubDetails.defaultProps = defaultWeatherState();
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3066,7 +3089,6 @@ var ClubDetailsPage = exports.ClubDetailsPage = function (_React$Component) {
   _createClass(ClubDetailsPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      store.dispatch(loadWeatherInfo());
       setTimeout(function () {
         store.dispatch(getClub(this.props.params.club_id));
       }.bind(this), 10);
@@ -3134,9 +3156,7 @@ var ClubMainPage = exports.ClubMainPage = function (_React$Component) {
     value: function componentDidMount() {
       if (this.props.params.postcode) {
         store.dispatch(searchClubs(this.props.params.postcode));
-      } else {
-        store.dispatch(loadWeatherInfo());
-      }
+      } else {}
     }
   }, {
     key: "render",
@@ -3886,7 +3906,7 @@ var ClubsReducer = function ClubsReducer() {
       return state.set('selectedMarker', action.club).set('isFetching', false).mergeDeep({ mapInfo: { zoom: 13 } });
 
     case REQUEST_SEARCH_CLUB:
-      return state.set('isSearchingClub', true);
+      return state.set('isSearchingClubs', true);
 
     case SEARCH_CLUB_SUCCESS:
       return state.set('isSearchingClubs', false).set('filteredClubs', action.clubs.clubs).set('dataFiltered', action.clubs.clubs).mergeDeep({ mapInfo: { center: [parseFloat(action.clubs.center.lat), parseFloat(action.clubs.center.lng)], zoom: 13 } });
@@ -3980,22 +4000,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var NavBar = exports.NavBar = function (_React$Component) {
   _inherits(NavBar, _React$Component);
 
-  //  <p>
-  //  Show:
-  //    {" "}
-  //    <NavLink filter="">
-  //    Dashboard
-  //    </NavLink>
-  //    {", "}
-  //    <NavLink filter="newsfeeds">
-  //    Newsfeeds
-  //    </NavLink>
-  //    {", "}
-  //    <NavLink filter="lessons">
-  //    Lessons
-  //    </NavLink>
-  //  </p>
-
   function NavBar(props) {
     _classCallCheck(this, NavBar);
 
@@ -4009,85 +4013,11 @@ var NavBar = exports.NavBar = function (_React$Component) {
 
   _createClass(NavBar, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {
-      store.subscribe(function () {
-        var newState = store.getState();
-        this.setState({ className: newState.NavReducer.className });
-      }.bind(this));
-    }
+    value: function componentDidMount() {}
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'nav',
-          { id: 'c-menu--slide-left', className: "c-menu c-menu--slide-left " + this.state.className },
-          _react2.default.createElement(
-            'div',
-            { className: 'nav-content' },
-            _react2.default.createElement(
-              'div',
-              { className: 'close-section' },
-              _react2.default.createElement(
-                'button',
-                { className: 'ui icon button', onClick: function onClick() {
-                    return _this2.props.dispatch(ToggleMenu());
-                  } },
-                _react2.default.createElement('i', { className: 'angle left icon' })
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'menu-header' },
-              'Sportaide Menu'
-            ),
-            _react2.default.createElement(
-              'ul',
-              { className: 'c-menu__items' },
-              _react2.default.createElement(
-                'li',
-                { className: 'c-menu__item' },
-                _react2.default.createElement(
-                  'a',
-                  { href: '/', className: 'c-menu__link', onClick: function onClick() {
-                      return _this2.props.dispatch(ToggleMenu());
-                    } },
-                  'Home'
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                { className: 'c-menu__item' },
-                _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/dashboard/clubs/club_map', className: 'c-menu__link', onClick: function onClick() {
-                      return _this2.props.dispatch(ToggleMenu());
-                    } },
-                  'Club Map'
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                { className: 'c-menu__item' },
-                _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/dashboard/lessons', className: 'c-menu__link', onClick: function onClick() {
-                      return _this2.props.dispatch(ToggleMenu());
-                    } },
-                  'Lessons'
-                )
-              )
-            )
-          )
-        ),
-        _react2.default.createElement('div', { id: 'c-mask', className: "c-mask " + this.state.className, onClick: function onClick() {
-            return _this2.props.dispatch(ToggleMenu());
-          } })
-      );
+      return _react2.default.createElement('div', null);
     }
   }]);
 
@@ -4102,9 +4032,7 @@ var NavBar = exports.NavBar = function (_React$Component) {
 //  }
 //}
 
-exports.NavBar = NavBar = (0, _reactRedux.connect)()(NavBar);
-
-'use strict';
+;'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -4352,11 +4280,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var store = (0, _redux.createStore)(TodoApp, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
-//store.dispatch(loadWeatherInfo())
+store.dispatch(loadWeatherInfo());
 
-(0, _reactDom.render)(_react2.default.createElement(Root, { store: store }), document.getElementById('dashboard'));
+if (document.getElementById('dashboard') != null) {
+  (0, _reactDom.render)(_react2.default.createElement(Root, { store: store }), document.getElementById('dashboard'));
+}
 
-'use strict';
+;'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true

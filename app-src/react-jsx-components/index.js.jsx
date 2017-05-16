@@ -8,7 +8,9 @@ let store = createStore(TodoApp,applyMiddleware(thunk))
 
 store.dispatch(loadWeatherInfo())
 
-render(
-  <Root store={store} />,
-  document.getElementById('dashboard')
-)
+if(document.getElementById('dashboard') != null) {
+  render(
+    <Root store={store} />,
+    document.getElementById('dashboard')
+  )
+}

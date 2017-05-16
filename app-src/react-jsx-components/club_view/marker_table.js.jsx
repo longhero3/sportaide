@@ -15,6 +15,23 @@ export class MarkerTable extends React.Component {
   getLocation() {
     store.dispatch(getLocation())
   }
+
+  clubList(){
+    if(this.props.isSearchingClubs == true){
+      return <div className="ui active centered inline loader"></div>;
+    } else {
+      if(this.props.filteredClubs.length == 0) {
+        return <div className="ui centered grid no-clubs-message"><br/>No Clubs Found Yet.</div>;
+      } else {
+        return <div className="club-list">
+          {this.props.filteredClubs.map((club) => {
+          return (<ClubRow club={club} weatherClass={this.props.weatherClass} key={"club_" + club.id}/>);
+          })}
+          </div>;
+      }
+    }
+  }
+
   render(){
     return (
       <div className="six wide column no-padding">
@@ -40,12 +57,7 @@ export class MarkerTable extends React.Component {
             <input className="input-effect search-club" onKeyUp={this.handleSearchClub.bind(this)} placeholder="Search by postcodes, sports, club names ..."/>
             <span className="input-focus-border" />
           </div>
-
-          <div className="club-list">
-            {this.props.filteredClubs.map((club) => {
-            return (<ClubRow club={club} weatherClass={this.props.weatherClass} key={"club_" + club.id}/>);
-            })}
-          </div>
+          {this.clubList()}
         </div>
       </div>
     )
@@ -67,6 +79,7 @@ MarkerTable.propTypes = {
   hoveredRowIndex: PropTypes.number,
   openBalloonIndex: PropTypes.number,
   isFetching: PropTypes.bool,
+  isSearchingClubs: PropTypes.bool,
   filteredClubs: PropTypes.any,
   weatherClass: PropTypes.any,
   weatherTemp: PropTypes.any,

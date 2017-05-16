@@ -88,3 +88,5 @@ ClubDetails.propTypes = {
   tmr: PropTypes.any,
   otherDay: PropTypes.any
 }
+
+ClubDetails.defaultProps = defaultWeatherState()

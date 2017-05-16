@@ -18,7 +18,7 @@ export class ClubRow extends React.Component {
   }
 
   render(){
-    var validClub = <div></div>
+    var validClub = <i className="remove icon red"></i>
     if (this.props.club.indoor_outdoor == "indoor" || this.props.weatherClass == "sunny" || this.props.weatherClass == "cloudy" ) {
       validClub = <i className="checkmark icon green able-club-tick"></i>
     }
@@ -29,7 +29,7 @@ export class ClubRow extends React.Component {
         <div className="club-row-address">{this.props.club.address}, {this.props.club.postcode}</div>
       </div>
       <div className="two wide column no-padding">
-        {validClub}
+        Weather condition: {validClub}
       </div>
     </div>)
   }
