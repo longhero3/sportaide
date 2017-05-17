@@ -17,6 +17,7 @@
 //= require 'greensock/TimelineMax'
 //= require 'greensock/TweenMax'
 //= require 'greensock/jquery.gsap.js'
+//= require glide
 //= require home
 //= require "plugins/counterup/jquery.counterup.min"
 //= require "plugins/counterup/waypoints.min"

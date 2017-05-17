@@ -1,14 +1,21 @@
 .intro.intro-home
   .intro-body
     .ui.container
-      %h1 A better way to teach kid about sport integrity
-      %ol
-        %li
-          Teach your kids how to play their sport correctly
-        %li
-          Become their sport partners
-        %li
-          Being engaged in their activities
+      #Glide.glide
+        -#.glide__arrows
+        -#  %button.glide__arrow.prev{"data-glide-dir" => "<"} prev
+        -#  %button.glide__arrow.next{"data-glide-dir" => ">"} next
+        .glide__wrapper
+          %ul.glide__track
+            %li.glide__slide
+              "Sports do not build character, they reveal it" - John Wooden, Renowned Basketball Coach
+              .john-image
+                = image_tag asset_path("john.jpg")
+            %li.glide__slide
+              sportsaide is one of the many steps taken towards helping parents teach their kids
+            %li.glide__slide
+              Be the best in sport they play by protecting its core values
+        .glide__bullets
 
 .online-course-wrapper
   .online-courses.ui.container

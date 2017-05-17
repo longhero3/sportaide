@@ -747,3 +747,28 @@ button.colins-submit {
     }
   }
 }
+
+.glide {
+  height: 200px!important;
+  &__wrapper {
+    vertical-align: middle;
+  }
+  &__slide {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 28px;
+    font-weight: light;
+    color: white;
+  }
+
+  .john-image {
+    width: 83px;
+    height: 90px;
+    margin: auto;
+
+    img {
+      border-radius: 50%;
+      border: 1px solid white;
+    }
+  }
+}
