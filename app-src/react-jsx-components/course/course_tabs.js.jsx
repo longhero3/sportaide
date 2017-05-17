@@ -13,7 +13,7 @@ export class CourseTabs extends React.Component{
   }
 
   componentDidUpdate(prev, next) {
-    $('.tab-menu .item').tab()
+    $('.tab-menu .tab-item').tab()
     if(this.state.binded == false){
       this.state.binded = true;
       $(".not").on("click", function () {
@@ -76,9 +76,9 @@ export class CourseTabs extends React.Component{
         return (
           <div className="ui segment">
             <div className="ui pointing secondary menu tab-menu">
-              <a className="item active" data-tab="first">Content</a>
-              <a className="item" data-tab="third">Overview</a>
-              <a className="item" data-tab="fourth">Quiz</a>
+              <a className="item tab-item active" data-tab="first">Content</a>
+              <a className="item tab-item" data-tab="third">Overview</a>
+              <a className="item tab-item" data-tab="fourth">Quiz</a>
             </div>
             <div className="ui tab active" data-tab="first">
               <div className="ui one column stackable grid segment">
@@ -141,10 +141,10 @@ export class CourseTabs extends React.Component{
       } else {
         return (
           <div className="ui segment">
-            <div className="ui pointing secondary menu tab-menu">
+            <div className="ui pointing secondary menu">
               <a className="item active" data-tab="fourth">Quiz</a>
             </div>
-            <div className="ui tab active" data-tab="fourth">
+            <div className="content" data-tab="fourth">
               <button className="ui right labeled icon green button not next-lesson-btn" data-animation data-type="success" data-title="Hoorays!" data-size="normal" data-message="Moving to the next lesson" onClick={this.nextLesson.bind(this)}>
                 Next Lesson
                 <i className="right chevron icon"/>

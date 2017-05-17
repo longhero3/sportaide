@@ -6,6 +6,9 @@ export class CourseNav extends React.Component {
   componentDidUpdate(prev, next) {
     $('.accordion').accordion({
       animateChildren: false,
+      animate: false,
+      collapsible: false,
+      duration: 0,
       closeNested: false
     })
   }

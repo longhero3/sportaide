@@ -829,6 +829,9 @@ var CourseNav = exports.CourseNav = function (_React$Component) {
     value: function componentDidUpdate(prev, next) {
       $('.accordion').accordion({
         animateChildren: false,
+        animate: false,
+        collapsible: false,
+        duration: 0,
         closeNested: false
       });
     }
@@ -1029,7 +1032,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
   _createClass(CourseTabs, [{
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prev, next) {
-      $('.tab-menu .item').tab();
+      $('.tab-menu .tab-item').tab();
       if (this.state.binded == false) {
         this.state.binded = true;
         $(".not").on("click", function () {
@@ -1111,17 +1114,17 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
               { className: 'ui pointing secondary menu tab-menu' },
               _react2.default.createElement(
                 'a',
-                { className: 'item active', 'data-tab': 'first' },
+                { className: 'item tab-item active', 'data-tab': 'first' },
                 'Content'
               ),
               _react2.default.createElement(
                 'a',
-                { className: 'item', 'data-tab': 'third' },
+                { className: 'item tab-item', 'data-tab': 'third' },
                 'Overview'
               ),
               _react2.default.createElement(
                 'a',
-                { className: 'item', 'data-tab': 'fourth' },
+                { className: 'item tab-item', 'data-tab': 'fourth' },
                 'Quiz'
               )
             ),
@@ -1256,7 +1259,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
             { className: 'ui segment' },
             _react2.default.createElement(
               'div',
-              { className: 'ui pointing secondary menu tab-menu' },
+              { className: 'ui pointing secondary menu' },
               _react2.default.createElement(
                 'a',
                 { className: 'item active', 'data-tab': 'fourth' },
@@ -1265,7 +1268,7 @@ var CourseTabs = exports.CourseTabs = function (_React$Component) {
             ),
             _react2.default.createElement(
               'div',
-              { className: 'ui tab active', 'data-tab': 'fourth' },
+              { className: 'content', 'data-tab': 'fourth' },
               _react2.default.createElement(
                 'button',
                 { className: 'ui right labeled icon green button not next-lesson-btn', 'data-animation': true, 'data-type': 'success', 'data-title': 'Hoorays!', 'data-size': 'normal', 'data-message': 'Moving to the next lesson', onClick: this.nextLesson.bind(this) },
