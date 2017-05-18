@@ -26,7 +26,7 @@ export class CourseView extends React.Component{
                   <i className="right angle icon divider"></i>
                   <div className="active section">{this.props.course.name}</div>
                 </div>
-                <h1 className="default-title"> {this.props.course.name}</h1>
+                <h1 className="default-title"> {this.props.currentLesson.title}</h1>
               </div>
             </div>
           </div>
@@ -49,5 +49,6 @@ export class CourseView extends React.Component{
 
 CourseView.propTypes = {
   course: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  currentLesson: PropTypes.object
 }

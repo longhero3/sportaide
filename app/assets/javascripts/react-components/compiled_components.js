@@ -1393,7 +1393,7 @@ var CourseView = exports.CourseView = function (_React$Component) {
                   'h1',
                   { className: 'default-title' },
                   ' ',
-                  this.props.course.name
+                  this.props.currentLesson.title
                 )
               )
             )
@@ -1427,7 +1427,8 @@ var CourseView = exports.CourseView = function (_React$Component) {
 
 CourseView.propTypes = {
   course: _react.PropTypes.object.isRequired,
-  isFetching: _react.PropTypes.bool.isRequired
+  isFetching: _react.PropTypes.bool.isRequired,
+  currentLesson: _react.PropTypes.object
 };
 
 'use strict';
@@ -1441,7 +1442,8 @@ var _reactRedux = require('react-redux');
 var mapCourseState = function mapCourseState(state) {
   return {
     course: state.CourseDetailsReducer.course,
-    isFetching: state.CourseDetailsReducer.isFetching
+    isFetching: state.CourseDetailsReducer.isFetching,
+    currentLesson: state.CourseDetailsReducer.currentLesson
   };
 };
 

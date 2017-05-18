@@ -211,6 +211,9 @@
 
 @media (min-width:320px)  {
 /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .course-title-banner{
+    margin-top: 162px;
+  }
   .video-iframe {
     width: 250px;
     height: 150px;
@@ -232,6 +235,9 @@
 }
 @media (min-width:801px)  {
 /* tablet, landscape iPad, lo-res laptops ands desktops */
+  .course-title-banner {
+    margin-top: 0;
+  }
   .video-iframe {
     width: 400px;
     height: 250px;
