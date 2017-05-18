@@ -18,7 +18,6 @@
 //= require 'greensock/TweenMax'
 //= require 'greensock/jquery.gsap.js'
 //= require glide
-//= require home
 //= require "plugins/counterup/jquery.counterup.min"
 //= require "plugins/counterup/waypoints.min"
 //= require "plugins/flot/jquery.flot"
@@ -34,5 +33,6 @@
 //= require jquery.filterizr
 //= require dashboard2
 //= require main
+//= require home
 
 //= require_tree ./react-components

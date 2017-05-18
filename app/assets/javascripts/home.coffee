@@ -174,6 +174,7 @@ $ ->
   $('.news-article').on 'click', () ->
     window.location.href = $(this).find('.news-link').attr("href")
 
-  $("#Glide").glide(
-    type: "carousel"
-  )
+  if document.getElementById('Glide') != null
+    $("#Glide").glide(
+      type: "carousel"
+    )
